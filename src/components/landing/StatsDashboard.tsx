@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Trophy, Users, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
@@ -29,7 +28,7 @@ const stats = [
 
 const StatsDashboard = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 pb-4 pt-8 md:pt-4">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 pb-4 pt-4 md:pt-2">
       {stats.map((stat, index) => (
         <motion.div
           key={stat.title}
@@ -62,7 +61,6 @@ const StatsDashboard = () => {
                 </h3>
               </div>
               
-              {/* Glow effect overlay */}
               <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent blur-xl" />
               </div>
@@ -75,4 +73,3 @@ const StatsDashboard = () => {
 };
 
 export default StatsDashboard;
-
