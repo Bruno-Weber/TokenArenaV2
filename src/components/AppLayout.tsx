@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -37,7 +36,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
             <img 
               src={TokenArenaLogo} 
               alt="TokenArena Logo" 
-              className="w-10 h-10 rounded-full"
+              className="w-10 h-10 rounded-full object-contain"
             />
             <span className="font-bold text-lg bg-gradient-to-r from-[#8A2BE2] to-[#4B0082] bg-clip-text text-transparent">
               TokenArena
