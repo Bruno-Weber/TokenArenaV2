@@ -3,13 +3,10 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Rocket, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
-import BackgroundCarousel from "./BackgroundCarousel";
 
 const Hero = () => {
   return (
-    <div className="relative min-h-[80vh] flex flex-col items-center justify-center text-center px-4 overflow-hidden">
-      <BackgroundCarousel />
-      
+    <div className="relative min-h-[80vh] flex flex-col items-center justify-center text-center px-4 bg-gradient-to-br from-black via-gray-900 to-black">
       <div className="relative z-10 max-w-4xl mx-auto space-y-8">
         <div className="animate-fade-in space-y-8">
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white">
@@ -54,10 +51,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-
-      {/* Gradient Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/60 z-[1]" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/60 z-[1]" />
     </div>
   );
 };
