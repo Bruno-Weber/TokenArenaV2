@@ -27,8 +27,9 @@ const WalletInfo = ({ address, balance }: WalletInfoProps) => {
                    before:absolute before:inset-0 before:bg-gradient-to-r before:from-violet-500/10 before:to-fuchsia-500/10 before:opacity-0 
                    hover:before:opacity-100 before:transition-opacity">
       <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5" />
+      <div className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-violet-500/30 to-transparent" />
       <CardHeader className="pb-2 relative">
-        <CardTitle className="flex items-center gap-2 text-gradient">
+        <CardTitle className="flex items-center gap-2 text-gradient bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
           <WalletIcon className="h-5 w-5" />
           My Wallet
         </CardTitle>
