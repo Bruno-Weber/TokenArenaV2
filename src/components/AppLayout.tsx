@@ -1,12 +1,10 @@
+
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Home, Activity, Wallet, Users, BarChart3, Settings, Vote, Rocket, PackageOpen } from "lucide-react";
 import { BackgroundPaths } from "@/components/ui/background-paths";
-
-interface AppLayoutProps {
-  children: React.ReactNode;
-}
+import TokenArenaLogo from "@/assets/TokenArenaLogo.png";  // We'll create this asset
 
 const AppLayout = ({ children }: AppLayoutProps) => {
   const location = useLocation();
@@ -15,11 +13,15 @@ const AppLayout = ({ children }: AppLayoutProps) => {
     <div className="min-h-screen flex flex-col bg-token-background">
       <header className="border-b border-token-purple/20 sticky top-0 z-20 bg-token-background/80 backdrop-blur-lg">
         <div className="container flex justify-between items-center py-4">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-token-primary flex items-center justify-center">
-              <span className="text-white font-bold">TA</span>
-            </div>
-            <span className="font-bold text-lg text-white">TokenArena</span>
+          <Link to="/" className="flex items-center gap-3">
+            <img 
+              src={TokenArenaLogo} 
+              alt="TokenArena Logo" 
+              className="w-10 h-10 rounded-full"
+            />
+            <span className="font-bold text-lg bg-gradient-to-r from-[#8A2BE2] to-[#4B0082] bg-clip-text text-transparent">
+              TokenArena
+            </span>
           </Link>
           
           <nav className="hidden md:flex items-center gap-6">
