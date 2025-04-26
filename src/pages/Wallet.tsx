@@ -163,7 +163,6 @@ const Wallet = () => {
           </div>
           
           <div className="lg:col-span-2">
-            {/* Asset Tabs */}
             <Tabs defaultValue="tokens" className="w-full">
               <TabsList className="grid grid-cols-3 mb-6">
                 <TabsTrigger value="tokens">Fan Tokens</TabsTrigger>
@@ -198,13 +197,36 @@ const Wallet = () => {
               </TabsContent>
               
               <TabsContent value="staking">
-                <div className="text-center py-12">
-                  <WalletIcon className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
-                  <h3 className="text-xl font-medium mb-2">Staking Coming Soon</h3>
-                  <p className="text-muted-foreground mb-4">
-                    Earn rewards by staking your fan tokens
-                  </p>
-                  <Button disabled>Join Waitlist</Button>
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {mockFanTokens.slice(0, 3).map(token => (
+                      <Card key={token.id} className="sports-border">
+                        <CardHeader>
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full overflow-hidden border border-gray-200">
+                              <img
+                                src={token.teamLogo}
+                                alt={`${token.name} logo`}
+                                className="w-full h-full object-contain"
+                              />
+                            </div>
+                            <div>
+                              <CardTitle className="text-lg">{token.name}</CardTitle>
+                              <CardDescription>APR: 12.5%</CardDescription>
+                            </div>
+                          </div>
+                        </CardHeader>
+                        <CardContent>
+                          <StakingModal
+                            tokenSymbol={token.symbol}
+                            walletBalance="2,500"
+                            onStake={() => Promise.resolve()}
+                            onUnstake={() => Promise.resolve()}
+                          />
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
                 </div>
               </TabsContent>
             </Tabs>
