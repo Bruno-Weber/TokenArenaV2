@@ -17,33 +17,37 @@ import Stake from "./pages/Stake";
 import Voting from "./pages/Voting";
 import NFTMarket from "./pages/NFTMarket";
 import Confetti from "./components/voting/Confetti";
+import { useState } from "react";
 
-const queryClient = new QueryClient();
-
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <Confetti />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/market" element={<Market />} />
-          <Route path="/activity" element={<Activity />} />
-          <Route path="/teams" element={<Teams />} />
-          <Route path="/wallet" element={<Wallet />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/club/:id" element={<Club />} />
-          <Route path="/create-token" element={<CreateToken />} />
-          <Route path="/stake" element={<Stake />} />
-          <Route path="/voting" element={<Voting />} />
-          <Route path="/nft-market" element={<NFTMarket />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  // Create a new client inside the component
+  const [queryClient] = useState(() => new QueryClient());
+  
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <Confetti />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/market" element={<Market />} />
+            <Route path="/activity" element={<Activity />} />
+            <Route path="/teams" element={<Teams />} />
+            <Route path="/wallet" element={<Wallet />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/club/:id" element={<Club />} />
+            <Route path="/create-token" element={<CreateToken />} />
+            <Route path="/stake" element={<Stake />} />
+            <Route path="/voting" element={<Voting />} />
+            <Route path="/nft-market" element={<NFTMarket />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
