@@ -44,20 +44,21 @@ const AppLayout = ({ children }: AppLayoutProps) => {
             </span>
           </Link>
           
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center justify-center flex-1 gap-6">
             <NavLink to="/" label="Home" />
             <NavLink to="/market" label="Market" />
             <NavLink to="/activity" label="Activity" />
             <NavLink to="/teams" label="Teams" />
-            <div className="ml-4">
-              <WalletConnect
-                isConnected={isConnected}
-                address={walletAddress}
-                onConnect={handleConnect}
-                onDisconnect={handleDisconnect}
-                balance={balance}
-              />
-            </div>
+          </div>
+          
+          <div className="flex items-center gap-2">
+            <WalletConnect
+              isConnected={isConnected}
+              address={walletAddress}
+              onConnect={handleConnect}
+              onDisconnect={handleDisconnect}
+              balance={balance}
+            />
           </div>
         </div>
       </header>
