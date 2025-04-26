@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -12,6 +13,7 @@ import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import Club from "./pages/Club";
 import CreateToken from "./pages/CreateToken";
+import Stake from "./pages/Stake";  // Novo import
 
 const queryClient = new QueryClient();
 
@@ -30,6 +32,7 @@ const App = () => (
           <Route path="/settings" element={<Settings />} />
           <Route path="/club/:id" element={<Club />} />
           <Route path="/create-token" element={<CreateToken />} />
+          <Route path="/stake" element={<Stake />} />  {/* Nova rota */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
@@ -38,3 +41,4 @@ const App = () => (
 );
 
 export default App;
+

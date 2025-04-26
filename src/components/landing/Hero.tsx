@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, SquarePlus } from "lucide-react";
+import { ArrowRight, SquarePlus, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Hero = () => {
@@ -33,9 +33,20 @@ const Hero = () => {
             <SquarePlus className="ml-2 h-5 w-5" />
           </Link>
         </Button>
+        <Button 
+          size="lg"
+          variant="secondary"
+          asChild
+        >
+          <Link to="/stake">
+            Fazer Stake
+            <Zap className="ml-2 h-5 w-5" />
+          </Link>
+        </Button>
       </div>
     </div>
   );
 };
 
 export default Hero;
+
