@@ -2,10 +2,10 @@
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 
 const images = [
-  "/lovable-uploads/2950d86e-9dd7-4535-846a-7965e7cccd45.png",
-  "/lovable-uploads/6691d712-a62a-44d3-bbe5-da49ec8e8d51.png", 
-  "/lovable-uploads/634fb5a1-528a-452b-96aa-7b92c47626f5.png",
-  "/lovable-uploads/de9fa12e-365b-4cdd-80e4-6c0160d9b46c.png"
+  "/lovable-uploads/c8fccb8b-88a4-469b-86ae-f671b65b4d93.png",
+  "/lovable-uploads/c14e7506-61f2-4521-837d-35c215b6efd5.png",
+  "/lovable-uploads/b74c88a8-5db0-44f4-8c24-4da9c058bba4.png",
+  "/lovable-uploads/29fa9964-5a45-419f-a938-c29cbeb852ce.png"
 ];
 
 const BackgroundCarousel = () => {
