@@ -2,14 +2,11 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Rocket, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
-import { BackgroundPaths } from "@/components/ui/background-paths";
 import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
-    <div className="relative min-h-[80vh] flex flex-col items-center justify-center text-center px-4 bg-gradient-to-br from-black via-gray-900/95 to-black">
-      <BackgroundPaths />
-      
+    <div className="relative min-h-[80vh] flex flex-col items-center justify-center text-center px-4">
       <div className="relative z-10 max-w-4xl mx-auto space-y-8">
         <div className="animate-fade-in space-y-8">
           <motion.h1 

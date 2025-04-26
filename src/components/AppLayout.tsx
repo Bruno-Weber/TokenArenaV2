@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Home, Activity, Wallet, Users, BarChart3, Settings, Vote, Rocket, PackageOpen } from "lucide-react";
+import { BackgroundPaths } from "@/components/ui/background-paths";
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -11,11 +12,11 @@ const AppLayout = ({ children }: AppLayoutProps) => {
   const location = useLocation();
 
   return (
-    <div className="min-h-screen flex flex-col bg-chiliz-dark text-gray-100">
-      <header className="border-b border-gray-800 sticky top-0 z-10 bg-chiliz-darker">
+    <div className="min-h-screen flex flex-col bg-token-background">
+      <header className="border-b border-token-purple/20 sticky top-0 z-20 bg-token-background/80 backdrop-blur-lg">
         <div className="container flex justify-between items-center py-4">
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-chiliz-primary flex items-center justify-center">
+            <div className="w-8 h-8 rounded-full bg-token-primary flex items-center justify-center">
               <span className="text-white font-bold">TA</span>
             </div>
             <span className="font-bold text-lg text-white">TokenArena</span>
@@ -35,7 +36,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
       </header>
       
       <div className="flex flex-1">
-        <aside className="hidden md:block w-16 lg:w-56 border-r border-gray-800 p-2 bg-chiliz-darker">
+        <aside className="hidden md:block w-16 lg:w-56 border-r border-token-purple/20 p-2 bg-token-background/80 backdrop-blur-lg z-10">
           <div className="flex flex-col gap-2">
             <SidebarLink to="/" icon={<Home className="h-5 w-5" />} label="Dashboard" />
             <SidebarLink to="/market" icon={<BarChart3 className="h-5 w-5" />} label="Market" />
@@ -49,14 +50,15 @@ const AppLayout = ({ children }: AppLayoutProps) => {
           </div>
         </aside>
         
-        <main className="flex-1 p-4">
-          <div className="container mx-auto">
+        <main className="flex-1 relative">
+          <BackgroundPaths />
+          <div className="container mx-auto p-4 relative z-10">
             {children}
           </div>
         </main>
       </div>
       
-      <footer className="border-t border-gray-800 py-4 bg-chiliz-darker">
+      <footer className="border-t border-token-purple/20 py-4 bg-token-background/80 backdrop-blur-lg z-10">
         <div className="container">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div>

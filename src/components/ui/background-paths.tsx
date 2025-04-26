@@ -14,14 +14,14 @@ function FloatingPaths({ position }: { position: number }) {
         } ${343 - i * 6}C${616 - i * 5 * position} ${470 - i * 6} ${
             684 - i * 5 * position
         } ${875 - i * 6} ${684 - i * 5 * position} ${875 - i * 6}`,
-        color: `rgba(15,23,42,${0.1 + i * 0.03})`,
+        color: `rgba(147,39,143,${0.1 + i * 0.03})`, // Updated to purple
         width: 0.5 + i * 0.03,
     }));
 
     return (
-        <div className="absolute inset-0 pointer-events-none">
+        <div className="fixed inset-0 pointer-events-none z-0">
             <svg
-                className="w-full h-full text-slate-950 dark:text-white"
+                className="w-full h-full text-purple-500/20 dark:text-purple-300/20"
                 viewBox="0 0 696 316"
                 fill="none"
             >
