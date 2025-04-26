@@ -24,7 +24,6 @@ const TransactionStatus = ({
     return `${hash.substring(0, 8)}...${hash.substring(hash.length - 8)}`;
   };
 
-  // Get status-specific UI elements
   const getStatusUI = (status: string) => {
     switch (status) {
       case "pending":
@@ -33,7 +32,7 @@ const TransactionStatus = ({
           text: "Pending",
           className: "bg-yellow-500/10 text-yellow-500 border-yellow-500",
           progressValue: 50,
-          progressClass: "bg-yellow-500",
+          progressClass: "bg-gradient-to-r from-yellow-500 to-yellow-400",
         };
       case "success":
         return {
@@ -41,7 +40,7 @@ const TransactionStatus = ({
           text: "Success",
           className: "bg-green-500/10 text-green-500 border-green-500",
           progressValue: 100,
-          progressClass: "bg-green-500",
+          progressClass: "bg-gradient-to-r from-green-500 to-green-400",
         };
       case "failed":
         return {
@@ -49,7 +48,7 @@ const TransactionStatus = ({
           text: "Failed",
           className: "bg-red-500/10 text-red-500 border-red-500",
           progressValue: 100,
-          progressClass: "bg-red-500",
+          progressClass: "bg-gradient-to-r from-red-500 to-red-400",
         };
       default:
         return {
@@ -57,7 +56,7 @@ const TransactionStatus = ({
           text: "Unknown",
           className: "bg-gray-500/10 text-gray-500 border-gray-500",
           progressValue: 0,
-          progressClass: "bg-gray-500",
+          progressClass: "bg-gradient-to-r from-gray-500 to-gray-400",
         };
     }
   };
@@ -65,34 +64,34 @@ const TransactionStatus = ({
   const statusUI = getStatusUI(status);
 
   return (
-    <Card className={`border ${status === "success" ? "tx-success" : ""} ${status === "pending" ? "tx-pending" : ""}`}>
+    <Card className={`border transition-all duration-300 hover:shadow-lg backdrop-blur-sm bg-card/30 ${status === "success" ? "tx-success animate-fade-in" : ""} ${status === "pending" ? "tx-pending" : ""}`}>
       <CardContent className="p-4">
         <div className="flex flex-col space-y-2">
           <div className="flex justify-between items-center">
             <Badge 
               variant="outline" 
-              className={`flex items-center gap-1 border ${statusUI.className}`}
+              className={`flex items-center gap-1 border ${statusUI.className} transition-colors duration-300`}
             >
               {statusUI.icon}
               {statusUI.text}
             </Badge>
-            <span className="text-xs text-muted-foreground">{timestamp}</span>
+            <span className="text-xs text-muted-foreground bg-background/50 px-2 py-1 rounded-full">{timestamp}</span>
           </div>
           
           <Progress 
             value={statusUI.progressValue} 
-            className={`h-1 mt-2 ${statusUI.progressClass}`}
+            className={`h-1 mt-2 ${statusUI.progressClass} transition-all duration-300`}
           />
           
           <div className="flex flex-col mt-2">
-            <span className="text-sm font-medium">{message}</span>
+            <span className="text-sm font-medium bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">{message}</span>
             <div className="flex items-center gap-1 mt-1">
               <span className="text-xs text-muted-foreground">TX:</span>
               <a 
                 href={`https://chiliscan.com/tx/${hash}`} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-xs text-blue-500 hover:underline font-mono"
+                className="text-xs text-blue-500 hover:text-blue-400 transition-colors font-mono hover:underline"
               >
                 {shortenHash(hash)}
               </a>
