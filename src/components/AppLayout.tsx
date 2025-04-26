@@ -65,15 +65,14 @@ const AppLayout = ({ children }: AppLayoutProps) => {
       <div className="flex flex-1">
         <aside className="hidden md:block w-16 lg:w-56 border-r border-token-purple/20 p-2 bg-token-background/80 backdrop-blur-lg z-10">
           <div className="flex flex-col gap-2">
-            <SidebarLink to="/" icon={<Home className="h-5 w-5" />} label="Dashboard" />
-            <SidebarLink to="/market" icon={<BarChart3 className="h-5 w-5" />} label="Market" />
-            <SidebarLink to="/activity" icon={<Activity className="h-5 w-5" />} label="Activity" />
-            <SidebarLink to="/wallet" icon={<Wallet className="h-5 w-5" />} label="Wallet" />
-            <SidebarLink to="/teams" icon={<Users className="h-5 w-5" />} label="Teams" />
-            <SidebarLink to="/voting" icon={<Vote className="h-5 w-5" />} label="Votações" />
-            <SidebarLink to="/stake" icon={<Rocket className="h-5 w-5" />} label="Stake" />
-            <SidebarLink to="/nft-market" icon={<PackageOpen className="h-5 w-5" />} label="NFT Market" />
-            <SidebarLink to="/settings" icon={<Settings className="h-5 w-5" />} label="Settings" />
+            {sidebarLinks.map((link) => (
+              <SidebarLink 
+                key={link.to} 
+                to={link.to} 
+                icon={link.icon} 
+                label={link.label} 
+              />
+            ))}
           </div>
         </aside>
         
@@ -132,6 +131,17 @@ interface SidebarLinkProps {
   icon: React.ReactNode;
   label: string;
 }
+
+const sidebarLinks = [
+  { to: "/", icon: <Home className="h-5 w-5" />, label: "Dashboard" },
+  { to: "/market", icon: <BarChart3 className="h-5 w-5" />, label: "Market" },
+  { to: "/activity", icon: <Activity className="h-5 w-5" />, label: "Activity" },
+  { to: "/wallet", icon: <Wallet className="h-5 w-5" />, label: "Wallet" },
+  { to: "/teams", icon: <Users className="h-5 w-5" />, label: "Teams" },
+  { to: "/voting", icon: <Vote className="h-5 w-5" />, label: "Votações" },
+  { to: "/nft-market", icon: <PackageOpen className="h-5 w-5" />, label: "NFT Market" },
+  { to: "/settings", icon: <Settings className="h-5 w-5" />, label: "Settings" },
+];
 
 const SidebarLink = ({ to, icon, label }: SidebarLinkProps) => {
   const isActive = window.location.pathname === to;
