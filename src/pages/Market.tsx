@@ -158,20 +158,30 @@ interface StatsCardProps {
 
 const StatsCard = ({ title, value, change, isPositive }: StatsCardProps) => {
   return (
-    <Card>
-      <CardHeader className="pb-2">
-        <CardTitle className="text-lg">{title}</CardTitle>
+    <Card className="overflow-hidden relative bg-gradient-to-br from-token-background-light/50 to-transparent backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-300 group">
+      {/* Glow effect */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#8B5CF6]/10 to-[#D946EF]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      
+      <CardHeader className="pb-2 relative z-10">
+        <CardTitle className="text-lg text-white/80 group-hover:text-white transition-colors">
+          {title}
+        </CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="text-3xl font-bold">{value}</div>
+      <CardContent className="relative z-10">
+        <div className="text-3xl font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent group-hover:from-[#8B5CF6] group-hover:to-[#D946EF] transition-all duration-300">
+          {value}
+        </div>
         <div className="flex items-center mt-1">
           <ArrowUpDown className={`h-4 w-4 mr-1 ${isPositive ? "text-green-500" : "text-red-500"}`} />
           <span className={isPositive ? "text-green-500" : "text-red-500"}>
             {isPositive ? "+" : ""}{change}%
           </span>
-          <span className="text-muted-foreground text-sm ml-1">vs. last week</span>
+          <span className="text-white/60 text-sm ml-1">vs. last week</span>
         </div>
       </CardContent>
+      
+      {/* Animated border */}
+      <div className="absolute inset-0 border border-white/20 group-hover:border-[#8B5CF6]/50 transition-colors duration-300" />
     </Card>
   );
 };

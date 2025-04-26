@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/use-toast";
 import { ExternalLink, ChevronRight, Users, TrendingUp, Trophy } from "lucide-react";
+
 interface FanTokenProps {
   id: string;
   name: string;
@@ -15,6 +16,7 @@ interface FanTokenProps {
   holders: number;
   category: "football" | "basketball" | "baseball" | "hockey" | "soccer";
 }
+
 const FanTokenCard = ({
   id,
   name,
@@ -26,10 +28,9 @@ const FanTokenCard = ({
   holders,
   category
 }: FanTokenProps) => {
-  const {
-    toast
-  } = useToast();
+  const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+
   const handleBuy = () => {
     setIsLoading(true);
     // Simulate a network request
@@ -41,72 +42,96 @@ const FanTokenCard = ({
       });
     }, 1500);
   };
+
   const formatNumber = (num: number) => {
     return new Intl.NumberFormat("en-US", {
       maximumFractionDigits: 2,
       minimumFractionDigits: 2
     }).format(num);
   };
+
   const getBorderColor = () => {
     switch (category) {
       case "football":
-        return "border-sports-football";
+        return "from-sports-football/20 to-sports-football/10";
       case "basketball":
-        return "border-sports-basketball";
+        return "from-sports-basketball/20 to-sports-basketball/10";
       case "baseball":
-        return "border-sports-baseball";
+        return "from-sports-baseball/20 to-sports-baseball/10";
       case "hockey":
-        return "border-sports-hockey";
+        return "from-sports-hockey/20 to-sports-hockey/10";
       case "soccer":
-        return "border-sports-soccer";
+        return "from-sports-soccer/20 to-sports-soccer/10";
       default:
-        return "border-gray-200";
+        return "from-gray-200/20 to-gray-200/10";
     }
   };
-  return <Card className={`card-sports transition-all duration-300 hover:translate-y-[-5px] ${getBorderColor()} border-2`}>
-      <CardHeader className="pb-2">
+
+  return (
+    <Card className={`relative overflow-hidden transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br ${getBorderColor()} backdrop-blur-xl border border-white/10 hover:border-white/20 group`}>
+      <div className="absolute inset-0 bg-gradient-to-r from-[#8B5CF6]/5 to-[#D946EF]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      
+      <CardHeader className="pb-2 relative z-10">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200">
-              <img src={teamLogo} alt={`${name} logo`} className="w-full h-full object-contain" onError={e => {
-              e.currentTarget.src = "/placeholder.svg";
-            }} />
+            <div className="w-10 h-10 rounded-full overflow-hidden border border-white/20 bg-token-background-light/50 p-1">
+              <img
+                src={teamLogo}
+                alt={`${name} logo`}
+                className="w-full h-full object-contain filter drop-shadow-glow"
+                onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
+              />
             </div>
             <div>
-              <CardTitle className="text-lg">{name}</CardTitle>
+              <CardTitle className="text-lg font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent group-hover:from-[#8B5CF6] group-hover:to-[#D946EF] transition-all duration-300">
+                {name}
+              </CardTitle>
               <CardDescription>
-                <Badge variant="outline" className="font-mono text-xs">
+                <Badge variant="outline" className="font-mono text-xs border-white/20">
                   {symbol}
                 </Badge>
               </CardDescription>
             </div>
           </div>
-          <Badge variant="secondary" className={`capitalize bg-opacity-20 ${category === 'football' ? 'bg-sports-football text-sports-football' : category === 'basketball' ? 'bg-sports-basketball text-sports-basketball' : category === 'baseball' ? 'bg-sports-baseball text-sports-baseball' : category === 'hockey' ? 'bg-sports-hockey text-sports-hockey' : 'bg-sports-soccer text-sports-soccer'}`}>
+          <Badge 
+            variant="secondary" 
+            className={`capitalize bg-opacity-20 backdrop-blur-sm ${
+              category === 'football' ? 'bg-sports-football text-sports-football' :
+              category === 'basketball' ? 'bg-sports-basketball text-sports-basketball' :
+              category === 'baseball' ? 'bg-sports-baseball text-sports-baseball' :
+              category === 'hockey' ? 'bg-sports-hockey text-sports-hockey' :
+              'bg-sports-soccer text-sports-soccer'
+            }`}
+          >
             {category}
           </Badge>
         </div>
       </CardHeader>
-      <CardContent className="py-2">
+
+      <CardContent className="py-2 relative z-10">
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div className="flex flex-col">
-            <span className="text-muted-foreground">Price</span>
+            <span className="text-white/60">Price</span>
             <div className="font-medium flex items-center gap-1">
-              <span>${formatNumber(price)}</span>
-              <Badge variant={change24h >= 0 ? "outline" : "destructive"} className={`text-xs ${change24h >= 0 ? "text-green-500 border-green-500" : ""}`}>
+              <span className="text-white">${formatNumber(price)}</span>
+              <Badge 
+                variant={change24h >= 0 ? "outline" : "destructive"} 
+                className={`text-xs ${change24h >= 0 ? "text-green-500 border-green-500" : ""}`}
+              >
                 {change24h >= 0 ? "+" : ""}
                 {formatNumber(change24h)}%
               </Badge>
             </div>
           </div>
           <div className="flex flex-col">
-            <span className="text-muted-foreground">Supply</span>
-            <div className="font-medium">
+            <span className="text-white/60">Supply</span>
+            <div className="font-medium text-white">
               {supply}
             </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-4 mt-4 text-xs text-muted-foreground">
+        <div className="flex items-center gap-4 mt-4 text-xs text-white/60">
           <div className="flex items-center gap-1">
             <Users className="h-3 w-3" />
             <span>{holders.toLocaleString()} holders</span>
@@ -121,23 +146,39 @@ const FanTokenCard = ({
           </div>
         </div>
       </CardContent>
-      <CardFooter className="flex justify-between pt-2">
-        <Button variant="outline" size="sm" className="text-xs" onClick={() => {
-        window.open(`https://chiliscan.com/token/${id}`, "_blank");
-      }}>
+
+      <CardFooter className="flex justify-between pt-2 relative z-10">
+        <Button 
+          variant="outline" 
+          size="sm" 
+          className="text-xs border-white/20 hover:border-white/40 bg-token-background-light/30"
+          onClick={() => { window.open(`https://chiliscan.com/token/${id}`, "_blank"); }}
+        >
           <ExternalLink className="h-3 w-3 mr-1" />
           Explore
         </Button>
-        <Button variant="default" size="sm" onClick={handleBuy} disabled={isLoading} className="text-xs bg-[#8623e2]">
-          {isLoading ? <>
+        <Button 
+          variant="default" 
+          size="sm" 
+          onClick={handleBuy} 
+          disabled={isLoading} 
+          className="text-xs bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] hover:from-[#7C3AED] hover:to-[#C026D3]"
+        >
+          {isLoading ? (
+            <>
               <span className="animate-spin mr-1">⭮</span>
               Loading...
-            </> : <>
+            </>
+          ) : (
+            <>
               Get Token
               <ChevronRight className="h-3 w-3 ml-1" />
-            </>}
+            </>
+          )}
         </Button>
       </CardFooter>
-    </Card>;
+    </Card>
+  );
 };
+
 export default FanTokenCard;
