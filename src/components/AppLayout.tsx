@@ -1,10 +1,13 @@
-
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Home, Activity, Wallet, Users, BarChart3, Settings, Vote, Rocket, PackageOpen } from "lucide-react";
 import { BackgroundPaths } from "@/components/ui/background-paths";
-import TokenArenaLogo from "@/assets/TokenArenaLogo.png";  // We'll create this asset
+import TokenArenaLogo from "@/assets/TokenArenaLogo.png";
+
+interface AppLayoutProps {
+  children: React.ReactNode;
+}
 
 const AppLayout = ({ children }: AppLayoutProps) => {
   const location = useLocation();
