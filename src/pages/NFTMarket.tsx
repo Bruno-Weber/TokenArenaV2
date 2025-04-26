@@ -28,16 +28,31 @@ const NFTMarket = () => {
 
   return (
     <AppLayout>
-      <div className="container mx-auto px-4 py-8 min-h-screen">
-        <h1 className="text-4xl font-bold text-center mb-8 text-gradient animate-text-shimmer bg-clip-text text-transparent bg-[linear-gradient(to_right,theme(colors.purple.400),theme(colors.purple.600),theme(colors.blue.400),theme(colors.purple.400))] bg-[length:200%_auto]">
-          NFT Marketplace
+      <div className="container mx-auto px-4 py-8 min-h-screen relative">
+        {/* Decorative background elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
+        </div>
+
+        <h1 className="text-4xl font-bold text-center mb-12 relative">
+          <span className="inline-block animate-text-shimmer bg-[linear-gradient(110deg,#b388ff,#8c9eff,#82b1ff,#b388ff)] bg-[length:200%_auto] bg-clip-text text-transparent">
+            NFT Marketplace
+          </span>
         </h1>
 
-        <RandomMint />
+        <div className="relative backdrop-blur-sm bg-black/40 border border-white/10 rounded-xl p-8 mb-12 group transition-all duration-300 hover:bg-black/50">
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity" />
+          <RandomMint />
+        </div>
 
-        <h2 className="text-2xl font-bold mb-4 text-white">Market Listings</h2>
-        <div className="mb-12">
-          <Carousel className="w-full max-w-5xl mx-auto">
+        <h2 className="text-2xl font-bold mb-6 text-white/90 relative inline-block">
+          Market Listings
+          <span className="absolute -bottom-1 left-0 w-full h-px bg-gradient-to-r from-purple-500/50 to-blue-500/50" />
+        </h2>
+
+        <div className="relative">
+          <Carousel className="w-full max-w-6xl mx-auto">
             <CarouselContent className="-ml-4">
               {mockNFTs.map((nft) => (
                 <CarouselItem key={nft.id} className="pl-4 md:basis-1/2 lg:basis-1/3">
@@ -45,13 +60,13 @@ const NFTMarket = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="hidden md:flex" />
-            <CarouselNext className="hidden md:flex" />
+            <CarouselPrevious className="hidden md:flex -left-12 bg-white/5 hover:bg-white/10 border-white/10" />
+            <CarouselNext className="hidden md:flex -right-12 bg-white/5 hover:bg-white/10 border-white/10" />
           </Carousel>
         </div>
 
         <Dialog open={!!selectedNFT} onOpenChange={() => setSelectedNFT(null)}>
-          <DialogContent className="bg-black/90 border border-white/10 backdrop-blur-lg">
+          <DialogContent className="bg-black/90 border border-white/10 backdrop-blur-xl">
             <DialogHeader>
               <DialogTitle className="text-2xl font-bold text-white">Buy NFT</DialogTitle>
               <DialogDescription className="text-gray-400">
