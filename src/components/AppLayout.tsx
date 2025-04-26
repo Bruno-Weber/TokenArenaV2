@@ -1,13 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Home, Activity, Wallet, Users, BarChart3, Settings, Vote } from "lucide-react";
+import { Home, Activity, Wallet, Users, BarChart3, Settings, Vote, Rocket } from "lucide-react";
 
 interface AppLayoutProps {
   children: React.ReactNode;
 }
 
 const AppLayout = ({ children }: AppLayoutProps) => {
+  const location = useLocation();
+
   return (
     <div className="min-h-screen flex flex-col bg-chiliz-dark text-gray-100">
       <header className="border-b border-gray-800 sticky top-0 z-10 bg-chiliz-darker">
@@ -41,6 +43,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
             <SidebarLink to="/wallet" icon={<Wallet className="h-5 w-5" />} label="Wallet" />
             <SidebarLink to="/teams" icon={<Users className="h-5 w-5" />} label="Teams" />
             <SidebarLink to="/voting" icon={<Vote className="h-5 w-5" />} label="Votações" />
+            <SidebarLink to="/stake" icon={<Rocket className="h-5 w-5" />} label="Stake" />
             <SidebarLink to="/settings" icon={<Settings className="h-5 w-5" />} label="Settings" />
           </div>
         </aside>

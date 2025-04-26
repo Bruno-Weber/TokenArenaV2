@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Rocket } from "lucide-react";
+import { Rocket, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Hero = () => {
@@ -34,9 +34,21 @@ const Hero = () => {
             className="bg-token-purple hover:bg-token-purple-light text-white font-medium text-lg px-8 py-6"
             asChild
           >
-            <Link to="/create-token">
+            <Link to="/market">
               <Rocket className="mr-2 h-5 w-5" />
-              Launch App
+              Explorar Fan Tokens
+            </Link>
+          </Button>
+
+          <Button 
+            size="lg"
+            variant="outline"
+            className="border-token-purple text-token-purple hover:bg-token-purple/10 font-medium text-lg px-8 py-6"
+            asChild
+          >
+            <Link to="/create-token">
+              <Plus className="mr-2 h-5 w-5" />
+              Criar Fan Token
             </Link>
           </Button>
         </div>
