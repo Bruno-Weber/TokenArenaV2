@@ -3,11 +3,12 @@ import React, { useState } from "react";
 import AppLayout from "@/components/AppLayout";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import NFTCard from "@/components/nft/NFTCard";
+import RandomMint from "@/components/nft/RandomMint";
 import { mockNFTs } from "@/lib/mockNFTData";
 import { NFT } from "@/types/nft";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 const NFTMarket = () => {
   const [selectedNFT, setSelectedNFT] = useState<NFT | null>(null);
@@ -19,8 +20,8 @@ const NFTMarket = () => {
 
   const handleConfirmMint = () => {
     toast({
-      title: "NFT Minting Initiated",
-      description: `Starting to mint ${selectedNFT?.name}. Please wait for confirmation.`,
+      title: "NFT Purchase Initiated",
+      description: `Starting to purchase ${selectedNFT?.name}. Please wait for confirmation.`,
     });
     setSelectedNFT(null);
   };
@@ -32,6 +33,9 @@ const NFTMarket = () => {
           NFT Marketplace
         </h1>
 
+        <RandomMint />
+
+        <h2 className="text-2xl font-bold mb-4 text-white">Market Listings</h2>
         <div className="mb-12">
           <Carousel className="w-full max-w-5xl mx-auto">
             <CarouselContent className="-ml-4">
@@ -49,9 +53,9 @@ const NFTMarket = () => {
         <Dialog open={!!selectedNFT} onOpenChange={() => setSelectedNFT(null)}>
           <DialogContent className="bg-black/90 border border-white/10 backdrop-blur-lg">
             <DialogHeader>
-              <DialogTitle className="text-2xl font-bold text-white">Mint NFT</DialogTitle>
+              <DialogTitle className="text-2xl font-bold text-white">Buy NFT</DialogTitle>
               <DialogDescription className="text-gray-400">
-                Are you sure you want to mint {selectedNFT?.name}?
+                Are you sure you want to buy {selectedNFT?.name} for {selectedNFT?.price} ETH?
               </DialogDescription>
             </DialogHeader>
             <div className="flex justify-end space-x-4 mt-4">
@@ -62,7 +66,7 @@ const NFTMarket = () => {
                 className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
                 onClick={handleConfirmMint}
               >
-                Confirm Mint
+                Confirm Purchase
               </Button>
             </div>
           </DialogContent>

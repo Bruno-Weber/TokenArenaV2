@@ -7,4 +7,9 @@ export interface NFT {
   status: "new" | "sold_out";
   rarity: "common" | "rare" | "legendary";
   club: string;
+  seller?: {
+    address: string;
+    name: string;
+    profileNft: string;
+  };
 }

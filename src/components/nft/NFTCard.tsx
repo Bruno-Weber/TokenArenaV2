@@ -3,6 +3,7 @@ import React from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { NFT } from "@/types/nft";
 
 interface NFTCardProps {
@@ -48,17 +49,32 @@ const NFTCard: React.FC<NFTCardProps> = ({ nft, onMint }) => {
         </div>
       </CardContent>
 
-      <CardFooter className="p-4 flex justify-between items-center">
-        <div className="text-sm">
-          <span className="text-gray-400">Price</span>
-          <p className="text-white font-bold">{nft.price} ETH</p>
+      <CardFooter className="p-4 flex flex-col gap-4">
+        <div className="flex items-center justify-between w-full">
+          <div className="text-sm">
+            <span className="text-gray-400">Price</span>
+            <p className="text-white font-bold">{nft.price} ETH</p>
+          </div>
+          <Button 
+            onClick={() => onMint(nft)}
+            className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
+          >
+            {nft.seller ? "Buy Now" : "Mint Now"}
+          </Button>
         </div>
-        <Button 
-          onClick={() => onMint(nft)}
-          className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
-        >
-          Mint Now
-        </Button>
+        
+        {nft.seller && (
+          <div className="flex items-center gap-2 w-full border-t border-white/10 pt-4">
+            <Avatar className="h-8 w-8">
+              <AvatarImage src={nft.seller.profileNft} />
+              <AvatarFallback>SF</AvatarFallback>
+            </Avatar>
+            <div className="flex flex-col">
+              <span className="text-sm font-medium text-white">{nft.seller.name}</span>
+              <span className="text-xs text-gray-400">{nft.seller.address}</span>
+            </div>
+          </div>
+        )}
       </CardFooter>
     </Card>
   );
