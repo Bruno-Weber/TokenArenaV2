@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
-import { Loader2, Wallet, ExternalLink, Copy, Check } from "lucide-react";
+import { Loader2, Wallet, ExternalLink, Copy, Check, AlertCircle } from "lucide-react";
 import { NETWORKS } from "@/lib/web3";
 
 interface WalletConnectProps {
@@ -25,6 +25,11 @@ const WalletConnect = ({
   const [copied, setCopied] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [hasProvider, setHasProvider] = useState(false);
+
+  useEffect(() => {
+    setHasProvider(window.ethereum !== undefined);
+  }, []);
 
   const shortenAddress = (addr: string | null) => {
     if (!addr) return "";
@@ -54,6 +59,10 @@ const WalletConnect = ({
   const handleConnectWallet = async () => {
     setIsLoading(true);
     try {
+      if (!window.ethereum) {
+        throw new Error("No Ethereum provider found. Please install MetaMask.");
+      }
+      
       await window.ethereum.request({ method: 'eth_requestAccounts' });
       
       const chainId = await window.ethereum.request({ method: 'eth_chainId' });
@@ -120,12 +129,29 @@ const WalletConnect = ({
                 Choose a wallet to connect to the Chiliz Chain network
               </DialogDescription>
             </DialogHeader>
+            {!hasProvider && (
+              <div className="bg-amber-500/20 border border-amber-500/50 rounded-md p-3 flex items-center gap-2 mb-2">
+                <AlertCircle className="h-5 w-5 text-amber-500" />
+                <p className="text-sm">
+                  No Ethereum wallet detected. Please install{" "}
+                  <a 
+                    href="https://metamask.io" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:underline"
+                  >
+                    MetaMask
+                  </a>.
+                </p>
+              </div>
+            )}
             <div className="grid grid-cols-1 gap-4 py-4">
               <WalletOption 
                 name="MetaMask" 
                 icon="/metamask.svg" 
                 onClick={handleConnectWallet}
                 isLoading={isLoading}
+                disabled={!hasProvider}
               />
               <WalletOption 
                 name="WalletConnect" 
@@ -181,15 +207,16 @@ interface WalletOptionProps {
   icon: string;
   onClick: () => void;
   isLoading?: boolean;
+  disabled?: boolean;
 }
 
-const WalletOption = ({ name, icon, onClick, isLoading }: WalletOptionProps) => {
+const WalletOption = ({ name, icon, onClick, isLoading, disabled }: WalletOptionProps) => {
   return (
     <Button 
       variant="outline" 
       className="flex items-center justify-between p-4 h-auto sports-border hover:border-chiliz-primary"
       onClick={onClick}
-      disabled={isLoading}
+      disabled={isLoading || disabled}
     >
       <div className="flex items-center gap-3">
         <div className="w-8 h-8 relative">
