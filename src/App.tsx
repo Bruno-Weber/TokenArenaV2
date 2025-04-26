@@ -15,6 +15,7 @@ import Club from "./pages/Club";
 import CreateToken from "./pages/CreateToken";
 import Stake from "./pages/Stake";
 import Voting from "./pages/Voting";
+import NFTMarket from "./pages/NFTMarket";
 import Confetti from "./components/voting/Confetti";
 
 const queryClient = new QueryClient();
@@ -37,6 +38,7 @@ const App = () => (
           <Route path="/create-token" element={<CreateToken />} />
           <Route path="/stake" element={<Stake />} />
           <Route path="/voting" element={<Voting />} />
+          <Route path="/nft-market" element={<NFTMarket />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
