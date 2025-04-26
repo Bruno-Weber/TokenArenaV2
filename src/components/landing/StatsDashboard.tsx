@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Trophy, Users, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
@@ -29,7 +28,7 @@ const stats = [
 
 const StatsDashboard = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 pb-4 pt-0 md:-mt-4">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 pb-4 pt-0 -mt-4 md:-mt-12">
       {stats.map((stat, index) => (
         <motion.div
           key={stat.title}
@@ -74,4 +73,3 @@ const StatsDashboard = () => {
 };
 
 export default StatsDashboard;
-
