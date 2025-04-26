@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import AppLayout from "@/components/AppLayout";
@@ -50,7 +49,13 @@ const Index = () => {
           <h2 className="text-2xl font-bold mb-8">Atividades Recentes</h2>
           <div className="space-y-4">
             {mockTransactions.slice(0, 5).map((tx) => (
-              <TransactionStatus key={tx.hash} {...tx} />
+              <TransactionStatus 
+                key={tx.hash}
+                hash={tx.hash}
+                status={tx.status}
+                timestamp={new Date(tx.timestamp).toLocaleTimeString('pt-BR')}
+                message={tx.message}
+              />
             ))}
           </div>
         </div>

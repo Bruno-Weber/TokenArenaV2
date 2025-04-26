@@ -10,6 +10,7 @@ export const mockTransactions = [
     type: "transfer",
     token: "PSG",
     timestamp: new Date().getTime() - 1000 * 60 * 5, // 5 minutes ago
+    message: "Transferred 10 PSG Fan Tokens"
   },
   {
     hash: "0x2345...6789",
@@ -20,6 +21,7 @@ export const mockTransactions = [
     type: "stake",
     token: "JUV",
     timestamp: new Date().getTime() - 1000 * 60 * 15, // 15 minutes ago
+    message: "Staking 25 JUV Fan Tokens"
   },
   {
     hash: "0x3456...7890",
@@ -30,6 +32,7 @@ export const mockTransactions = [
     type: "vote",
     token: "BAR",
     timestamp: new Date().getTime() - 1000 * 60 * 30, // 30 minutes ago
+    message: "Voted on team decision with 5 BAR Tokens"
   },
   {
     hash: "0x4567...8901",
@@ -40,6 +43,7 @@ export const mockTransactions = [
     type: "transfer",
     token: "ATM",
     timestamp: new Date().getTime() - 1000 * 60 * 45, // 45 minutes ago
+    message: "Transferred 50 ATM Fan Tokens"
   },
   {
     hash: "0x5678...9012",
@@ -50,5 +54,6 @@ export const mockTransactions = [
     type: "mint",
     token: "MAN",
     timestamp: new Date().getTime() - 1000 * 60 * 60, // 1 hour ago
+    message: "Failed to mint 15 MAN Fan Tokens"
   }
 ];

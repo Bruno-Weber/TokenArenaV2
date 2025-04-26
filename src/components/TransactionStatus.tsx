@@ -5,11 +5,11 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, CheckCircle2, AlertCircle, Clock } from "lucide-react";
 
-type TransactionStatus = 'pending' | 'confirmed' | 'failed' | 'success';
+type TransactionStatus = 'pending' | 'success' | 'failed';
 
 interface TransactionStatusProps {
   hash: string;
-  status: TransactionStatus;
+  status: string;
   timestamp: string;
   message: string;
 }
@@ -20,13 +20,12 @@ const TransactionStatus = ({
   timestamp,
   message,
 }: TransactionStatusProps) => {
-  // Format the transaction hash for display
   const shortenHash = (hash: string) => {
     return `${hash.substring(0, 8)}...${hash.substring(hash.length - 8)}`;
   };
 
   // Get status-specific UI elements
-  const getStatusUI = (status: TransactionStatus) => {
+  const getStatusUI = (status: string) => {
     switch (status) {
       case "pending":
         return {
@@ -35,14 +34,6 @@ const TransactionStatus = ({
           className: "bg-yellow-500/10 text-yellow-500 border-yellow-500",
           progressValue: 50,
           progressClass: "bg-yellow-500",
-        };
-      case "confirmed":
-        return {
-          icon: <Clock className="h-4 w-4 text-blue-500" />,
-          text: "Confirmed",
-          className: "bg-blue-500/10 text-blue-500 border-blue-500",
-          progressValue: 75,
-          progressClass: "bg-blue-500",
         };
       case "success":
         return {
