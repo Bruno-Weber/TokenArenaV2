@@ -28,7 +28,7 @@ const stats = [
 
 const StatsDashboard = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 pb-4 pt-4 md:pt-2">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 pb-4 pt-2 md:pt-0">
       {stats.map((stat, index) => (
         <motion.div
           key={stat.title}
