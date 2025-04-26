@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import AppLayout from "@/components/AppLayout";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
@@ -9,12 +8,36 @@ import { NFT } from "@/types/nft";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import WalletConnect from "@/components/WalletConnect";
+import { Football } from "lucide-react";
 
 const NFTMarket = () => {
   const [selectedNFT, setSelectedNFT] = useState<NFT | null>(null);
+  const [isConnected, setIsConnected] = useState(false);
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  const [balance, setBalance] = useState("0.00");
   const { toast } = useToast();
 
+  const handleConnect = () => {
+    setIsConnected(true);
+    setWalletAddress("0x1234...5678"); // Mock address
+    setBalance("100.00"); // Mock balance
+  };
+
+  const handleDisconnect = () => {
+    setIsConnected(false);
+    setWalletAddress(null);
+    setBalance("0.00");
+  };
+
   const handleMint = (nft: NFT) => {
+    if (!isConnected) {
+      toast({
+        title: "Wallet Required",
+        description: "Please connect your wallet to mint NFTs",
+      });
+      return;
+    }
     setSelectedNFT(nft);
   };
 
@@ -29,17 +52,32 @@ const NFTMarket = () => {
   return (
     <AppLayout>
       <div className="container mx-auto px-4 py-8 min-h-screen relative">
-        {/* Decorative background elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
         </div>
 
-        <h1 className="text-4xl font-bold text-center mb-12 relative">
-          <span className="inline-block animate-text-shimmer bg-[linear-gradient(110deg,#b388ff,#8c9eff,#82b1ff,#b388ff)] bg-[length:200%_auto] bg-clip-text text-transparent">
-            NFT Marketplace
-          </span>
-        </h1>
+        <div className="flex flex-col items-center justify-center mb-12 relative">
+          <h1 className="text-4xl font-bold text-center mb-6 relative">
+            <span className="inline-block animate-text-shimmer bg-[linear-gradient(110deg,#b388ff,#8c9eff,#82b1ff,#b388ff)] bg-[length:200%_auto] bg-clip-text text-transparent">
+              NFT Marketplace
+            </span>
+          </h1>
+
+          <div className="relative group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-green-600 to-blue-600 rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+            <div className="relative px-7 py-4 bg-black ring-1 ring-gray-900/5 rounded-lg leading-none flex items-center">
+              <WalletConnect
+                isConnected={isConnected}
+                address={walletAddress}
+                onConnect={handleConnect}
+                onDisconnect={handleDisconnect}
+                balance={balance}
+              />
+              <Football className="ml-2 h-5 w-5 text-green-500 animate-bounce" />
+            </div>
+          </div>
+        </div>
 
         <div className="relative backdrop-blur-sm bg-black/40 border border-white/10 rounded-xl p-8 mb-12 group transition-all duration-300 hover:bg-black/50">
           <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity" />
