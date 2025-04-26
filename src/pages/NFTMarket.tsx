@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import AppLayout from "@/components/AppLayout";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
@@ -58,25 +57,21 @@ const NFTMarket = () => {
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
         </div>
 
-        <div className="flex flex-col items-center justify-center mb-12 relative">
-          <h1 className="text-4xl font-bold text-center mb-6 relative">
+        <div className="flex justify-between items-center mb-12 relative">
+          <h1 className="text-4xl font-bold text-center relative">
             <span className="inline-block animate-text-shimmer bg-[linear-gradient(110deg,#b388ff,#8c9eff,#82b1ff,#b388ff)] bg-[length:200%_auto] bg-clip-text text-transparent">
               NFT Marketplace
             </span>
           </h1>
 
-          <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-green-600 to-blue-600 rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
-            <div className="relative px-7 py-4 bg-black ring-1 ring-gray-900/5 rounded-lg leading-none flex items-center">
-              <WalletConnect
-                isConnected={isConnected}
-                address={walletAddress}
-                onConnect={handleConnect}
-                onDisconnect={handleDisconnect}
-                balance={balance}
-              />
-              <Trophy className="ml-2 h-5 w-5 text-green-500 animate-bounce" />
-            </div>
+          <div className="absolute top-0 right-0">
+            <WalletConnect
+              isConnected={isConnected}
+              address={walletAddress}
+              onConnect={handleConnect}
+              onDisconnect={handleDisconnect}
+              balance={balance}
+            />
           </div>
         </div>
 
