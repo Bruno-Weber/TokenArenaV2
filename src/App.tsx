@@ -11,6 +11,7 @@ import Wallet from "./pages/Wallet";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import Club from "./pages/Club";
+import CreateToken from "./pages/CreateToken";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/wallet" element={<Wallet />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/club/:id" element={<Club />} />
+          <Route path="/create-token" element={<CreateToken />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
