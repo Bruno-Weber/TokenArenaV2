@@ -1,9 +1,11 @@
-import React from "react";
+
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Home, Activity, Wallet, Users, BarChart3, Settings, Vote, Rocket, PackageOpen } from "lucide-react";
 import { BackgroundPaths } from "@/components/ui/background-paths";
 import TokenArenaLogo from "@/assets/TokenArenaLogo.png";
+import WalletConnect from "@/components/WalletConnect";
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -11,6 +13,21 @@ interface AppLayoutProps {
 
 const AppLayout = ({ children }: AppLayoutProps) => {
   const location = useLocation();
+  const [isConnected, setIsConnected] = useState(false);
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  const [balance, setBalance] = useState("0.00");
+
+  const handleConnect = () => {
+    setIsConnected(true);
+    setWalletAddress("0x1234...5678"); // Mock address
+    setBalance("100.00"); // Mock balance
+  };
+
+  const handleDisconnect = () => {
+    setIsConnected(false);
+    setWalletAddress(null);
+    setBalance("0.00");
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-token-background">
@@ -27,15 +44,20 @@ const AppLayout = ({ children }: AppLayoutProps) => {
             </span>
           </Link>
           
-          <nav className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-6">
             <NavLink to="/" label="Home" />
             <NavLink to="/market" label="Market" />
             <NavLink to="/activity" label="Activity" />
             <NavLink to="/teams" label="Teams" />
-          </nav>
-          
-          <div className="flex items-center gap-2">
-            <div id="wallet-container"></div>
+            <div className="ml-4">
+              <WalletConnect
+                isConnected={isConnected}
+                address={walletAddress}
+                onConnect={handleConnect}
+                onDisconnect={handleDisconnect}
+                balance={balance}
+              />
+            </div>
           </div>
         </div>
       </header>

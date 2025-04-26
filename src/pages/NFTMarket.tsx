@@ -8,36 +8,12 @@ import { NFT } from "@/types/nft";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import WalletConnect from "@/components/WalletConnect";
-import { Trophy } from "lucide-react";
 
 const NFTMarket = () => {
   const [selectedNFT, setSelectedNFT] = useState<NFT | null>(null);
-  const [isConnected, setIsConnected] = useState(false);
-  const [walletAddress, setWalletAddress] = useState<string | null>(null);
-  const [balance, setBalance] = useState("0.00");
   const { toast } = useToast();
 
-  const handleConnect = () => {
-    setIsConnected(true);
-    setWalletAddress("0x1234...5678"); // Mock address
-    setBalance("100.00"); // Mock balance
-  };
-
-  const handleDisconnect = () => {
-    setIsConnected(false);
-    setWalletAddress(null);
-    setBalance("0.00");
-  };
-
   const handleMint = (nft: NFT) => {
-    if (!isConnected) {
-      toast({
-        title: "Wallet Required",
-        description: "Please connect your wallet to mint NFTs",
-      });
-      return;
-    }
     setSelectedNFT(nft);
   };
 
@@ -63,16 +39,6 @@ const NFTMarket = () => {
               NFT Marketplace
             </span>
           </h1>
-
-          <div className="absolute top-0 right-0">
-            <WalletConnect
-              isConnected={isConnected}
-              address={walletAddress}
-              onConnect={handleConnect}
-              onDisconnect={handleDisconnect}
-              balance={balance}
-            />
-          </div>
         </div>
 
         <div className="relative backdrop-blur-sm bg-black/40 border border-white/10 rounded-xl p-8 mb-12 group transition-all duration-300 hover:bg-black/50">
