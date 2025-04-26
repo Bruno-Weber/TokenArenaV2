@@ -12,10 +12,10 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: '2rem',
+      padding: "2rem",
       screens: {
-        '2xl': '1400px'
-      }
+        "2xl": "1400px",
+      },
     },
     extend: {
       colors: {
@@ -76,7 +76,20 @@ export default {
           baseball: "#2196F3",
           hockey: "#9C27B0",
           soccer: "#8BC34A"
+        },
+        token: {
+          purple: "#9333EA",
+          "purple-light": "#A855F7",
+          "purple-dark": "#6B21A8",
+          background: "#0F1115",
+          "background-light": "#1A1F2C",
+          text: "#F9FAFB",
+          "text-muted": "#9CA3AF",
         }
+      },
+      backgroundImage: {
+        "gradient-purple": "linear-gradient(to right, #9333EA, #A855F7)",
+        "gradient-dark": "linear-gradient(to bottom, #1A1F2C, #0F1115)",
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -103,6 +116,10 @@ export default {
         'fade-in': {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' }
+        },
+        "text-shimmer": {
+          from: { backgroundPosition: "0 0" },
+          to: { backgroundPosition: "-200% 0" },
         }
       },
       animation: {
@@ -110,7 +127,8 @@ export default {
         'accordion-up': 'accordion-up 0.2s ease-out',
         'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
         'slide-up': 'slide-up 0.3s ease-out',
-        'fade-in': 'fade-in 0.3s ease-out'
+        'fade-in': 'fade-in 0.3s ease-out',
+        "text-shimmer": "text-shimmer 2.5s ease-out infinite alternate"
       }
     }
   },
