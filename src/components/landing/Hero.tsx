@@ -15,19 +15,19 @@ const Hero = () => {
           duration: 1
         }} className="text-5xl md:text-7xl font-bold tracking-tight">
             <span className="inline-block hover-scale transition-all text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">
-              Conectando{" "}
+              Conectando&ensp;
             </span>
             <span className="inline-block bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(139,92,246,0.6)] animate-text-shimmer hover-scale transition-all">
               Torcedores
             </span>
             <span className="inline-block text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)] hover-scale transition-all">
-              {" "}e{" "}
+              &ensp;e&ensp;
             </span>
             <span className="inline-block bg-gradient-to-r from-[#D946EF] to-[#8B5CF6] bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(217,70,239,0.6)] animate-text-shimmer hover-scale transition-all">
               Clubes
             </span>
             <span className="inline-block text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)] hover-scale transition-all">
-              {" "}pelo Mundo
+              &ensp;pelo&ensp;Mundo
             </span>
           </motion.h1>
           
