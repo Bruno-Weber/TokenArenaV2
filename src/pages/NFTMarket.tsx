@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import AppLayout from "@/components/AppLayout";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
@@ -9,7 +10,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import WalletConnect from "@/components/WalletConnect";
-import { Football } from "lucide-react";
+import { Trophy } from "lucide-react";
 
 const NFTMarket = () => {
   const [selectedNFT, setSelectedNFT] = useState<NFT | null>(null);
@@ -74,7 +75,7 @@ const NFTMarket = () => {
                 onDisconnect={handleDisconnect}
                 balance={balance}
               />
-              <Football className="ml-2 h-5 w-5 text-green-500 animate-bounce" />
+              <Trophy className="ml-2 h-5 w-5 text-green-500 animate-bounce" />
             </div>
           </div>
         </div>
