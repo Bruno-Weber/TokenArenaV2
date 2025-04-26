@@ -4,6 +4,21 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/use-toast";
 import { ExternalLink, ChevronRight, Users, TrendingUp, Trophy } from "lucide-react";
+import RealMadridLogo from "@/assets/team-logos/real-madrid.png";
+import ManUtdLogo from "@/assets/team-logos/man-utd.png";
+import RedWingsLogo from "@/assets/team-logos/red-wings.png";
+import LakersLogo from "@/assets/team-logos/lakers.png";
+import BarcelonaLogo from "@/assets/team-logos/barcelona.png";
+import YankeesLogo from "@/assets/team-logos/yankees.png";
+
+const teamLogos: Record<string, string> = {
+  RMA: RealMadridLogo,
+  MNU: ManUtdLogo,
+  RDW: RedWingsLogo,
+  LAK: LakersLogo,
+  BAR: BarcelonaLogo,
+  YNK: YankeesLogo,
+};
 
 interface FanTokenProps {
   id: string;
@@ -68,15 +83,15 @@ const FanTokenCard = ({
   };
 
   return (
-    <Card className={`relative overflow-hidden transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br ${getBorderColor()} backdrop-blur-xl border border-white/10 hover:border-white/20 group`}>
+    <Card className={`relative group overflow-hidden transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br ${getBorderColor()} backdrop-blur-xl border border-white/10 hover:border-white/20`}>
       <div className="absolute inset-0 bg-gradient-to-r from-[#8B5CF6]/5 to-[#D946EF]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       
       <CardHeader className="pb-2 relative z-10">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-start">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full overflow-hidden border border-white/20 bg-token-background-light/50 p-1">
               <img
-                src={teamLogo}
+                src={teamLogos[symbol] || "/placeholder.svg"}
                 alt={`${name} logo`}
                 className="w-full h-full object-contain filter drop-shadow-glow"
                 onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
