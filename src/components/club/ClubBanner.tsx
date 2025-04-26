@@ -2,6 +2,7 @@
 import { Club } from "@/types/club";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import StakingModal from "@/components/staking/StakingModal";
 
 interface ClubBannerProps {
   club: Club;
@@ -10,11 +11,14 @@ interface ClubBannerProps {
 const ClubBanner = ({ club }: ClubBannerProps) => {
   const { toast } = useToast();
 
-  const handleStake = () => {
-    toast({
-      title: "Stake Iniciado",
-      description: `Iniciando stake de ${club.symbol} tokens.`,
-    });
+  const handleStake = async (amount: string) => {
+    // Simulate staking delay
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+  };
+
+  const handleUnstake = async () => {
+    // Simulate unstaking delay
+    await new Promise((resolve) => setTimeout(resolve, 2000));
   };
 
   return (
@@ -31,9 +35,12 @@ const ClubBanner = ({ club }: ClubBannerProps) => {
         <div className="flex-1">
           <h1 className="text-4xl font-bold text-white mb-2">{club.name}</h1>
           <p className="text-white/90 max-w-2xl mb-4">{club.description}</p>
-          <Button onClick={handleStake} size="lg" className="bg-white text-primary hover:bg-white/90">
-            Stakear {club.symbol} Tokens
-          </Button>
+          <StakingModal
+            tokenSymbol={club.symbol}
+            walletBalance="2,500"
+            onStake={handleStake}
+            onUnstake={handleUnstake}
+          />
         </div>
       </div>
     </div>
