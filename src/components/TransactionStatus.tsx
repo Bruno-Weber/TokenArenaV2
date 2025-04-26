@@ -90,8 +90,7 @@ const TransactionStatus = ({
           
           <Progress 
             value={statusUI.progressValue} 
-            className="h-1 mt-2" 
-            indicatorClassName={statusUI.progressClass} 
+            className={`h-1 mt-2 ${statusUI.progressClass}`}
           />
           
           <div className="flex flex-col mt-2">
