@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -118,8 +119,8 @@ export default {
           '100%': { opacity: '1' }
         },
         "text-shimmer": {
-          from: { backgroundPosition: "0 0" },
-          to: { backgroundPosition: "-200% 0" },
+          "0%": { backgroundPosition: "0 0" },
+          "100%": { backgroundPosition: "-200% 0" }
         }
       },
       animation: {
@@ -128,9 +129,10 @@ export default {
         'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
         'slide-up': 'slide-up 0.3s ease-out',
         'fade-in': 'fade-in 0.3s ease-out',
-        "text-shimmer": "text-shimmer 2.5s ease-out infinite alternate"
+        "text-shimmer": "text-shimmer 3s infinite"
       }
     }
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
+
