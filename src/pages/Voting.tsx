@@ -11,7 +11,7 @@ const Voting = () => {
           <h1 className="text-4xl font-bold mb-2 text-center bg-gradient-to-r from-chiliz-primary to-chiliz-secondary bg-clip-text text-transparent">
             Votações do Clube
           </h1>
-          <p className="text-center text-muted-foreground mb-8">
+          <p className="text-center text-gray-400 mb-8">
             Participe das decisões importantes e ajude a definir o futuro do seu clube
           </p>
           
