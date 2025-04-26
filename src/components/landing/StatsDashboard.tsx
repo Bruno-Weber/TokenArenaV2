@@ -29,13 +29,16 @@ const stats = [
 
 const StatsDashboard = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 py-12">
-      {stats.map((stat) => (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 pb-4 pt-8 md:pt-4">
+      {stats.map((stat, index) => (
         <motion.div
           key={stat.title}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ 
+            duration: 0.5, 
+            delay: index * 0.2 // Staggered animation
+          }}
         >
           <Card className={`
             relative group transition-all duration-300
@@ -72,3 +75,4 @@ const StatsDashboard = () => {
 };
 
 export default StatsDashboard;
+
