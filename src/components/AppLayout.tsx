@@ -2,7 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Home, Activity, Wallet, Users, BarChart3, Settings } from "lucide-react";
+import { Home, Activity, Wallet, Users, BarChart3, Settings, Vote } from "lucide-react";
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -41,6 +41,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
             <SidebarLink to="/activity" icon={<Activity className="h-5 w-5" />} label="Activity" />
             <SidebarLink to="/wallet" icon={<Wallet className="h-5 w-5" />} label="Wallet" />
             <SidebarLink to="/teams" icon={<Users className="h-5 w-5" />} label="Teams" />
+            <SidebarLink to="/voting" icon={<Vote className="h-5 w-5" />} label="Votações" />
             <SidebarLink to="/settings" icon={<Settings className="h-5 w-5" />} label="Settings" />
           </div>
         </aside>

@@ -13,7 +13,9 @@ import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import Club from "./pages/Club";
 import CreateToken from "./pages/CreateToken";
-import Stake from "./pages/Stake";  // Novo import
+import Stake from "./pages/Stake";
+import Voting from "./pages/Voting";
+import Confetti from "./components/voting/Confetti";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +24,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <Confetti />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
@@ -32,7 +35,8 @@ const App = () => (
           <Route path="/settings" element={<Settings />} />
           <Route path="/club/:id" element={<Club />} />
           <Route path="/create-token" element={<CreateToken />} />
-          <Route path="/stake" element={<Stake />} />  {/* Nova rota */}
+          <Route path="/stake" element={<Stake />} />
+          <Route path="/voting" element={<Voting />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
@@ -41,4 +45,3 @@ const App = () => (
 );
 
 export default App;
-
