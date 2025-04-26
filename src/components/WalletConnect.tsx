@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { Loader2, Wallet, ExternalLink, Copy, Check } from "lucide-react";
+import { NETWORKS } from "@/lib/web3";
+
 interface WalletConnectProps {
   isConnected: boolean;
   address: string | null;
@@ -11,6 +13,7 @@ interface WalletConnectProps {
   onDisconnect: () => void;
   balance: string;
 }
+
 const WalletConnect = ({
   isConnected,
   address,
@@ -18,17 +21,16 @@ const WalletConnect = ({
   onDisconnect,
   balance
 }: WalletConnectProps) => {
-  const {
-    toast
-  } = useToast();
+  const { toast } = useToast();
   const [copied, setCopied] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Format the address for display
   const shortenAddress = (addr: string | null) => {
     if (!addr) return "";
     return `${addr.substring(0, 6)}...${addr.substring(addr.length - 4)}`;
   };
+
   const copyToClipboard = () => {
     if (!address) return;
     navigator.clipboard.writeText(address);
@@ -40,7 +42,6 @@ const WalletConnect = ({
     });
   };
 
-  // Simulated external link to explorer
   const viewOnExplorer = () => {
     if (!address) return;
     window.open(`https://chiliscan.com/address/${address}`, "_blank");
@@ -50,9 +51,62 @@ const WalletConnect = ({
     });
   };
 
-  // Display the wallet button or connected info
-  return <div>
-      {!isConnected ? <Dialog open={isOpen} onOpenChange={setIsOpen}>
+  const handleConnectWallet = async () => {
+    setIsLoading(true);
+    try {
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      
+      const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+      
+      if (chainId !== '0x15B38') {
+        try {
+          await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: '0x15B38' }],
+          });
+        } catch (switchError: any) {
+          if (switchError.code === 4902) {
+            await window.ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [{
+                chainId: '0x15B38',
+                chainName: NETWORKS.CHILIZ_MAINNET.name,
+                nativeCurrency: {
+                  name: 'CHZ',
+                  symbol: 'CHZ',
+                  decimals: 18
+                },
+                rpcUrls: [NETWORKS.CHILIZ_MAINNET.rpcUrl],
+                blockExplorerUrls: [NETWORKS.CHILIZ_MAINNET.blockExplorer]
+              }],
+            });
+          } else {
+            throw switchError;
+          }
+        }
+      }
+      
+      onConnect();
+      setIsOpen(false);
+      toast({
+        title: "Wallet Connected",
+        description: "Successfully connected to Chiliz Chain"
+      });
+    } catch (error: any) {
+      toast({
+        title: "Connection Failed",
+        description: error.message || "Failed to connect wallet",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div>
+      {!isConnected ? (
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
             <Button className="text-white flex items-center gap-2 bg-violet-800 hover:bg-violet-700">
               <Wallet className="h-4 w-4" />
@@ -61,29 +115,33 @@ const WalletConnect = ({
           </DialogTrigger>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
-              <DialogTitle className="text-xl font-bold">Connect Wallet</DialogTitle>
+              <DialogTitle className="text-xl font-bold">Connect to Chiliz Chain</DialogTitle>
               <DialogDescription>
-                Choose a wallet to connect to Chiliz Chain
+                Choose a wallet to connect to the Chiliz Chain network
               </DialogDescription>
             </DialogHeader>
             <div className="grid grid-cols-1 gap-4 py-4">
-              <WalletOption name="MetaMask" icon="/metamask.svg" onClick={() => {
-            onConnect();
-            setIsOpen(false);
-            toast({
-              title: "Wallet connected",
-              description: "MetaMask wallet has been connected successfully."
-            });
-          }} />
-              <WalletOption name="WalletConnect" icon="/walletconnect.svg" onClick={() => {
-            toast({
-              title: "Coming Soon",
-              description: "WalletConnect integration will be available soon."
-            });
-          }} />
+              <WalletOption 
+                name="MetaMask" 
+                icon="/metamask.svg" 
+                onClick={handleConnectWallet}
+                isLoading={isLoading}
+              />
+              <WalletOption 
+                name="WalletConnect" 
+                icon="/walletconnect.svg" 
+                onClick={() => {
+                  toast({
+                    title: "Coming Soon",
+                    description: "WalletConnect integration will be available soon."
+                  });
+                }}
+              />
             </div>
           </DialogContent>
-        </Dialog> : <Card className="sports-border">
+        </Dialog>
+      ) : (
+        <Card className="sports-border">
           <CardContent className="p-4 flex flex-col gap-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -112,34 +170,50 @@ const WalletConnect = ({
               <span className="font-bold">{balance} CHZ</span>
             </div>
           </CardContent>
-        </Card>}
-    </div>;
+        </Card>
+      )}
+    </div>
+  );
 };
+
 interface WalletOptionProps {
   name: string;
   icon: string;
   onClick: () => void;
+  isLoading?: boolean;
 }
-const WalletOption = ({
-  name,
-  icon,
-  onClick
-}: WalletOptionProps) => {
-  return <Button variant="outline" className="flex items-center justify-between p-4 h-auto sports-border hover:border-chiliz-primary" onClick={onClick}>
+
+const WalletOption = ({ name, icon, onClick, isLoading }: WalletOptionProps) => {
+  return (
+    <Button 
+      variant="outline" 
+      className="flex items-center justify-between p-4 h-auto sports-border hover:border-chiliz-primary"
+      onClick={onClick}
+      disabled={isLoading}
+    >
       <div className="flex items-center gap-3">
         <div className="w-8 h-8 relative">
-          {/* Fallback if SVG doesn't load */}
           <div className="absolute inset-0 flex items-center justify-center text-xs font-bold text-gray-400">
             {name.substring(0, 1)}
           </div>
-          <img src={icon} alt={`${name} logo`} className="w-full h-full object-contain relative z-10" onError={e => {
-          // Keep the fallback visible if image fails to load
-          e.currentTarget.style.display = 'none';
-        }} />
+          <img 
+            src={icon} 
+            alt={`${name} logo`} 
+            className="w-full h-full object-contain relative z-10" 
+            onError={e => {
+              e.currentTarget.style.display = 'none';
+            }} 
+          />
         </div>
         <span className="font-medium">{name}</span>
       </div>
-      <span className="text-gray-400 text-sm">Connect</span>
-    </Button>;
+      {isLoading ? (
+        <Loader2 className="h-4 w-4 animate-spin" />
+      ) : (
+        <span className="text-gray-400 text-sm">Connect</span>
+      )}
+    </Button>
+  );
 };
+
 export default WalletConnect;
