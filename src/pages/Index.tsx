@@ -6,7 +6,7 @@ import Hero from "@/components/landing/Hero";
 import StatsDashboard from "@/components/landing/StatsDashboard";
 import { useToast } from "@/components/ui/use-toast";
 import { Trophy, Vote, Zap } from "lucide-react";
-import { TransactionStatus } from "@/components/TransactionStatus";
+import TransactionStatus from "@/components/TransactionStatus";
 import { mockTransactions } from "@/components/MockData";
 
 const Index = () => {
