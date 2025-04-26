@@ -1,23 +1,20 @@
+"use client";
+
 import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/use-toast";
 import { ExternalLink, ChevronRight, Users, TrendingUp, Trophy } from "lucide-react";
-import RealMadridLogo from "@/assets/team-logos/real-madrid.png";
-import ManUtdLogo from "@/assets/team-logos/man-utd.png";
-import RedWingsLogo from "@/assets/team-logos/red-wings.png";
-import LakersLogo from "@/assets/team-logos/lakers.png";
-import BarcelonaLogo from "@/assets/team-logos/barcelona.png";
-import YankeesLogo from "@/assets/team-logos/yankees.png";
 
+// Aqui agora é direto, sem imports
 const teamLogos: Record<string, string> = {
-  RMA: RealMadridLogo,
-  MNU: ManUtdLogo,
-  RDW: RedWingsLogo,
-  LAK: LakersLogo,
-  BAR: BarcelonaLogo,
-  YNK: YankeesLogo,
+  RMA: "/images/realmadrid.png",
+  MNU: "/images/manchesterunited.png",
+  RDW: "/images/redwings.png",
+  LAK: "/images/lakers.png",
+  BAR: "/images/barcelona.png",
+  YNK: "/images/yankees.png",
 };
 
 interface FanTokenProps {
@@ -41,19 +38,18 @@ const FanTokenCard = ({
   price,
   change24h,
   holders,
-  category
+  category,
 }: FanTokenProps) => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleBuy = () => {
     setIsLoading(true);
-    // Simulate a network request
     setTimeout(() => {
       setIsLoading(false);
       toast({
         title: "Coming Soon!",
-        description: "Token purchase functionality will be available in the next update."
+        description: "Token purchase functionality will be available in the next update.",
       });
     }, 1500);
   };
@@ -61,7 +57,7 @@ const FanTokenCard = ({
   const formatNumber = (num: number) => {
     return new Intl.NumberFormat("en-US", {
       maximumFractionDigits: 2,
-      minimumFractionDigits: 2
+      minimumFractionDigits: 2,
     }).format(num);
   };
 
@@ -85,7 +81,6 @@ const FanTokenCard = ({
   return (
     <Card className={`relative group overflow-hidden transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br ${getBorderColor()} backdrop-blur-xl border border-white/10 hover:border-white/20`}>
       <div className="absolute inset-0 bg-gradient-to-r from-[#8B5CF6]/5 to-[#D946EF]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      
       <CardHeader className="pb-2 relative z-10">
         <div className="flex justify-between items-start">
           <div className="flex items-center gap-3">
@@ -94,7 +89,6 @@ const FanTokenCard = ({
                 src={teamLogos[symbol] || "/placeholder.svg"}
                 alt={`${name} logo`}
                 className="w-full h-full object-contain filter drop-shadow-glow"
-                onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
               />
             </div>
             <div>
@@ -108,14 +102,18 @@ const FanTokenCard = ({
               </CardDescription>
             </div>
           </div>
-          <Badge 
-            variant="secondary" 
+          <Badge
+            variant="secondary"
             className={`capitalize bg-opacity-20 backdrop-blur-sm ${
-              category === 'football' ? 'bg-sports-football text-sports-football' :
-              category === 'basketball' ? 'bg-sports-basketball text-sports-basketball' :
-              category === 'baseball' ? 'bg-sports-baseball text-sports-baseball' :
-              category === 'hockey' ? 'bg-sports-hockey text-sports-hockey' :
-              'bg-sports-soccer text-sports-soccer'
+              category === "football"
+                ? "bg-sports-football text-sports-football"
+                : category === "basketball"
+                ? "bg-sports-basketball text-sports-basketball"
+                : category === "baseball"
+                ? "bg-sports-baseball text-sports-baseball"
+                : category === "hockey"
+                ? "bg-sports-hockey text-sports-hockey"
+                : "bg-sports-soccer text-sports-soccer"
             }`}
           >
             {category}
@@ -129,8 +127,8 @@ const FanTokenCard = ({
             <span className="text-white/60">Price</span>
             <div className="font-medium flex items-center gap-1">
               <span className="text-white">${formatNumber(price)}</span>
-              <Badge 
-                variant={change24h >= 0 ? "outline" : "destructive"} 
+              <Badge
+                variant={change24h >= 0 ? "outline" : "destructive"}
                 className={`text-xs ${change24h >= 0 ? "text-green-500 border-green-500" : ""}`}
               >
                 {change24h >= 0 ? "+" : ""}
@@ -140,9 +138,7 @@ const FanTokenCard = ({
           </div>
           <div className="flex flex-col">
             <span className="text-white/60">Supply</span>
-            <div className="font-medium text-white">
-              {supply}
-            </div>
+            <div className="font-medium text-white">{supply}</div>
           </div>
         </div>
 
@@ -163,26 +159,27 @@ const FanTokenCard = ({
       </CardContent>
 
       <CardFooter className="flex justify-between pt-2 relative z-10">
-        <Button 
-          variant="outline" 
-          size="sm" 
+        <Button
+          variant="outline"
+          size="sm"
           className="text-xs border-white/20 hover:border-white/40 bg-token-background-light/30"
-          onClick={() => { window.open(`https://chiliscan.com/token/${id}`, "_blank"); }}
+          onClick={() => {
+            window.open(`https://chiliscan.com/token/${id}`, "_blank");
+          }}
         >
           <ExternalLink className="h-3 w-3 mr-1" />
           Explore
         </Button>
-        <Button 
-          variant="default" 
-          size="sm" 
-          onClick={handleBuy} 
-          disabled={isLoading} 
+        <Button
+          variant="default"
+          size="sm"
+          onClick={handleBuy}
+          disabled={isLoading}
           className="text-xs bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] hover:from-[#7C3AED] hover:to-[#C026D3]"
         >
           {isLoading ? (
             <>
-              <span className="animate-spin mr-1">⭮</span>
-              Loading...
+              <span className="animate-spin mr-1">⭮</span>Loading...
             </>
           ) : (
             <>
