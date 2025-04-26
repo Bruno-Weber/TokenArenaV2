@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Home, Activity, Wallet, Users, BarChart3, Settings, Vote, Rocket, PackageOpen } from "lucide-react";
 import { BackgroundPaths } from "@/components/ui/background-paths";
-import TokenArenaLogo from "@/assets/TokenArenaLogo.png";
+// Logo is loaded directly from public folder
 import WalletConnect from "@/components/WalletConnect";
 
 interface AppLayoutProps {
@@ -34,7 +34,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
         <div className="container flex justify-between items-center py-4">
           <Link to="/" className="flex items-center gap-3">
             <img 
-              src={TokenArenaLogo} 
+              src="/images/logo.png" 
               alt="TokenArena Logo" 
               className="w-10 h-10 rounded-full object-contain"
             />

@@ -40,7 +40,7 @@ const Hero = () => {
         }} transition={{
           delay: 0.5,
           duration: 0.8
-        }} className="text-xl text-white/90 max-w-2xl mx-auto animate-slide-up">Dê poder pra torcida e valor pro seu clube — tudo em um só lugar.</motion.p>
+        }} className="text-xl text-white/90 max-w-2xl mx-auto animate-slide-up">Dê poder para a torcida e valor para o seu clube - tudo em um só lugar.</motion.p>
           
           <motion.div initial={{
           opacity: 0,

@@ -81,8 +81,8 @@ export const createMockWeb3Provider = (): Web3Provider => {
   };
 };
 
-// Mock token data for display
-export interface FanToken {
+// src/mock/MockData.ts
+export interface FanTokenProps {
   id: string;
   name: string;
   symbol: string;
@@ -94,23 +94,23 @@ export interface FanToken {
   category: "football" | "basketball" | "baseball" | "hockey" | "soccer";
 }
 
-export const mockFanTokens: FanToken[] = [
+export const mockFanTokens: FanTokenProps[] = [
   {
     id: "0x123456789abcdef123456789abcdef123456789a",
     name: "Barcelona Fan Token",
     symbol: "BAR",
-    teamLogo: "https://cryptologos.cc/logos/chiliz-chz-logo.png",
+    teamLogo: "/images/barcelona.png",
     supply: "10,000,000",
     price: 2.34,
     change24h: 5.67,
     holders: 25678,
-    category: "football",
+    category: "soccer",
   },
   {
     id: "0x223456789abcdef123456789abcdef123456789b",
-    name: "Lakers Fan Token",
+    name: "Los Angeles Lakers Fan Token",
     symbol: "LAK",
-    teamLogo: "https://cryptologos.cc/logos/chiliz-chz-logo.png",
+    teamLogo: "/images/lakers.png",
     supply: "5,000,000",
     price: 3.21,
     change24h: -2.14,
@@ -119,9 +119,9 @@ export const mockFanTokens: FanToken[] = [
   },
   {
     id: "0x323456789abcdef123456789abcdef123456789c",
-    name: "Yankees Fan Token",
+    name: "New York Yankees Fan Token",
     symbol: "YNK",
-    teamLogo: "https://cryptologos.cc/logos/chiliz-chz-logo.png",
+    teamLogo: "/images/yankees.png",
     supply: "8,000,000",
     price: 1.87,
     change24h: 3.25,
@@ -130,9 +130,9 @@ export const mockFanTokens: FanToken[] = [
   },
   {
     id: "0x423456789abcdef123456789abcdef123456789d",
-    name: "Red Wings Fan Token",
+    name: "Detroit Red Wings Fan Token",
     symbol: "RDW",
-    teamLogo: "https://cryptologos.cc/logos/chiliz-chz-logo.png",
+    teamLogo: "/images/redwings.png",
     supply: "3,000,000",
     price: 4.56,
     change24h: 1.23,
@@ -143,7 +143,7 @@ export const mockFanTokens: FanToken[] = [
     id: "0x523456789abcdef123456789abcdef123456789e",
     name: "Manchester United Fan Token",
     symbol: "MNU",
-    teamLogo: "https://cryptologos.cc/logos/chiliz-chz-logo.png",
+    teamLogo: "/images/manchesterunited.png",
     supply: "12,000,000",
     price: 5.67,
     change24h: -1.45,
@@ -154,7 +154,7 @@ export const mockFanTokens: FanToken[] = [
     id: "0x623456789abcdef123456789abcdef123456789f",
     name: "Real Madrid Fan Token",
     symbol: "RMA",
-    teamLogo: "https://cryptologos.cc/logos/chiliz-chz-logo.png",
+    teamLogo: "/images/realmadrid.png",
     supply: "15,000,000",
     price: 6.78,
     change24h: 2.34,
@@ -162,6 +162,9 @@ export const mockFanTokens: FanToken[] = [
     category: "soccer",
   },
 ];
+
+
+
 
 // Mock transaction data
 export interface Transaction {

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -7,26 +6,20 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AppLayout from "@/components/AppLayout";
 import FanTokenCard from "@/components/FanTokenCard";
-import { mockFanTokens } from "@/lib/web3";
 import { Search, FilterX, ArrowUpDown } from "lucide-react";
+import { mockFanTokens } from "@/lib/web3";
 
 const Market = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("price-high");
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
-  
-  // Filter and sort tokens based on selected criteria
+
   const filteredTokens = mockFanTokens.filter(token => {
-    // Apply search filter
-    const matchesSearch = token.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    const matchesSearch = token.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           token.symbol.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    // Apply category filter if selected
     const matchesCategory = !categoryFilter || token.category === categoryFilter;
-    
     return matchesSearch && matchesCategory;
   }).sort((a, b) => {
-    // Apply sorting
     switch (sortBy) {
       case "price-high":
         return b.price - a.price;
@@ -42,21 +35,20 @@ const Market = () => {
         return b.price - a.price;
     }
   });
-  
-  // Reset all filters
+
   const resetFilters = () => {
     setSearchTerm("");
     setCategoryFilter(null);
     setSortBy("price-high");
   };
-  
+
   return (
     <AppLayout>
       <div className="py-8">
         <h1 className="text-3xl font-bold mb-2">Fan Token Market</h1>
         <p className="text-muted-foreground mb-8">Discover and analyze fan tokens from various teams and sports</p>
-        
-        {/* Filters and Search */}
+
+        {/* Filters */}
         <div className="flex flex-col md:flex-row gap-4 mb-8">
           <div className="flex flex-1 relative">
             <Input
@@ -68,7 +60,7 @@ const Market = () => {
             />
             <Search className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
           </div>
-          
+
           <div className="flex gap-2">
             <Select value={sortBy} onValueChange={setSortBy}>
               <SelectTrigger className="w-[180px]">
@@ -84,7 +76,7 @@ const Market = () => {
                 </SelectGroup>
               </SelectContent>
             </Select>
-            
+
             <Button 
               variant="outline" 
               onClick={resetFilters}
@@ -95,42 +87,26 @@ const Market = () => {
             </Button>
           </div>
         </div>
-        
-        {/* Token Categories */}
+
+        {/* Categories */}
         <Tabs defaultValue="all" className="w-full mb-8">
           <TabsList>
             <TabsTrigger value="all" onClick={() => setCategoryFilter(null)}>All Sports</TabsTrigger>
-            <TabsTrigger value="football" onClick={() => setCategoryFilter("football")}>Football</TabsTrigger>
             <TabsTrigger value="soccer" onClick={() => setCategoryFilter("soccer")}>Soccer</TabsTrigger>
             <TabsTrigger value="basketball" onClick={() => setCategoryFilter("basketball")}>Basketball</TabsTrigger>
             <TabsTrigger value="baseball" onClick={() => setCategoryFilter("baseball")}>Baseball</TabsTrigger>
             <TabsTrigger value="hockey" onClick={() => setCategoryFilter("hockey")}>Hockey</TabsTrigger>
           </TabsList>
         </Tabs>
-        
-        {/* Market Stats Cards */}
+
+        {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <StatsCard
-            title="Market Volume"
-            value="$2.45M"
-            change={5.76}
-            isPositive={true}
-          />
-          <StatsCard
-            title="Total Users"
-            value="135,892"
-            change={12.34}
-            isPositive={true}
-          />
-          <StatsCard
-            title="Average Price"
-            value="$3.67"
-            change={-1.23}
-            isPositive={false}
-          />
+          <StatsCard title="Market Volume" value="$2.45M" change={5.76} isPositive={true} />
+          <StatsCard title="Total Users" value="135,892" change={12.34} isPositive={true} />
+          <StatsCard title="Average Price" value="$3.67" change={-1.23} isPositive={false} />
         </div>
-        
-        {/* Token Grid */}
+
+        {/* Grid of Tokens */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredTokens.length > 0 ? (
             filteredTokens.map((token) => (
@@ -159,9 +135,7 @@ interface StatsCardProps {
 const StatsCard = ({ title, value, change, isPositive }: StatsCardProps) => {
   return (
     <Card className="overflow-hidden relative bg-gradient-to-br from-token-background-light/50 to-transparent backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-300 group">
-      {/* Glow effect */}
       <div className="absolute inset-0 bg-gradient-to-r from-[#8B5CF6]/10 to-[#D946EF]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      
       <CardHeader className="pb-2 relative z-10">
         <CardTitle className="text-lg text-white/80 group-hover:text-white transition-colors">
           {title}
@@ -179,8 +153,6 @@ const StatsCard = ({ title, value, change, isPositive }: StatsCardProps) => {
           <span className="text-white/60 text-sm ml-1">vs. last week</span>
         </div>
       </CardContent>
-      
-      {/* Animated border */}
       <div className="absolute inset-0 border border-white/20 group-hover:border-[#8B5CF6]/50 transition-colors duration-300" />
     </Card>
   );
