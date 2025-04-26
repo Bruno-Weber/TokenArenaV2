@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -145,29 +144,32 @@ interface TeamCardProps {
 
 const TeamCard = ({ team, onFollow }: TeamCardProps) => {
   return (
-    <Card className="card-sports overflow-hidden">
-      <CardHeader className="pb-2">
+    <Card className="relative overflow-hidden transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-black/20 to-black/10 backdrop-blur-xl border border-white/10 hover:border-white/20 group">
+      <div className="absolute inset-0 bg-gradient-to-r from-violet-500/5 to-fuchsia-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+      <CardHeader className="pb-2 relative">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gray-200">
+            <div className="w-12 h-12 rounded-full overflow-hidden border border-white/20 bg-black/30 p-1 backdrop-blur-sm">
               <img
                 src={team.logo}
                 alt={`${team.name} logo`}
-                className="w-full h-full object-contain"
+                className="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]"
                 onError={(e) => {
                   e.currentTarget.src = "/placeholder.svg";
                 }}
               />
             </div>
             <div>
-              <CardTitle>{team.name}</CardTitle>
+              <CardTitle className="text-gradient group-hover:bg-gradient-to-r group-hover:from-violet-300 group-hover:to-fuchsia-300">
+                {team.name}
+              </CardTitle>
               <CardDescription className="flex items-center gap-2">
-                <Badge variant="outline" className="font-mono">
+                <Badge variant="outline" className="font-mono border-white/20 bg-black/30">
                   ${team.tokenSymbol}
                 </Badge>
                 <Badge 
                   variant="secondary" 
-                  className="capitalize"
+                  className="capitalize bg-gradient-to-r from-violet-500/20 to-fuchsia-500/20 border border-white/10"
                 >
                   {team.category}
                 </Badge>
@@ -177,7 +179,7 @@ const TeamCard = ({ team, onFollow }: TeamCardProps) => {
         </div>
       </CardHeader>
       
-      <CardContent className="pb-2">
+      <CardContent className="pb-2 relative">
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div className="flex flex-col">
             <span className="text-sm text-muted-foreground">Supporters</span>
@@ -226,9 +228,9 @@ const TeamCard = ({ team, onFollow }: TeamCardProps) => {
         </div>
       </CardContent>
       
-      <CardFooter className="pt-4">
+      <CardFooter className="pt-4 relative">
         <Button 
-          className="w-full bg-chiliz-primary hover:bg-chiliz-primary/90"
+          className="w-full bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:opacity-90 transition-opacity"
           onClick={onFollow}
         >
           Follow Team

@@ -106,6 +106,23 @@
   .chiliz-gradient {
     @apply bg-gradient-to-r from-chiliz-primary to-chiliz-secondary;
   }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent;
+  }
+  
+  .glass-card {
+    @apply relative overflow-hidden backdrop-blur-xl bg-black/10 border border-white/20;
+  }
+  
+  .card-hover-effect {
+    @apply before:absolute before:inset-0 before:bg-gradient-to-r before:from-violet-500/10 before:to-fuchsia-500/10 
+           before:opacity-0 hover:before:opacity-100 before:transition-opacity;
+  }
+  
+  .neo-glow {
+    @apply shadow-[0_8px_32px_rgba(0,0,0,0.12)] hover:shadow-[0_8px_32px_rgba(139,92,246,0.12)];
+  }
 }
 
 .card-glow {

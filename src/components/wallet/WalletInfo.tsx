@@ -23,30 +23,33 @@ const WalletInfo = ({ address, balance }: WalletInfoProps) => {
   };
 
   return (
-    <Card className="mb-6">
-      <CardHeader className="pb-2">
-        <CardTitle className="flex items-center gap-2">
+    <Card className="relative overflow-hidden backdrop-blur-xl bg-black/10 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.12)]
+                   before:absolute before:inset-0 before:bg-gradient-to-r before:from-violet-500/10 before:to-fuchsia-500/10 before:opacity-0 
+                   hover:before:opacity-100 before:transition-opacity">
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5" />
+      <CardHeader className="pb-2 relative">
+        <CardTitle className="flex items-center gap-2 text-gradient">
           <WalletIcon className="h-5 w-5" />
           My Wallet
         </CardTitle>
-        <CardDescription>Connected to Chiliz Chain</CardDescription>
+        <CardDescription className="text-white/60">Connected to Chiliz Chain</CardDescription>
       </CardHeader>
-      <CardContent className="pb-2">
+      <CardContent className="pb-2 relative">
         <div className="flex items-center justify-between mb-4">
-          <div className="font-mono text-sm bg-gray-100 dark:bg-gray-800 p-2 rounded-md overflow-hidden overflow-ellipsis">
+          <div className="font-mono text-sm bg-black/30 p-2 rounded-md overflow-hidden overflow-ellipsis backdrop-blur-sm border border-white/10">
             {address}
           </div>
           <div className="flex items-center gap-1">
-            <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={handleCopy}>
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-white/10" onClick={handleCopy}>
               <Copy className="h-4 w-4" />
             </Button>
-            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-white/10">
               <QrCode className="h-4 w-4" />
             </Button>
             <Button 
               variant="ghost" 
               size="sm" 
-              className="h-8 w-8 p-0"
+              className="h-8 w-8 p-0 hover:bg-white/10"
               onClick={() => window.open(`https://chiliscan.com/address/${address}`, "_blank")}
             >
               <ExternalLink className="h-4 w-4" />
@@ -55,18 +58,20 @@ const WalletInfo = ({ address, balance }: WalletInfoProps) => {
         </div>
         
         <div>
-          <div className="text-muted-foreground text-sm mb-1">Balance</div>
-          <div className="text-3xl font-bold">{balance} CHZ</div>
-          <div className="text-sm text-muted-foreground mt-1">≈ $45.74 USD</div>
+          <div className="text-white/60 text-sm mb-1">Balance</div>
+          <div className="text-3xl font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
+            {balance} CHZ
+          </div>
+          <div className="text-sm text-white/60 mt-1">≈ $45.74 USD</div>
         </div>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="relative">
         <div className="w-full grid grid-cols-2 gap-2">
-          <Button variant="outline" className="flex items-center gap-2">
+          <Button variant="outline" className="flex items-center gap-2 bg-white/5 border-white/10 hover:bg-white/10 backdrop-blur-sm">
             <ArrowDownUp className="h-4 w-4" />
             Swap
           </Button>
-          <Button className="flex items-center gap-2 bg-chiliz-primary hover:bg-chiliz-primary/90">
+          <Button className="flex items-center gap-2 bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:opacity-90">
             <Send className="h-4 w-4" />
             Send
           </Button>
