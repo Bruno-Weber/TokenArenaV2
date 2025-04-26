@@ -2,7 +2,7 @@
 import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { History } from "lucide-react";
+import StakingModal from "@/components/staking/StakingModal";
 
 interface StakingSectionProps {
   tokens: Array<{
@@ -14,6 +14,17 @@ interface StakingSectionProps {
 }
 
 const StakingSection = ({ tokens }: StakingSectionProps) => {
+  // Mock handlers for staking actions
+  const handleStake = async (amount: string) => {
+    console.log(`Staking ${amount} tokens`);
+    return Promise.resolve();
+  };
+
+  const handleUnstake = async () => {
+    console.log("Unstaking tokens");
+    return Promise.resolve();
+  };
+
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -35,9 +46,12 @@ const StakingSection = ({ tokens }: StakingSectionProps) => {
               </div>
             </CardHeader>
             <CardContent>
-              <Button className="w-full bg-chiliz-primary hover:bg-chiliz-primary/90">
-                Stake Now
-              </Button>
+              <StakingModal 
+                tokenSymbol={token.symbol}
+                walletBalance="2,500"
+                onStake={handleStake}
+                onUnstake={handleUnstake}
+              />
             </CardContent>
           </Card>
         ))}
