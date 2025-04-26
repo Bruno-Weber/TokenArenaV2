@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Home, Activity, Wallet, Users, BarChart3, Settings, Vote, Rocket } from "lucide-react";
+import { Home, Activity, Wallet, Users, BarChart3, Settings, Vote, Rocket, PackageOpen } from "lucide-react";
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -44,6 +44,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
             <SidebarLink to="/teams" icon={<Users className="h-5 w-5" />} label="Teams" />
             <SidebarLink to="/voting" icon={<Vote className="h-5 w-5" />} label="Votações" />
             <SidebarLink to="/stake" icon={<Rocket className="h-5 w-5" />} label="Stake" />
+            <SidebarLink to="/nft-market" icon={<PackageOpen className="h-5 w-5" />} label="NFT Market" />
             <SidebarLink to="/settings" icon={<Settings className="h-5 w-5" />} label="Settings" />
           </div>
         </aside>
