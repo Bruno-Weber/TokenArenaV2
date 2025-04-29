@@ -7,12 +7,14 @@ import { Wallet, AlertCircle } from "lucide-react";
 import { NETWORKS } from "@/lib/web3";
 import WalletOption from "./wallet/WalletOption";
 import ConnectedWallet from "./wallet/ConnectedWallet";
+
+import type { WalletType } from "@/components/landing/useWallet";
 import NotificationDropdown from "./notifications/NotificationDropdown";
 
 interface WalletConnectProps {
   isConnected: boolean;
   address: string | null;
-  onConnect: () => void;
+  onConnect: (walletType: WalletType) => void;
   onDisconnect: () => void;
   balance: string;
 }
@@ -33,13 +35,13 @@ const WalletConnect = ({
     setHasProvider(window.ethereum !== undefined);
   }, []);
 
-  const handleConnectWallet = async () => {
+  const handleConnectWallet = async (walletType: WalletType) => {
     setIsLoading(true);
     try {
       if (!window.ethereum) {
         throw new Error("No Ethereum provider found. Please install MetaMask.");
       }
-      
+      // Aqui você pode customizar a lógica para cada carteira se necessário
       await window.ethereum.request({ method: 'eth_requestAccounts' });
       const chainId = await window.ethereum.request({ method: 'eth_chainId' });
       
@@ -71,7 +73,7 @@ const WalletConnect = ({
         }
       }
       
-      onConnect();
+      onConnect(walletType);
       setIsOpen(false);
       toast({
         title: "Wallet Connected",
@@ -104,57 +106,56 @@ const WalletConnect = ({
   return (
     <div className="flex items-center gap-2">
       <NotificationDropdown />
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogTrigger asChild>
-          <Button className="text-white flex items-center gap-2 bg-violet-800 hover:bg-violet-700">
-            <Wallet className="h-4 w-4" />
-            Connect Wallet
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-xl font-bold">Connect to Chiliz Chain</DialogTitle>
-            <DialogDescription>
-              Choose a wallet to connect to the Chiliz Chain network
-            </DialogDescription>
-          </DialogHeader>
-          {!hasProvider && (
-            <div className="bg-amber-500/20 border border-amber-500/50 rounded-md p-3 flex items-center gap-2 mb-2">
-              <AlertCircle className="h-5 w-5 text-amber-500" />
-              <p className="text-sm">
-                No Ethereum wallet detected. Please install{" "}
-                <a 
-                  href="https://metamask.io" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline"
-                >
-                  MetaMask
-                </a>.
-              </p>
+      <Button className="text-white flex items-center gap-2 bg-violet-800 hover:bg-violet-700" onClick={() => setIsOpen(true)}>
+        <Wallet className="h-4 w-4" />
+        Connect Wallet
+      </Button>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center min-h-screen bg-black/60">
+          <div className="bg-token-background rounded-lg shadow-xl p-16 min-w-[320px] relative">
+            <button className="absolute top-2 right-2 text-white/60 hover:text-white text-xl" onClick={() => setIsOpen(false)}>&times;</button>
+            <h2 className="text-xl font-bold mb-2 text-white">Conectar carteira</h2>
+            <p className="text-white/70 mb-4">Escolha uma carteira para conectar à Chiliz Chain</p>
+            <div className="flex flex-col gap-3 mt-4">
+              <Button
+                variant="outline"
+                className="flex items-center gap-3 border-token-purple text-white font-medium text-base px-6 py-3"
+                onClick={() => { onConnect('metamask'); setIsOpen(false); }}
+                disabled={isLoading}
+              >
+                <img src="/metamask.svg" alt="MetaMask" className="w-6 h-6 mr-2" />
+                {isLoading ? 'Conectando...' : 'MetaMask'}
+              </Button>
+              <Button
+                variant="outline"
+                className="flex items-center gap-3 border-token-purple text-white font-medium text-base px-6 py-3"
+                onClick={() => { onConnect('rabby'); setIsOpen(false); }}
+                disabled={isLoading}
+              >
+                <img src="/images/rabby.png" alt="Rabby" className="w-6 h-6 mr-2" />
+                {isLoading ? 'Conectando...' : 'Rabby'}
+              </Button>
+              <Button
+                variant="outline"
+                className="flex items-center gap-3 border-token-purple text-white font-medium text-base px-6 py-3 opacity-60 cursor-not-allowed"
+                onClick={() => toast({ title: 'Em breve', description: 'WalletConnect estará disponível em breve.' })}
+                disabled
+              >
+                <img src="/walletconnect.svg" alt="WalletConnect" className="w-6 h-6 mr-2" />
+                WalletConnect <span className="ml-2 text-xs">(em breve)</span>
+              </Button>
             </div>
-          )}
-          <div className="grid grid-cols-1 gap-4 py-4">
-            <WalletOption 
-              name="MetaMask" 
-              icon="/metamask.svg" 
-              onClick={handleConnectWallet}
-              isLoading={isLoading}
-              disabled={!hasProvider}
-            />
-            <WalletOption 
-              name="WalletConnect" 
-              icon="/walletconnect.svg" 
-              onClick={() => {
-                toast({
-                  title: "Coming Soon",
-                  description: "WalletConnect integration will be available soon."
-                });
-              }}
-            />
           </div>
-        </DialogContent>
-      </Dialog>
+        </div>
+      )}
+      {isLoading && (
+        <span className="text-white text-sm font-medium ml-2 animate-fade-in">Conectando...</span>
+      )}
+      {/* Se quiser mostrar erro, passe error como prop para WalletConnect e exiba aqui:
+      {error && (
+        <span className="text-red-400 text-sm font-medium ml-2 animate-fade-in">{error}</span>
+      )}
+      */}
     </div>
   );
 };

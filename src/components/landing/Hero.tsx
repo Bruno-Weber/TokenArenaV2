@@ -92,9 +92,6 @@ const Hero = () => {
               </Link>
             </Button>
 
-
-
-
             <Button
               size="lg"
               variant="outline"
