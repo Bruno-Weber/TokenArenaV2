@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -106,11 +107,13 @@ const Market = () => {
           <StatsCard title="Average Price" value="$3.67" change={-1.23} isPositive={false} />
         </div>
 
-        {/* Grid of Tokens */}
+        {/* Grid of Tokens - Fixed layout with consistent sizing */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredTokens.length > 0 ? (
             filteredTokens.map((token) => (
-              <FanTokenCard key={token.id} {...token} />
+              <div key={token.id} className="h-full">
+                <FanTokenCard {...token} />
+              </div>
             ))
           ) : (
             <div className="col-span-full text-center py-16">
