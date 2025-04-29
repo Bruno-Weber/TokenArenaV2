@@ -7,6 +7,7 @@ import { Wallet, AlertCircle } from "lucide-react";
 import { NETWORKS } from "@/lib/web3";
 import WalletOption from "./wallet/WalletOption";
 import ConnectedWallet from "./wallet/ConnectedWallet";
+import NotificationDropdown from "./notifications/NotificationDropdown";
 
 interface WalletConnectProps {
   isConnected: boolean;
@@ -89,66 +90,72 @@ const WalletConnect = ({
 
   if (isConnected && address) {
     return (
-      <ConnectedWallet
-        address={address}
-        balance={balance}
-        onDisconnect={onDisconnect}
-      />
+      <div className="flex items-center gap-2">
+        <NotificationDropdown />
+        <ConnectedWallet
+          address={address}
+          balance={balance}
+          onDisconnect={onDisconnect}
+        />
+      </div>
     );
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button className="text-white flex items-center gap-2 bg-violet-800 hover:bg-violet-700">
-          <Wallet className="h-4 w-4" />
-          Connect Wallet
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle className="text-xl font-bold">Connect to Chiliz Chain</DialogTitle>
-          <DialogDescription>
-            Choose a wallet to connect to the Chiliz Chain network
-          </DialogDescription>
-        </DialogHeader>
-        {!hasProvider && (
-          <div className="bg-amber-500/20 border border-amber-500/50 rounded-md p-3 flex items-center gap-2 mb-2">
-            <AlertCircle className="h-5 w-5 text-amber-500" />
-            <p className="text-sm">
-              No Ethereum wallet detected. Please install{" "}
-              <a 
-                href="https://metamask.io" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-blue-500 hover:underline"
-              >
-                MetaMask
-              </a>.
-            </p>
+    <div className="flex items-center gap-2">
+      <NotificationDropdown />
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogTrigger asChild>
+          <Button className="text-white flex items-center gap-2 bg-violet-800 hover:bg-violet-700">
+            <Wallet className="h-4 w-4" />
+            Connect Wallet
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold">Connect to Chiliz Chain</DialogTitle>
+            <DialogDescription>
+              Choose a wallet to connect to the Chiliz Chain network
+            </DialogDescription>
+          </DialogHeader>
+          {!hasProvider && (
+            <div className="bg-amber-500/20 border border-amber-500/50 rounded-md p-3 flex items-center gap-2 mb-2">
+              <AlertCircle className="h-5 w-5 text-amber-500" />
+              <p className="text-sm">
+                No Ethereum wallet detected. Please install{" "}
+                <a 
+                  href="https://metamask.io" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:underline"
+                >
+                  MetaMask
+                </a>.
+              </p>
+            </div>
+          )}
+          <div className="grid grid-cols-1 gap-4 py-4">
+            <WalletOption 
+              name="MetaMask" 
+              icon="/metamask.svg" 
+              onClick={handleConnectWallet}
+              isLoading={isLoading}
+              disabled={!hasProvider}
+            />
+            <WalletOption 
+              name="WalletConnect" 
+              icon="/walletconnect.svg" 
+              onClick={() => {
+                toast({
+                  title: "Coming Soon",
+                  description: "WalletConnect integration will be available soon."
+                });
+              }}
+            />
           </div>
-        )}
-        <div className="grid grid-cols-1 gap-4 py-4">
-          <WalletOption 
-            name="MetaMask" 
-            icon="/metamask.svg" 
-            onClick={handleConnectWallet}
-            isLoading={isLoading}
-            disabled={!hasProvider}
-          />
-          <WalletOption 
-            name="WalletConnect" 
-            icon="/walletconnect.svg" 
-            onClick={() => {
-              toast({
-                title: "Coming Soon",
-                description: "WalletConnect integration will be available soon."
-              });
-            }}
-          />
-        </div>
-      </DialogContent>
-    </Dialog>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 };
 
