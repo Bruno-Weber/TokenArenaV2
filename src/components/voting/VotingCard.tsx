@@ -4,7 +4,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Calendar, Users, CheckCircle2, Clock } from "lucide-react";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Calendar, Users, CheckCircle2, Clock, Coins } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Vote } from "./types";
 
@@ -25,6 +26,9 @@ const VotingCard = ({ vote, userVote, onVote, isActive }: VotingCardProps) => {
     return totalVotes === 0 ? 0 : Math.round((value / totalVotes) * 100);
   };
 
+  // Mock token balance for the user - in a real app this would come from a wallet or API
+  const tokenBalance = (Math.random() * 100).toFixed(2);
+
   return (
     <Card className="overflow-hidden border-2 hover:border-purple-500/50 transition-all duration-300">
       <CardHeader className={cn(
@@ -34,9 +38,17 @@ const VotingCard = ({ vote, userVote, onVote, isActive }: VotingCardProps) => {
           : "from-gray-800 to-gray-900"
       )}>
         <div className="flex justify-between items-start">
-          <div>
-            <CardTitle className="text-xl text-white">{vote.title}</CardTitle>
-            <CardDescription className="mt-1 text-gray-400">{vote.description}</CardDescription>
+          <div className="flex items-center gap-3">
+            <Avatar className="h-12 w-12 rounded-md border-2 border-white/10">
+              <AvatarImage src={vote.clubLogo} alt={vote.clubName} />
+              <AvatarFallback className="bg-purple-900/50 text-white font-bold">
+                {vote.tokenSymbol.substring(0, 2)}
+              </AvatarFallback>
+            </Avatar>
+            <div>
+              <CardTitle className="text-xl text-white">{vote.title}</CardTitle>
+              <CardDescription className="mt-1 text-gray-400">{vote.description}</CardDescription>
+            </div>
           </div>
           {isActive ? (
             <Badge variant="outline" className="bg-purple-500/20 text-purple-300 border-purple-500">
@@ -49,18 +61,27 @@ const VotingCard = ({ vote, userVote, onVote, isActive }: VotingCardProps) => {
           )}
         </div>
         
-        <div className="flex items-center gap-4 mt-3 text-sm text-gray-400">
-          <div className="flex items-center">
-            <Calendar className="mr-1 h-4 w-4" />
-            {isActive ? (
-              <span>Encerra em {vote.deadline}</span>
-            ) : (
-              <span>Encerrada em {vote.deadline}</span>
-            )}
+        <div className="flex items-center justify-between mt-3">
+          <div className="flex items-center gap-4 text-sm text-gray-400">
+            <div className="flex items-center">
+              <Calendar className="mr-1 h-4 w-4" />
+              {isActive ? (
+                <span>Encerra em {vote.deadline}</span>
+              ) : (
+                <span>Encerrada em {vote.deadline}</span>
+              )}
+            </div>
+            <div className="flex items-center">
+              <Users className="mr-1 h-4 w-4" />
+              <span>{totalVotes} votos</span>
+            </div>
           </div>
-          <div className="flex items-center">
-            <Users className="mr-1 h-4 w-4" />
-            <span>{totalVotes} votos</span>
+          
+          <div className="flex items-center bg-purple-500/10 px-3 py-1.5 rounded-full">
+            <Coins className="h-4 w-4 text-purple-400 mr-2" />
+            <span className="text-sm font-medium text-purple-300">
+              {tokenBalance} {vote.tokenSymbol}
+            </span>
           </div>
         </div>
       </CardHeader>

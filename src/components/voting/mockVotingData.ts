@@ -1,5 +1,10 @@
 
 import { Vote } from "./types";
+import barcelonaLogo from "@/assets/team-logos/barcelona.png";
+import realMadridLogo from "@/assets/team-logos/real-madrid.png";
+import lakersLogo from "@/assets/team-logos/lakers.png";
+import yankeesLogo from "@/assets/team-logos/yankees.png";
+import manUtdLogo from "@/assets/team-logos/man-utd.png";
 
 export const mockActiveVotes: Vote[] = [
   {
@@ -11,7 +16,11 @@ export const mockActiveVotes: Vote[] = [
     results: {
       "Design Tradicional": 245,
       "Design Moderno": 178
-    }
+    },
+    clubId: "barcelona",
+    clubName: "FC Barcelona",
+    clubLogo: barcelonaLogo,
+    tokenSymbol: "BAR"
   },
   {
     id: "2",
@@ -23,7 +32,11 @@ export const mockActiveVotes: Vote[] = [
       "Estádio do Clube": 342,
       "Centro de Treinamento": 156,
       "Hotel Parceiro": 203
-    }
+    },
+    clubId: "lakers",
+    clubName: "Los Angeles Lakers",
+    clubLogo: lakersLogo,
+    tokenSymbol: "LAK"
   },
   {
     id: "3",
@@ -35,7 +48,11 @@ export const mockActiveVotes: Vote[] = [
       "Manter a atual": 198,
       "Nova composição": 243,
       "Clássico do rock": 187
-    }
+    },
+    clubId: "real-madrid",
+    clubName: "Real Madrid",
+    clubLogo: realMadridLogo,
+    tokenSymbol: "RMA"
   }
 ];
 
@@ -54,7 +71,11 @@ export const mockPastVotes: Vote[] = [
     comments: [
       "A águia venceu com 42.5% dos votos e será nossa nova mascote!",
       "Agradecemos a participação de todos os torcedores nesta decisão importante."
-    ]
+    ],
+    clubId: "yankees",
+    clubName: "New York Yankees",
+    clubLogo: yankeesLogo,
+    tokenSymbol: "YNK"
   },
   {
     id: "5",
@@ -70,6 +91,10 @@ export const mockPastVotes: Vote[] = [
     comments: [
       "A diretoria acatou a decisão dos torcedores e a pré-temporada será na Europa.",
       "Os treinos acontecerão em centros esportivos de alto nível para maximizar a preparação do time."
-    ]
+    ],
+    clubId: "man-utd",
+    clubName: "Manchester United",
+    clubLogo: manUtdLogo,
+    tokenSymbol: "MNU"
   }
 ];
