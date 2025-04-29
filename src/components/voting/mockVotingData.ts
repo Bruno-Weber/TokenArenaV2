@@ -1,10 +1,5 @@
 
 import { Vote } from "./types";
-import barcelonaLogo from "@/assets/team-logos/barcelona.png";
-import realMadridLogo from "@/assets/team-logos/real-madrid.png";
-import lakersLogo from "@/assets/team-logos/lakers.png";
-import yankeesLogo from "@/assets/team-logos/yankees.png";
-import manUtdLogo from "@/assets/team-logos/man-utd.png";
 
 export const mockActiveVotes: Vote[] = [
   {
@@ -19,7 +14,7 @@ export const mockActiveVotes: Vote[] = [
     },
     clubId: "barcelona",
     clubName: "FC Barcelona",
-    clubLogo: barcelonaLogo,
+    clubLogo: "/images/barcelona.png",
     tokenSymbol: "BAR"
   },
   {
@@ -35,7 +30,7 @@ export const mockActiveVotes: Vote[] = [
     },
     clubId: "lakers",
     clubName: "Los Angeles Lakers",
-    clubLogo: lakersLogo,
+    clubLogo: "/images/lakers.png",
     tokenSymbol: "LAK"
   },
   {
@@ -51,7 +46,7 @@ export const mockActiveVotes: Vote[] = [
     },
     clubId: "real-madrid",
     clubName: "Real Madrid",
-    clubLogo: realMadridLogo,
+    clubLogo: "/images/realmadrid.png",
     tokenSymbol: "RMA"
   }
 ];
@@ -74,7 +69,7 @@ export const mockPastVotes: Vote[] = [
     ],
     clubId: "yankees",
     clubName: "New York Yankees",
-    clubLogo: yankeesLogo,
+    clubLogo: "/images/yankees.png",
     tokenSymbol: "YNK"
   },
   {
@@ -94,7 +89,7 @@ export const mockPastVotes: Vote[] = [
     ],
     clubId: "man-utd",
     clubName: "Manchester United",
-    clubLogo: manUtdLogo,
+    clubLogo: "/images/manchesterunited.png",
     tokenSymbol: "MNU"
   }
 ];
