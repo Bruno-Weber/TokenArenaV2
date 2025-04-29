@@ -1,32 +1,31 @@
-
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useWallet } from "@/components/landing/useWallet";
 import { Button } from "@/components/ui/button";
 import { Home, Activity, Wallet, Users, BarChart3, Settings, Vote, Rocket, PackageOpen } from "lucide-react";
 import { BackgroundPaths } from "@/components/ui/background-paths";
 // Logo is loaded directly from public folder
 import WalletConnect from "@/components/WalletConnect";
-import NotificationDropdown from "@/components/notifications/NotificationDropdown";
 
 interface AppLayoutProps {
   children: React.ReactNode;
 }
 
-import type { WalletType } from "@/components/landing/useWallet";
-
 const AppLayout = ({ children }: AppLayoutProps) => {
   const location = useLocation();
-  const { walletAddress, chzBalance, connect, disconnect, loading } = useWallet();
+  const [isConnected, setIsConnected] = useState(false);
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  const [balance, setBalance] = useState("0.00");
 
-  const isConnected = !!walletAddress;
-
-  const handleConnect = (walletType: WalletType) => {
-    connect(walletType);
+  const handleConnect = () => {
+    setIsConnected(true);
+    setWalletAddress("0x1234...5678"); // Mock address
+    setBalance("100.00"); // Mock balance
   };
 
   const handleDisconnect = () => {
-    disconnect();
+    setIsConnected(false);
+    setWalletAddress(null);
+    setBalance("0.00");
   };
 
   return (
@@ -51,14 +50,13 @@ const AppLayout = ({ children }: AppLayoutProps) => {
             <NavLink to="/teams" label="Teams" />
           </div>
           
-          <div className="flex items-center gap-3">
-            <NotificationDropdown />
+          <div className="flex items-center gap-2">
             <WalletConnect
               isConnected={isConnected}
               address={walletAddress}
               onConnect={handleConnect}
               onDisconnect={handleDisconnect}
-              balance={chzBalance ?? "0.00"}
+              balance={balance}
             />
           </div>
         </div>

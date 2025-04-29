@@ -8,12 +8,10 @@ import { NETWORKS } from "@/lib/web3";
 import WalletOption from "./wallet/WalletOption";
 import ConnectedWallet from "./wallet/ConnectedWallet";
 
-import type { WalletType } from "@/components/landing/useWallet";
-
 interface WalletConnectProps {
   isConnected: boolean;
   address: string | null;
-  onConnect: (walletType: WalletType) => void;
+  onConnect: () => void;
   onDisconnect: () => void;
   balance: string;
 }
@@ -34,13 +32,13 @@ const WalletConnect = ({
     setHasProvider(window.ethereum !== undefined);
   }, []);
 
-  const handleConnectWallet = async (walletType: WalletType) => {
+  const handleConnectWallet = async () => {
     setIsLoading(true);
     try {
       if (!window.ethereum) {
         throw new Error("No Ethereum provider found. Please install MetaMask.");
       }
-      // Aqui você pode customizar a lógica para cada carteira se necessário
+      
       await window.ethereum.request({ method: 'eth_requestAccounts' });
       const chainId = await window.ethereum.request({ method: 'eth_chainId' });
       
@@ -72,7 +70,7 @@ const WalletConnect = ({
         }
       }
       
-      onConnect(walletType);
+      onConnect();
       setIsOpen(false);
       toast({
         title: "Wallet Connected",
@@ -134,14 +132,7 @@ const WalletConnect = ({
           <WalletOption 
             name="MetaMask" 
             icon="/metamask.svg" 
-            onClick={() => handleConnectWallet("metamask")}
-            isLoading={isLoading}
-            disabled={!hasProvider}
-          />
-          <WalletOption 
-            name="Rabby" 
-            icon="/images/rabby.png" 
-            onClick={() => handleConnectWallet("rabby")}
+            onClick={handleConnectWallet}
             isLoading={isLoading}
             disabled={!hasProvider}
           />
