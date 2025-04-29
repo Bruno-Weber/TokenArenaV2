@@ -16,13 +16,13 @@ const CreateTokenFlow = () => {
   };
 
   return (
-    <Card className="w-full max-w-4xl mx-auto">
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold text-center">
+    <Card className="w-full max-w-4xl mx-auto border-token-background-light bg-token-background text-token-text">
+      <CardHeader className="border-b border-token-background-light">
+        <CardTitle className="text-2xl font-bold text-center text-white">
           {currentStep === "kyc" ? "Verificação KYC" : "Criar Fan Token"}
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-6">
         {currentStep === "kyc" ? (
           <KYCVerification onSuccess={handleKYCSuccess} />
         ) : (
