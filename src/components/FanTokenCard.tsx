@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/use-toast";
 import { ExternalLink, ChevronRight, Users, TrendingUp, Trophy } from "lucide-react";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 // Team logo mappings
 const teamLogos: Record<string, string> = {
@@ -81,22 +82,25 @@ const FanTokenCard = ({
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex items-center gap-3 mb-4">
-        <img
-          src={teamLogos[symbol] || teamLogo}
-          alt={`${name} logo`}
-          className="w-14 h-14 object-contain drop-shadow-md bg-white/10 rounded-full p-2 border border-white/10"
-          loading="lazy"
-        />
-        <div>
-          <span className="block text-lg font-bold text-white leading-tight">{name}</span>
-          <span className="block text-xs text-white/60 font-mono uppercase tracking-wide">{symbol}</span>
-        </div>
-      </div>
       <Card className={`flex flex-col flex-grow relative group overflow-hidden transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br ${getBorderColor()} backdrop-blur-xl border border-white/10 hover:border-white/20`}>
         <div className="absolute inset-0 bg-gradient-to-r from-[#8B5CF6]/5 to-[#D946EF]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        
         <CardHeader className="pb-2 relative z-10">
-          <div className="flex justify-end items-start">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Avatar className="w-12 h-12 border-2 border-white/10">
+                <AvatarImage 
+                  src={teamLogos[symbol] || teamLogo} 
+                  alt={`${name} logo`}
+                  className="object-contain"
+                />
+                <AvatarFallback className="bg-white/10 text-white">{symbol.substring(0, 2)}</AvatarFallback>
+              </Avatar>
+              <div>
+                <h3 className="font-bold text-lg text-white leading-tight">{name}</h3>
+                <span className="block text-xs text-white/60 font-mono uppercase tracking-wide">{symbol}</span>
+              </div>
+            </div>
             <Badge
               variant="secondary"
               className={`capitalize bg-opacity-20 backdrop-blur-sm ${
