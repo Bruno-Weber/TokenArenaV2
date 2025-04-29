@@ -4,7 +4,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { AmericanFootball, Bell } from "lucide-react";
+import { Bell, Football } from "lucide-react";
 
 interface Notification {
   id: string;
@@ -71,7 +71,7 @@ const NotificationDropdown = () => {
     <Popover>
       <PopoverTrigger asChild>
         <Button variant="outline" size="icon" className="relative">
-          <AmericanFootball className="h-5 w-5 text-purple-600" />
+          <Football className="h-5 w-5 text-purple-600" />
           {unreadCount > 0 && (
             <Badge 
               className="absolute -top-1 -right-1 px-1.5 py-0.5 bg-purple-600 text-white text-[10px]" 
