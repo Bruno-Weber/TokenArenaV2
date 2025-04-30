@@ -29,15 +29,40 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
 
   // Translation function
   const t = (section: string, key: string): string => {
-    // @ts-ignore - This is a dynamic access to nested properties
-    const translation = section.split('.').reduce((obj, path) => 
-      obj && obj[path], translations)[key];
-    
-    return translation?.[language] || key;
+    try {
+      if (!section || !key) return key || '';
+      
+      // Split by dots to access nested properties
+      const sectionParts = section.split('.');
+      let translationSection: any = translations;
+      
+      // Navigate through the sections
+      for (const part of sectionParts) {
+        if (!translationSection[part]) {
+          return key;
+        }
+        translationSection = translationSection[part];
+      }
+      
+      // Access the key in the final section
+      if (translationSection[key] && translationSection[key][language]) {
+        return translationSection[key][language];
+      }
+      
+      return key;
+    } catch (error) {
+      console.error(`Translation error for ${section}.${key}:`, error);
+      return key;
+    }
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t, languageOptions }}>
+    <LanguageContext.Provider value={{ 
+      language, 
+      setLanguage, 
+      t, 
+      languageOptions: languageOptions as LanguageOption[] 
+    }}>
       {children}
     </LanguageContext.Provider>
   );

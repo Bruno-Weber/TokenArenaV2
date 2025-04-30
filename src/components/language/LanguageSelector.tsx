@@ -9,7 +9,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Globe } from "lucide-react";
+import { Globe, Languages } from "lucide-react";
 
 const LanguageSelector = () => {
   const { language, setLanguage, languageOptions } = useLanguage();
@@ -18,14 +18,14 @@ const LanguageSelector = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-          <Globe className="h-4 w-4" />
+          <Languages className="h-4 w-4" />
           <span className="sr-only">Toggle language</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuRadioGroup value={language} onValueChange={(value) => setLanguage(value as any)}>
           {languageOptions.map((option) => (
-            <DropdownMenuRadioItem key={option.value} value={option.value}>
+            <DropdownMenuRadioItem key={option.value} value={option.value} className="flex items-center gap-2 cursor-pointer">
               <span className="mr-2">{option.flag}</span>
               {option.label}
             </DropdownMenuRadioItem>
