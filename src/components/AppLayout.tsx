@@ -1,8 +1,9 @@
+
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useWallet } from "@/components/landing/useWallet";
 import { Button } from "@/components/ui/button";
-import { Home, Activity, Wallet, Users, BarChart3, Settings, Vote, Rocket, PackageOpen } from "lucide-react";
+import { Home, Activity, Wallet, Users, BarChart3, Settings, Vote, Rocket, PackageOpen, Trophy } from "lucide-react";
 import { BackgroundPaths } from "@/components/ui/background-paths";
 // Logo is loaded directly from public folder
 import WalletConnect from "@/components/WalletConnect";
@@ -139,6 +140,7 @@ const sidebarLinks = [
   { to: "/teams", icon: <Users className="h-5 w-5" />, label: "Teams" },
   { to: "/voting", icon: <Vote className="h-5 w-5" />, label: "Votações" },
   { to: "/nft-market", icon: <PackageOpen className="h-5 w-5" />, label: "NFT Market" },
+  { to: "/gamification", icon: <Trophy className="h-5 w-5" />, label: "Ranking" },
   { to: "/settings", icon: <Settings className="h-5 w-5" />, label: "Settings" },
 ];
 
