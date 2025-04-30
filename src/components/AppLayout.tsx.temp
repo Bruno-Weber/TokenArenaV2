@@ -8,12 +8,11 @@ import { BackgroundPaths } from "@/components/ui/background-paths";
 import WalletConnect from "@/components/WalletConnect";
 import LanguageSelector from "@/components/LanguageSelector";
 import { useTranslation } from "react-i18next";
+import type { WalletType } from "@/components/landing/useWallet";
 
 interface AppLayoutProps {
   children: React.ReactNode;
 }
-
-import type { WalletType } from "@/components/landing/useWallet";
 
 interface NavLinkProps {
   to: string;

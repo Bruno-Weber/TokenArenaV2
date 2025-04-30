@@ -7,6 +7,7 @@ import { Wallet, AlertCircle } from "lucide-react";
 import { NETWORKS } from "@/lib/web3";
 import WalletOption from "./wallet/WalletOption";
 import ConnectedWallet from "./wallet/ConnectedWallet";
+import { useTranslation } from "react-i18next";
 
 import type { WalletType } from "@/components/landing/useWallet";
 import NotificationDropdown from "./notifications/NotificationDropdown";
@@ -27,6 +28,7 @@ const WalletConnect = ({
   balance
 }: WalletConnectProps) => {
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [hasProvider, setHasProvider] = useState(false);
@@ -39,7 +41,7 @@ const WalletConnect = ({
     setIsLoading(true);
     try {
       if (!window.ethereum) {
-        throw new Error("No Ethereum provider found. Please install MetaMask.");
+        throw new Error(t('wallet.noProviderError', 'No Ethereum provider found. Please install MetaMask.'));
       }
       // Aqui você pode customizar a lógica para cada carteira se necessário
       await window.ethereum.request({ method: 'eth_requestAccounts' });
@@ -76,13 +78,13 @@ const WalletConnect = ({
       onConnect(walletType);
       setIsOpen(false);
       toast({
-        title: "Wallet Connected",
-        description: "Successfully connected to Chiliz Chain"
+        title: t('wallet.connected'),
+        description: t('wallet.connectedDescription')
       });
     } catch (error: any) {
       toast({
-        title: "Connection Failed",
-        description: error.message || "Failed to connect wallet",
+        title: t('wallet.connectionFailed'),
+        description: error.message || t('wallet.connectionFailedDescription'),
         variant: "destructive"
       });
     } finally {
@@ -108,14 +110,14 @@ const WalletConnect = ({
       <NotificationDropdown />
       <Button className="text-white flex items-center gap-2 bg-violet-800 hover:bg-violet-700" onClick={() => setIsOpen(true)}>
         <Wallet className="h-4 w-4" />
-        Connect Wallet
+        {t('wallet.connect')}
       </Button>
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center min-h-screen bg-black/60">
           <div className="bg-token-background rounded-lg shadow-xl p-16 min-w-[320px] relative">
             <button className="absolute top-2 right-2 text-white/60 hover:text-white text-xl" onClick={() => setIsOpen(false)}>&times;</button>
-            <h2 className="text-xl font-bold mb-2 text-white">Conectar carteira</h2>
-            <p className="text-white/70 mb-4">Escolha uma carteira para conectar à Chiliz Chain</p>
+            <h2 className="text-xl font-bold mb-2 text-white">{t('wallet.connectWalletTitle', 'Conectar carteira')}</h2>
+            <p className="text-white/70 mb-4">{t('wallet.chooseWallet', 'Escolha uma carteira para conectar à Chiliz Chain')}</p>
             <div className="flex flex-col gap-3 mt-4">
               <Button
                 variant="outline"
@@ -124,7 +126,7 @@ const WalletConnect = ({
                 disabled={isLoading}
               >
                 <img src="/metamask.svg" alt="MetaMask" className="w-6 h-6 mr-2" />
-                {isLoading ? 'Conectando...' : 'MetaMask'}
+                {isLoading ? t('wallet.connecting', 'Conectando...') : 'MetaMask'}
               </Button>
               <Button
                 variant="outline"
@@ -133,16 +135,16 @@ const WalletConnect = ({
                 disabled={isLoading}
               >
                 <img src="/images/rabby.png" alt="Rabby" className="w-6 h-6 mr-2" />
-                {isLoading ? 'Conectando...' : 'Rabby'}
+                {isLoading ? t('wallet.connecting', 'Conectando...') : 'Rabby'}
               </Button>
               <Button
                 variant="outline"
                 className="flex items-center gap-3 border-token-purple text-white font-medium text-base px-6 py-3 opacity-60 cursor-not-allowed"
-                onClick={() => toast({ title: 'Em breve', description: 'WalletConnect estará disponível em breve.' })}
+                onClick={() => toast({ title: t('common.comingSoon', 'Em breve'), description: t('wallet.walletConnectSoon', 'WalletConnect estará disponível em breve.') })}
                 disabled
               >
                 <img src="/walletconnect.svg" alt="WalletConnect" className="w-6 h-6 mr-2" />
-                WalletConnect <span className="ml-2 text-xs">(em breve)</span>
+                WalletConnect <span className="ml-2 text-xs">({t('common.comingSoonShort', 'em breve')})</span>
               </Button>
             </div>
           </div>

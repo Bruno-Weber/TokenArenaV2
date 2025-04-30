@@ -4,17 +4,19 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import VotingCard from "./VotingCard";
 import { mockActiveVotes, mockPastVotes } from "./mockVotingData";
+import { useTranslation } from "react-i18next";
 
 const VotingList = () => {
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [votes, setVotes] = useState<Record<string, string>>({});
 
   const handleVote = (voteId: string, option: string) => {
     // Check if already voted
     if (votes[voteId]) {
       toast({
-        title: "Você já votou nesta proposta",
-        description: "Cada usuário pode votar apenas uma vez por proposta.",
+        title: t('voting.alreadyVoted'),
+        description: t('voting.alreadyVotedDesc'),
         variant: "default",
       });
       return;
@@ -25,8 +27,8 @@ const VotingList = () => {
     
     // Show success message with confetti animation
     toast({
-      title: "Voto registrado com sucesso!",
-      description: "Obrigado por participar da decisão do clube.",
+      title: t('voting.voteSubmitted'),
+      description: t('voting.voteSubmittedDesc'),
       variant: "default",
     });
     
@@ -41,8 +43,8 @@ const VotingList = () => {
     <div className="space-y-6 animate-fade-in">
       <Tabs defaultValue="active" className="w-full">
         <TabsList className="grid w-full max-w-md mx-auto grid-cols-2">
-          <TabsTrigger value="active">Votações Abertas</TabsTrigger>
-          <TabsTrigger value="past">Votações Encerradas</TabsTrigger>
+          <TabsTrigger value="active">{t('voting.activeVotes')}</TabsTrigger>
+          <TabsTrigger value="past">{t('voting.pastVotes')}</TabsTrigger>
         </TabsList>
         <TabsContent value="active" className="mt-6 space-y-6">
           {mockActiveVotes.map((vote) => (

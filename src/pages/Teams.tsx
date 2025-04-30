@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
 import AppLayout from "@/components/AppLayout";
 import { ChevronRight, Users, Trophy, Calendar, Star } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 // Mock team data
 const teams = [
@@ -86,28 +87,29 @@ const teams = [
 
 const Teams = () => {
   const { toast } = useToast();
+  const { t } = useTranslation();
   
   const handleFollow = (teamName: string) => {
     toast({
-      title: "Team Followed",
-      description: `You are now following ${teamName}. You'll receive updates about events and votes.`,
+      title: t('teams.teamFollowed'),
+      description: t('teams.teamFollowedDesc', { teamName }),
     });
   };
   
   return (
     <AppLayout>
       <div className="py-8">
-        <h1 className="text-3xl font-bold mb-2">Sports Teams</h1>
-        <p className="text-muted-foreground mb-8">Follow your favorite teams and participate in their community</p>
+        <h1 className="text-3xl font-bold mb-2">{t('teams.title')}</h1>
+        <p className="text-muted-foreground mb-8">{t('teams.subtitle')}</p>
         
         {/* Sport Categories */}
         <Tabs defaultValue="all" className="w-full mb-8">
           <TabsList>
-            <TabsTrigger value="all">All Sports</TabsTrigger>
-            <TabsTrigger value="soccer">Soccer</TabsTrigger>
-            <TabsTrigger value="basketball">Basketball</TabsTrigger>
-            <TabsTrigger value="baseball">Baseball</TabsTrigger>
-            <TabsTrigger value="hockey">Hockey</TabsTrigger>
+            <TabsTrigger value="all">{t('teams.allSports')}</TabsTrigger>
+            <TabsTrigger value="soccer">{t('teams.soccer')}</TabsTrigger>
+            <TabsTrigger value="basketball">{t('teams.basketball')}</TabsTrigger>
+            <TabsTrigger value="baseball">{t('teams.baseball')}</TabsTrigger>
+            <TabsTrigger value="hockey">{t('teams.hockey')}</TabsTrigger>
           </TabsList>
         </Tabs>
         
@@ -143,6 +145,7 @@ interface TeamCardProps {
 }
 
 const TeamCard = ({ team, onFollow }: TeamCardProps) => {
+  const { t } = useTranslation();
   return (
     <Card className="relative overflow-hidden transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-black/20 to-black/10 backdrop-blur-xl border border-white/10 hover:border-white/20 group">
       <div className="absolute inset-0 bg-gradient-to-r from-violet-500/5 to-fuchsia-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -182,14 +185,14 @@ const TeamCard = ({ team, onFollow }: TeamCardProps) => {
       <CardContent className="pb-2 relative">
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div className="flex flex-col">
-            <span className="text-sm text-muted-foreground">Supporters</span>
+            <span className="text-sm text-muted-foreground">{t('teams.supporters')}</span>
             <div className="flex items-center gap-1">
               <Users className="h-4 w-4 text-muted-foreground" />
               <span className="font-medium">{team.supporters.toLocaleString()}</span>
             </div>
           </div>
           <div className="flex flex-col">
-            <span className="text-sm text-muted-foreground">Global Ranking</span>
+            <span className="text-sm text-muted-foreground">{t('teams.globalRanking')}</span>
             <div className="flex items-center gap-1">
               <Trophy className="h-4 w-4 text-muted-foreground" />
               <span className="font-medium">#{team.ranking}</span>
@@ -199,7 +202,7 @@ const TeamCard = ({ team, onFollow }: TeamCardProps) => {
         
         <div className="mb-4">
           <div className="flex items-center justify-between mb-1">
-            <span className="text-sm text-muted-foreground">Community Engagement</span>
+            <span className="text-sm text-muted-foreground">{t('teams.communityEngagement')}</span>
             <span className="text-sm font-medium">{team.engagement}%</span>
           </div>
           <Progress value={team.engagement} className="h-2" />
@@ -208,15 +211,15 @@ const TeamCard = ({ team, onFollow }: TeamCardProps) => {
         <div className="flex items-center justify-between mb-4 text-sm">
           <div className="flex items-center gap-1">
             <Calendar className="h-4 w-4 text-muted-foreground" />
-            <span>{team.upcomingEvents} upcoming events</span>
+            <span>{team.upcomingEvents} {t('teams.upcomingEvents')}</span>
           </div>
           <Button variant="ghost" size="sm" className="h-8 px-2 text-xs">
-            View Calendar
+            {t('teams.viewCalendar')}
           </Button>
         </div>
         
         <div className="space-y-1">
-          <span className="text-sm text-muted-foreground">Team Achievements</span>
+          <span className="text-sm text-muted-foreground">{t('teams.teamAchievements')}</span>
           <div className="flex flex-wrap gap-2">
             {team.achievements.map((achievement, index) => (
               <Badge key={index} variant="outline" className="flex items-center gap-1">
@@ -233,7 +236,7 @@ const TeamCard = ({ team, onFollow }: TeamCardProps) => {
           className="w-full bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:opacity-90 transition-opacity"
           onClick={onFollow}
         >
-          Follow Team
+          {t('teams.followTeam')}
           <ChevronRight className="h-4 w-4 ml-1" />
         </Button>
       </CardFooter>

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { ExternalLink, Copy, Check } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface ConnectedWalletProps {
   address: string;
@@ -13,6 +14,7 @@ interface ConnectedWalletProps {
 
 const ConnectedWallet = ({ address, balance, onDisconnect }: ConnectedWalletProps) => {
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
 
   const shortenAddress = (addr: string) => {
@@ -24,16 +26,16 @@ const ConnectedWallet = ({ address, balance, onDisconnect }: ConnectedWalletProp
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
     toast({
-      title: "Address copied",
-      description: "Your wallet address has been copied to the clipboard."
+      title: t('wallet.addressCopied'),
+      description: t('wallet.addressCopiedDesc')
     });
   };
 
   const viewOnExplorer = () => {
     window.open(`https://chiliscan.com/address/${address}`, "_blank");
     toast({
-      title: "Opening explorer",
-      description: "Viewing your address on Chiliz explorer."
+      title: t('wallet.openingExplorer'),
+      description: t('wallet.viewingAddress')
     });
   };
 
@@ -41,7 +43,7 @@ const ConnectedWallet = ({ address, balance, onDisconnect }: ConnectedWalletProp
     <div className="flex items-center bg-[#18122B] rounded-xl px-4 py-2 shadow border border-token-purple/40 gap-4 min-w-[270px]">
       {/* Saldo em CHZ */}
       <div className="flex flex-col items-start justify-center mr-3">
-        <span className="text-xs text-white/70 leading-tight">Saldo CHZ</span>
+        <span className="text-xs text-white/70 leading-tight">{t('wallet.balance')}</span>
         <span className="text-xl font-bold bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(139,92,246,0.7)]">{balance}</span>
       </div>
       {/* Separador */}
