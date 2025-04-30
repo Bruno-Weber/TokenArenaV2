@@ -3,44 +3,62 @@ import React, { useEffect, useState } from "react";
 import AppLayout from "@/components/AppLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
+import ReactMarkdown from 'react-markdown';
 
 const Documentation = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [docContent, setDocContent] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   // Function to fetch markdown content
   const fetchMarkdown = async (docPath: string) => {
+    setIsLoading(true);
+    setError(null);
+    
     try {
+      // Updated path to access markdown files directly from the src/docs/docs folder
       const response = await fetch(`/src/docs/docs/${docPath}.md`);
+      
       if (!response.ok) {
         throw new Error(`Failed to fetch ${docPath}.md`);
       }
+      
       const text = await response.text();
-      return text;
+      setDocContent(text);
+      setError(null);
     } catch (error) {
       console.error("Error fetching markdown:", error);
-      return `# Error Loading Documentation\n\nUnable to load the requested document.`;
+      setError("Unable to load the requested document.");
+      setDocContent("");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     // Fetch the markdown content when the active tab changes
-    const loadContent = async () => {
-      const content = await fetchMarkdown(activeTab);
-      setDocContent(content);
-    };
-    
-    loadContent();
+    fetchMarkdown(activeTab);
   }, [activeTab]);
 
-  // Simple markdown renderer (in a real app, you'd use a proper markdown parser)
+  // Improved markdown renderer using react-markdown
   const renderMarkdown = (content: string) => {
-    // For this demo, we're just displaying the raw markdown
-    // In a real implementation, you'd use a markdown renderer like react-markdown
+    if (isLoading) {
+      return <div className="py-4">Loading document...</div>;
+    }
+
+    if (error) {
+      return (
+        <div className="py-4 text-red-500">
+          <h3 className="text-lg font-bold"># Error Loading Documentation</h3>
+          <p className="mt-2">{error}</p>
+        </div>
+      );
+    }
+
     return (
       <div className="prose prose-invert max-w-none">
-        <pre className="whitespace-pre-wrap">{content}</pre>
+        <ReactMarkdown>{content}</ReactMarkdown>
       </div>
     );
   };
