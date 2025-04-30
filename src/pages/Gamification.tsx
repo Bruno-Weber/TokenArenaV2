@@ -9,11 +9,9 @@ import RankingCard from "@/components/gamification/RankingCard";
 import LeaderboardFilters from "@/components/gamification/LeaderboardFilters";
 import { mockClubRankings, getFilteredRankings, rankingBenefits } from "@/lib/mockGamificationData";
 import { LeaderboardFilter } from '@/types/gamification';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 const Gamification = () => {
   const { toast } = useToast();
-  const { t } = useLanguage();
   const [filters, setFilters] = useState<LeaderboardFilter>({
     period: 'week',
     category: 'overall'
@@ -34,24 +32,25 @@ const Gamification = () => {
           <div>
             <h1 className="text-3xl font-bold mb-2 flex items-center gap-2">
               <Trophy className="h-8 w-8 text-yellow-500" />
-              {t('gamification.title', 'Club Rankings')}
+              Ranking dos Clubes
             </h1>
             <p className="text-muted-foreground">
-              {t('gamification.description', 'Track the clubs with the highest engagement and number of holders on the platform.')}
+              Acompanhe os clubes com maior engajamento e quantidade de holders na plataforma.
+              Clubes no topo do ranking receberão benefícios exclusivos!
             </p>
           </div>
           <Card className="w-full md:w-auto bg-gradient-to-r from-violet-900/30 to-fuchsia-900/30 border-violet-500/20">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium">{t('gamification.howItWorks.title', 'How does the ranking work?')}</CardTitle>
+              <CardTitle className="text-sm font-medium">Como funciona o ranking?</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2 text-sm">
               <p className="text-muted-foreground">
-                {t('gamification.howItWorks.description', 'Points are calculated based on:')}
+                Pontos são calculados com base em:
               </p>
               <ul className="space-y-1 list-disc pl-5 text-muted-foreground text-xs">
-                <li>{t('gamification.howItWorks.holders', 'Total number of holders (60%)')}</li>
-                <li>{t('gamification.howItWorks.interactions', 'Volume of interactions on the platform (30%)')}</li>
-                <li>{t('gamification.howItWorks.voting', 'Participation in voting (10%)')}</li>
+                <li>Número total de holders (60%)</li>
+                <li>Volume de interações na plataforma (30%)</li>
+                <li>Participação em votações (10%)</li>
               </ul>
             </CardContent>
           </Card>
@@ -61,8 +60,8 @@ const Gamification = () => {
           <div className="lg:col-span-2 space-y-6">
             <Tabs defaultValue="leaderboard">
               <TabsList className="grid grid-cols-2 mb-6">
-                <TabsTrigger value="leaderboard">{t('gamification.tabs.leaderboard', 'Leaderboard')}</TabsTrigger>
-                <TabsTrigger value="benefits">{t('gamification.tabs.benefits', 'Benefits')}</TabsTrigger>
+                <TabsTrigger value="leaderboard">Leaderboard</TabsTrigger>
+                <TabsTrigger value="benefits">Benefícios</TabsTrigger>
               </TabsList>
               
               <TabsContent value="leaderboard" className="space-y-8">
@@ -70,7 +69,7 @@ const Gamification = () => {
                 <div>
                   <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
                     <Medal className="h-5 w-5 text-yellow-500" />
-                    {t('gamification.top3Clubs', 'Top 3 Clubs')}
+                    Top 3 Clubes
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {topThreeClubs.map((club) => (
@@ -88,7 +87,7 @@ const Gamification = () => {
                 
                 {/* Other ranked clubs */}
                 <div>
-                  <h2 className="text-lg font-semibold mb-4">{t('gamification.otherClubs', 'Other Ranked Clubs')}</h2>
+                  <h2 className="text-lg font-semibold mb-4">Outros Clubes no Ranking</h2>
                   <div className="space-y-4">
                     {otherClubs.map((club) => (
                       <Card key={club.id} className="border border-white/10 hover:border-white/20 group">
@@ -110,9 +109,9 @@ const Gamification = () => {
                               <div>
                                 <h3 className="font-medium">{club.name}</h3>
                                 <div className="text-xs text-muted-foreground flex items-center gap-2">
-                                  <span>{club.score.toLocaleString()} {t('gamification.points', 'points')}</span>
+                                  <span>{club.score.toLocaleString()} pontos</span>
                                   <span>•</span>
-                                  <span>{club.holders.toLocaleString()} {t('gamification.holders', 'holders')}</span>
+                                  <span>{club.holders.toLocaleString()} holders</span>
                                 </div>
                               </div>
                             </div>
@@ -136,7 +135,8 @@ const Gamification = () => {
               <TabsContent value="benefits">
                 <div className="space-y-6">
                   <p className="text-muted-foreground">
-                    {t('gamification.benefits.introduction', 'Top-ranking clubs receive special benefits that further encourage community engagement and token appreciation.')}
+                    Os clubes no topo do ranking recebem benefícios especiais que incentivam ainda mais o engajamento 
+                    da comunidade e a valorização do token.
                   </p>
                   
                   {rankingBenefits.map((item) => (
@@ -152,13 +152,11 @@ const Gamification = () => {
                           {item.position === 3 && (
                             <Award className="h-5 w-5 text-amber-700" />
                           )}
-                          {item.position === 1 ? t('gamification.benefits.firstPlace', 'First Place') : 
-                           item.position === 2 ? t('gamification.benefits.secondPlace', 'Second Place') : 
-                           t('gamification.benefits.thirdPlace', 'Third Place')}
+                          {item.position === 1 ? 'Primeiro Lugar' : 
+                           item.position === 2 ? 'Segundo Lugar' : 'Terceiro Lugar'}
                         </CardTitle>
                         <CardDescription>
-                          {t('gamification.benefits.forPlace', 'For the')} {item.position}
-                          {t('gamification.benefits.weeklyRanking', 'place in the weekly ranking')}
+                          Para o {item.position}º lugar no ranking semanal
                         </CardDescription>
                       </CardHeader>
                       <CardContent className="pt-4">
@@ -181,8 +179,8 @@ const Gamification = () => {
           <div>
             <Card className="border border-white/10 sticky top-24">
               <CardHeader className="pb-2">
-                <CardTitle>{t('gamification.filters.title', 'Filters')}</CardTitle>
-                <CardDescription>{t('gamification.filters.subtitle', 'Customize the ranking')}</CardDescription>
+                <CardTitle>Filtros</CardTitle>
+                <CardDescription>Personalize o ranking</CardDescription>
               </CardHeader>
               <CardContent>
                 <LeaderboardFilters 
@@ -196,30 +194,30 @@ const Gamification = () => {
               <CardHeader className="pb-2">
                 <CardTitle className="flex items-center gap-2">
                   <TrendingUp className="h-5 w-5 text-green-500" />
-                  {t('gamification.highlights.title', 'Weekly Highlights')}
+                  Destaques da Semana
                 </CardTitle>
-                <CardDescription>{t('gamification.highlights.subtitle', 'Significant changes')}</CardDescription>
+                <CardDescription>Mudanças significativas</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <p className="text-sm font-medium">{t('gamification.highlights.biggestGrowth', 'Biggest growth')}</p>
+                  <p className="text-sm font-medium">Maior crescimento</p>
                   <p className="text-muted-foreground text-sm">New York Yankees +2</p>
                 </div>
                 <div>
-                  <p className="text-sm font-medium">{t('gamification.highlights.biggestDrop', 'Biggest drop')}</p>
+                  <p className="text-sm font-medium">Maior queda</p>
                   <p className="text-muted-foreground text-sm">Real Madrid -1</p>
                 </div>
                 <div>
-                  <p className="text-sm font-medium">{t('gamification.highlights.newHolders', 'New holders')}</p>
-                  <p className="text-muted-foreground text-sm">+15.789 {t('gamification.highlights.lastWeek', 'in the last week')}</p>
+                  <p className="text-sm font-medium">Novos holders</p>
+                  <p className="text-muted-foreground text-sm">+15.789 na última semana</p>
                 </div>
                 <Button variant="outline" className="w-full" onClick={() => {
                   toast({
-                    title: t('gamification.reportGenerated.title', 'Report generated'),
-                    description: t('gamification.reportGenerated.description', 'The complete statistics report has been sent to your email.')
+                    title: "Relatório gerado",
+                    description: "O relatório completo de estatísticas foi enviado ao seu email."
                   });
                 }}>
-                  {t('gamification.highlights.viewFullReport', 'View full report')}
+                  Ver relatório completo
                 </Button>
               </CardContent>
             </Card>

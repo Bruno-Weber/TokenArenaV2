@@ -2,7 +2,6 @@
 import React from 'react';
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LeaderboardFilter } from '@/types/gamification';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface LeaderboardFiltersProps {
   filters: LeaderboardFilter;
@@ -10,8 +9,6 @@ interface LeaderboardFiltersProps {
 }
 
 const LeaderboardFilters = ({ filters, onChange }: LeaderboardFiltersProps) => {
-  const { t } = useLanguage();
-
   const handlePeriodChange = (value: string) => {
     onChange({
       ...filters,
@@ -29,23 +26,23 @@ const LeaderboardFilters = ({ filters, onChange }: LeaderboardFiltersProps) => {
   return (
     <div className="space-y-4">
       <div>
-        <h4 className="text-sm font-medium mb-2">{t('gamification.filters.period.label', 'Period')}</h4>
+        <h4 className="text-sm font-medium mb-2">Período</h4>
         <Tabs defaultValue={filters.period} className="w-full" onValueChange={handlePeriodChange}>
           <TabsList className="grid grid-cols-3">
-            <TabsTrigger value="week">{t('gamification.filters.period.week', 'This week')}</TabsTrigger>
-            <TabsTrigger value="month">{t('gamification.filters.period.month', 'This month')}</TabsTrigger>
-            <TabsTrigger value="allTime">{t('gamification.filters.period.allTime', 'All time')}</TabsTrigger>
+            <TabsTrigger value="week">Esta semana</TabsTrigger>
+            <TabsTrigger value="month">Este mês</TabsTrigger>
+            <TabsTrigger value="allTime">Todos os tempos</TabsTrigger>
           </TabsList>
         </Tabs>
       </div>
 
       <div>
-        <h4 className="text-sm font-medium mb-2">{t('gamification.filters.category.label', 'Category')}</h4>
+        <h4 className="text-sm font-medium mb-2">Categoria</h4>
         <Tabs defaultValue={filters.category} className="w-full" onValueChange={handleCategoryChange}>
           <TabsList className="grid grid-cols-3">
-            <TabsTrigger value="overall">{t('gamification.filters.category.overall', 'Overall')}</TabsTrigger>
-            <TabsTrigger value="interactions">{t('gamification.filters.category.interactions', 'Interactions')}</TabsTrigger>
-            <TabsTrigger value="holders">{t('gamification.filters.category.holders', 'Holders')}</TabsTrigger>
+            <TabsTrigger value="overall">Geral</TabsTrigger>
+            <TabsTrigger value="interactions">Interações</TabsTrigger>
+            <TabsTrigger value="holders">Holders</TabsTrigger>
           </TabsList>
         </Tabs>
       </div>

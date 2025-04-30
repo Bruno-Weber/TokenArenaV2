@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import AppLayout from "@/components/AppLayout";
@@ -8,14 +7,11 @@ import { useToast } from "@/components/ui/use-toast";
 import { Trophy, Vote, Zap } from "lucide-react";
 import TransactionStatus from "@/components/TransactionStatus";
 import { mockTransactions } from "@/components/MockData";
-import { useLanguage } from "@/contexts/LanguageContext";
-
 const Index = () => {
-  const { toast } = useToast();
-  const { t } = useLanguage();
-  
-  return (
-    <AppLayout>
+  const {
+    toast
+  } = useToast();
+  return <AppLayout>
       {/* Hero Section */}
       <Hero />
 
@@ -28,16 +24,14 @@ const Index = () => {
       {/* Activities Feed */}
       <section className="py-12">
         <div className="container mx-auto">
-          <h2 className="text-2xl font-bold mb-8">{t('home.recentActivities', 'Atividades Recentes')}</h2>
+          <h2 className="text-2xl font-bold mb-8">Atividades Recentes</h2>
           <div className="space-y-4">
             {mockTransactions.slice(0, 5).map(tx => <TransactionStatus key={tx.hash} hash={tx.hash} status={tx.status} timestamp={new Date(tx.timestamp).toLocaleTimeString('pt-BR')} message={tx.message} />)}
           </div>
         </div>
       </section>
-    </AppLayout>
-  );
+    </AppLayout>;
 };
-
 const FeatureCard = ({
   icon,
   title,
@@ -55,5 +49,4 @@ const FeatureCard = ({
       <p className="text-muted-foreground">{description}</p>
     </div>;
 };
-
 export default Index;
