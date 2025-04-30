@@ -2,87 +2,48 @@
 import React, { useEffect, useState } from "react";
 import AppLayout from "@/components/AppLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
-
-// Import documentation files
-const overviewDoc = import.meta.glob("/src/docs/docs/overview.md", { eager: true });
-const getStartedDoc = import.meta.glob("/src/docs/docs/get-started.md", { eager: true });
-const marketDoc = import.meta.glob("/src/docs/docs/market.md", { eager: true });
-const votingDoc = import.meta.glob("/src/docs/docs/voting.md", { eager: true });
-const walletDoc = import.meta.glob("/src/docs/docs/wallet.md", { eager: true });
-const nftMarketDoc = import.meta.glob("/src/docs/docs/nft-market.md", { eager: true });
-const createTokenDoc = import.meta.glob("/src/docs/docs/create-token.md", { eager: true });
-const stakingDoc = import.meta.glob("/src/docs/docs/staking.md", { eager: true });
-
-// Simple markdown renderer (in a real app, you'd use a proper markdown parser)
-const renderMarkdown = (content: string) => {
-  // For this demo, we're just displaying the raw markdown
-  // In a real implementation, you'd use a markdown renderer like react-markdown
-  return (
-    <div className="prose prose-invert max-w-none">
-      <pre className="whitespace-pre-wrap">{content}</pre>
-    </div>
-  );
-};
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
 
 const Documentation = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [docContent, setDocContent] = useState<string>("");
 
-  // Function to fetch the markdown content
-  const fetchDoc = (docPath: string) => {
-    // In a real app, you'd fetch the actual markdown file
-    // For this demo, we're using the imported content
-    switch (docPath) {
-      case "overview":
-        return "/src/docs/docs/overview.md";
-      case "get-started":
-        return "/src/docs/docs/get-started.md";
-      case "market":
-        return "/src/docs/docs/market.md";
-      case "voting":
-        return "/src/docs/docs/voting.md";
-      case "wallet":
-        return "/src/docs/docs/wallet.md";
-      case "nft-market":
-        return "/src/docs/docs/nft-market.md";
-      case "create-token":
-        return "/src/docs/docs/create-token.md";
-      case "staking":
-        return "/src/docs/docs/staking.md";
-      default:
-        return "/src/docs/docs/overview.md";
+  // Function to fetch markdown content
+  const fetchMarkdown = async (docPath: string) => {
+    try {
+      const response = await fetch(`/src/docs/docs/${docPath}.md`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch ${docPath}.md`);
+      }
+      const text = await response.text();
+      return text;
+    } catch (error) {
+      console.error("Error fetching markdown:", error);
+      return `# Error Loading Documentation\n\nUnable to load the requested document.`;
     }
   };
 
   useEffect(() => {
-    const docPath = fetchDoc(activeTab);
+    // Fetch the markdown content when the active tab changes
+    const loadContent = async () => {
+      const content = await fetchMarkdown(activeTab);
+      setDocContent(content);
+    };
     
-    // In a real implementation you would fetch the MD file
-    // For this demo, we're simulating content from our imported files
-    let content = "# Loading documentation...";
-    
-    if (activeTab === "overview") {
-      content = "# TokenArena Documentation\n\nWelcome to the TokenArena documentation! Here you'll find guides and information about how to use our platform.";
-    } else if (activeTab === "get-started") {
-      content = "# Getting Started\n\nLearn how to set up your account and make your first steps in TokenArena.";
-    } else if (activeTab === "market") {
-      content = "# Token Market\n\nExplore the fan token marketplace and learn how to buy and sell tokens.";
-    } else if (activeTab === "voting") {
-      content = "# Voting System\n\nUnderstand how to participate in team decisions through the voting system.";
-    } else if (activeTab === "wallet") {
-      content = "# Wallet\n\nManage your tokens and track your portfolio performance.";
-    } else if (activeTab === "nft-market") {
-      content = "# NFT Marketplace\n\nCollect and trade unique digital assets from your favorite teams.";
-    } else if (activeTab === "create-token") {
-      content = "# Create Token\n\nLearn how teams can create their own fan tokens on the platform.";
-    } else if (activeTab === "staking") {
-      content = "# Staking\n\nEarn rewards by locking your tokens for a specified period.";
-    }
-    
-    setDocContent(content);
+    loadContent();
   }, [activeTab]);
+
+  // Simple markdown renderer (in a real app, you'd use a proper markdown parser)
+  const renderMarkdown = (content: string) => {
+    // For this demo, we're just displaying the raw markdown
+    // In a real implementation, you'd use a markdown renderer like react-markdown
+    return (
+      <div className="prose prose-invert max-w-none">
+        <pre className="whitespace-pre-wrap">{content}</pre>
+      </div>
+    );
+  };
 
   const sidebarItems = [
     { id: "overview", label: "Overview" },
