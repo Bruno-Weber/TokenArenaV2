@@ -15,6 +15,7 @@ import Club from "./pages/Club";
 import CreateToken from "./pages/CreateToken";
 import Voting from "./pages/Voting";
 import NFTMarket from "./pages/NFTMarket";
+import Documentation from "./pages/Documentation";
 import Confetti from "./components/voting/Confetti";
 import { useState } from "react";
 
@@ -40,6 +41,7 @@ const App = () => {
             <Route path="/create-token" element={<CreateToken />} />
             <Route path="/voting" element={<Voting />} />
             <Route path="/nft-market" element={<NFTMarket />} />
+            <Route path="/documentation" element={<Documentation />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
