@@ -9,6 +9,14 @@ export const languageOptions = [
 ];
 
 export const translations = {
+  home: {
+    recentActivities: {
+      pt: 'Atividades Recentes',
+      en: 'Recent Activities',
+      fr: 'Activités Récentes',
+      es: 'Actividades Recientes'
+    }
+  },
   gamification: {
     title: {
       pt: 'Ranking dos Clubes',

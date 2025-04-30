@@ -1,12 +1,14 @@
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Language, LanguageOption } from '@/types/language';
-import { languageOptions, translations } from '@/lib/translations';
+import { languageOptions } from '@/lib/translations';
+import '../lib/i18n'; // Import i18n configuration
 
 interface LanguageContextType {
   language: Language;
   setLanguage: (language: Language) => void;
-  t: (section: string, key: string) => string;
+  t: (key: string, defaultValue?: string) => string;
   languageOptions: LanguageOption[];
 }
 
@@ -25,42 +27,26 @@ interface LanguageProviderProps {
 }
 
 export const LanguageProvider = ({ children }: LanguageProviderProps) => {
-  const [language, setLanguage] = useState<Language>('pt');
+  const { t, i18n } = useTranslation();
+  
+  // Get current language as our Language type
+  const language = i18n.language.split('-')[0] as Language;
 
-  // Translation function
-  const t = (section: string, key: string): string => {
-    try {
-      if (!section || !key) return key || '';
-      
-      // Split by dots to access nested properties
-      const sectionParts = section.split('.');
-      let translationSection: any = translations;
-      
-      // Navigate through the sections
-      for (const part of sectionParts) {
-        if (!translationSection[part]) {
-          return key;
-        }
-        translationSection = translationSection[part];
-      }
-      
-      // Access the key in the final section
-      if (translationSection[key] && translationSection[key][language]) {
-        return translationSection[key][language];
-      }
-      
-      return key;
-    } catch (error) {
-      console.error(`Translation error for ${section}.${key}:`, error);
-      return key;
-    }
+  // Set language function that works with i18next
+  const setLanguage = (newLanguage: Language) => {
+    i18n.changeLanguage(newLanguage);
+  };
+
+  // Translation function that supports both dot notation and default values
+  const translate = (key: string, defaultValue?: string): string => {
+    return t(key, defaultValue || key);
   };
 
   return (
     <LanguageContext.Provider value={{ 
       language, 
       setLanguage, 
-      t, 
+      t: translate, 
       languageOptions: languageOptions as LanguageOption[] 
     }}>
       {children}
