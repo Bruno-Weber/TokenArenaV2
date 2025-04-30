@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/use-toast";
 import { ExternalLink, ChevronRight, Users, TrendingUp, Trophy } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { useTranslation } from "react-i18next";
 
 // Team logo mappings
 const teamLogos: Record<string, string> = {
@@ -43,6 +44,7 @@ const FanTokenCard = ({
   category,
 }: FanTokenProps) => {
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleBuy = () => {
@@ -50,8 +52,8 @@ const FanTokenCard = ({
     setTimeout(() => {
       setIsLoading(false);
       toast({
-        title: "Coming Soon!",
-        description: "Token purchase functionality will be available in the next update.",
+        title: t('common.comingSoon'),
+        description: t('common.tokenPurchaseMessage'),
       });
     }, 1500);
   };
@@ -123,7 +125,7 @@ const FanTokenCard = ({
         <CardContent className="py-2 relative z-10 flex-grow">
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div className="flex flex-col">
-              <span className="text-white/60">Price</span>
+              <span className="text-white/60">{t('common.price')}</span>
               <div className="font-medium flex items-center gap-1">
                 <span className="text-white">${formatNumber(price)}</span>
                 <Badge
@@ -136,7 +138,7 @@ const FanTokenCard = ({
               </div>
             </div>
             <div className="flex flex-col">
-              <span className="text-white/60">Supply</span>
+              <span className="text-white/60">{t('common.supply')}</span>
               <div className="font-medium text-white">{supply}</div>
             </div>
           </div>
@@ -144,15 +146,15 @@ const FanTokenCard = ({
           <div className="flex items-center gap-4 mt-4 text-xs text-white/60">
             <div className="flex items-center gap-1">
               <Users className="h-3 w-3" />
-              <span>{holders.toLocaleString()} holders</span>
+              <span>{holders.toLocaleString()} {t('common.holders')}</span>
             </div>
             <div className="flex items-center gap-1">
               <Trophy className="h-3 w-3" />
-              <span>Rank #12</span>
+              <span>{t('common.rank')} #12</span>
             </div>
             <div className="flex items-center gap-1">
               <TrendingUp className="h-3 w-3" />
-              <span>Active</span>
+              <span>{t('common.active')}</span>
             </div>
           </div>
         </CardContent>
@@ -167,7 +169,7 @@ const FanTokenCard = ({
             }}
           >
             <ExternalLink className="h-3 w-3 mr-1" />
-            Explore
+            {t('common.explore')}
           </Button>
           <Button
             variant="default"
@@ -178,11 +180,11 @@ const FanTokenCard = ({
           >
             {isLoading ? (
               <>
-                <span className="animate-spin mr-1">⭮</span>Loading...
+                <span className="animate-spin mr-1">⭮</span>{t('common.loading')}
               </>
             ) : (
               <>
-                Get Token
+                {t('common.getToken')}
                 <ChevronRight className="h-3 w-3 ml-1" />
               </>
             )}

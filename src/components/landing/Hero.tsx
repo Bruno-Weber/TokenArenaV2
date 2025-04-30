@@ -4,6 +4,7 @@ import { Rocket, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useWallet } from "./useWallet";
+import { useTranslation } from "react-i18next";
 
 const Hero = () => {
   const {
@@ -14,6 +15,8 @@ const Hero = () => {
     connect,
     disconnect
   } = useWallet();
+  
+  const { t } = useTranslation();
 
   return (
     <div className="relative min-h-[80vh] flex flex-col items-center justify-center text-center px-4">
@@ -32,19 +35,19 @@ const Hero = () => {
             className="text-5xl md:text-7xl font-bold tracking-tight"
           >
             <span className="inline-block hover-scale transition-all text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">
-              Conectando&ensp;
+              {t('landing.hero.connecting')}&ensp;
             </span>
             <span className="inline-block bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(139,92,246,0.6)] animate-text-shimmer hover-scale transition-all">
-              Torcedores
+              {t('landing.hero.fans')}
             </span>
             <span className="inline-block text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)] hover-scale transition-all">
-              &ensp;e&ensp;
+              &ensp;{t('landing.hero.and')}&ensp;
             </span>
             <span className="inline-block bg-gradient-to-r from-[#D946EF] to-[#8B5CF6] bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(217,70,239,0.6)] animate-text-shimmer hover-scale transition-all">
-              Clubes
+              {t('landing.hero.clubs')}
             </span>
             <span className="inline-block text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)] hover-scale transition-all">
-              &ensp;pelo&ensp;Mundo
+              &ensp;{t('landing.hero.worldwide')}
             </span>
           </motion.h1>
 
@@ -63,7 +66,7 @@ const Hero = () => {
             }}
             className="text-xl text-white/90 max-w-2xl mx-auto animate-slide-up"
           >
-            Dê poder para a torcida e valor para o seu clube - tudo em um só lugar.
+            {t('landing.hero.subtitle')}
           </motion.p>
 
           <motion.div
@@ -88,7 +91,7 @@ const Hero = () => {
             >
               <Link to="/market">
                 <Rocket className="mr-2 h-5 w-5" />
-                Explorar Fan Tokens
+                {t('landing.hero.exploreFanTokens')}
               </Link>
             </Button>
 
@@ -100,7 +103,7 @@ const Hero = () => {
             >
               <Link to="/create-token">
                 <Plus className="mr-2 h-5 w-5" />
-                Criar Fan Token
+                {t('landing.hero.createFanToken')}
               </Link>
             </Button>
           </motion.div>
