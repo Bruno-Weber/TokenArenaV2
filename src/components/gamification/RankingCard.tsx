@@ -1,11 +1,9 @@
-
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
-import { Trophy, TrendingUp, TrendingDown, Users, Star, Award } from "lucide-react";
+import { Trophy, TrendingUp, TrendingDown, Users, Award } from "lucide-react";
 import { ClubRanking } from '@/types/gamification';
 import { useTranslation } from 'react-i18next';
 

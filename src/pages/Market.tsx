@@ -9,8 +9,10 @@ import AppLayout from "@/components/AppLayout";
 import FanTokenCard from "@/components/FanTokenCard";
 import { Search, FilterX, ArrowUpDown } from "lucide-react";
 import { mockFanTokens } from "@/lib/web3";
+import { useTranslation } from "react-i18next";
 
 const Market = () => {
+  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("price-high");
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
@@ -46,15 +48,15 @@ const Market = () => {
   return (
     <AppLayout>
       <div className="py-8">
-        <h1 className="text-3xl font-bold mb-2">Fan Token Market</h1>
-        <p className="text-muted-foreground mb-8">Discover and analyze fan tokens from various teams and sports</p>
+        <h1 className="text-3xl font-bold mb-2">{t('market.title', 'Fan Token Market')}</h1>
+        <p className="text-muted-foreground mb-8">{t('market.subtitle', 'Discover and analyze fan tokens from various teams and sports')}</p>
 
         {/* Filters */}
         <div className="flex flex-col md:flex-row gap-4 mb-8">
           <div className="flex flex-1 relative">
             <Input
               type="text"
-              placeholder="Search tokens by name or symbol..."
+              placeholder={t('market.searchPlaceholder', 'Search tokens by name or symbol...')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-10"
@@ -65,15 +67,15 @@ const Market = () => {
           <div className="flex gap-2">
             <Select value={sortBy} onValueChange={setSortBy}>
               <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Sort by" />
+                <SelectValue placeholder={t('market.sortBy', 'Sort by')} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="price-high">Price (High to Low)</SelectItem>
-                  <SelectItem value="price-low">Price (Low to High)</SelectItem>
-                  <SelectItem value="change-high">% Change (High to Low)</SelectItem>
-                  <SelectItem value="change-low">% Change (Low to High)</SelectItem>
-                  <SelectItem value="holders">Most Holders</SelectItem>
+                  <SelectItem value="price-high">{t('market.priceHighToLow', 'Price (High to Low)')}</SelectItem>
+                  <SelectItem value="price-low">{t('market.priceLowToHigh', 'Price (Low to High)')}</SelectItem>
+                  <SelectItem value="change-high">{t('market.changeHighToLow', '% Change (High to Low)')}</SelectItem>
+                  <SelectItem value="change-low">{t('market.changeLowToHigh', '% Change (Low to High)')}</SelectItem>
+                  <SelectItem value="holders">{t('market.mostHolders', 'Most Holders')}</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -84,7 +86,7 @@ const Market = () => {
               className="flex items-center gap-2"
             >
               <FilterX className="h-4 w-4" />
-              Reset
+              {t('market.reset', 'Reset')}
             </Button>
           </div>
         </div>
@@ -92,11 +94,11 @@ const Market = () => {
         {/* Categories */}
         <Tabs defaultValue="all" className="w-full mb-8">
           <TabsList>
-            <TabsTrigger value="all" onClick={() => setCategoryFilter(null)}>All Sports</TabsTrigger>
-            <TabsTrigger value="soccer" onClick={() => setCategoryFilter("soccer")}>Soccer</TabsTrigger>
-            <TabsTrigger value="basketball" onClick={() => setCategoryFilter("basketball")}>Basketball</TabsTrigger>
-            <TabsTrigger value="baseball" onClick={() => setCategoryFilter("baseball")}>Baseball</TabsTrigger>
-            <TabsTrigger value="hockey" onClick={() => setCategoryFilter("hockey")}>Hockey</TabsTrigger>
+            <TabsTrigger value="all" onClick={() => setCategoryFilter(null)}>{t('market.allSports', 'All Sports')}</TabsTrigger>
+            <TabsTrigger value="soccer" onClick={() => setCategoryFilter("soccer")}>{t('market.soccer', 'Soccer')}</TabsTrigger>
+            <TabsTrigger value="basketball" onClick={() => setCategoryFilter("basketball")}>{t('market.basketball', 'Basketball')}</TabsTrigger>
+            <TabsTrigger value="baseball" onClick={() => setCategoryFilter("baseball")}>{t('market.baseball', 'Baseball')}</TabsTrigger>
+            <TabsTrigger value="hockey" onClick={() => setCategoryFilter("hockey")}>{t('market.hockey', 'Hockey')}</TabsTrigger>
           </TabsList>
         </Tabs>
 
