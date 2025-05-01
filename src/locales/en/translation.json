@@ -46,11 +46,6 @@
     "createToken": "Create Token",
     "nftMarket": "NFT Market"
   },
-  "footer": {
-    "copyright": "© 2025 TokenArena | Powered by Chiliz Chain",
-    "terms": "Terms of Use",
-    "privacy": "Privacy"
-  },
   "landing": {
     "hero": {
       "connecting": "Connecting",

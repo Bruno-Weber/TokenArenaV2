@@ -2,12 +2,14 @@
 import { ClubStats as ClubStatsType } from "@/types/club";
 import { Card, CardContent } from "@/components/ui/card";
 import { Users, Coins, Trophy } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface ClubStatsProps {
   stats: ClubStatsType;
 }
 
 const ClubStats = ({ stats }: ClubStatsProps) => {
+  const { t } = useTranslation();
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       <Card>
@@ -17,7 +19,7 @@ const ClubStats = ({ stats }: ClubStatsProps) => {
               <Coins className="h-6 w-6 text-primary" />
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Total em Stake</p>
+              <p className="text-sm text-muted-foreground">{t('club.totalStaked', 'Total em Stake')}</p>
               <p className="text-2xl font-bold">{stats.totalStaked.toLocaleString()}</p>
             </div>
           </div>
@@ -31,7 +33,7 @@ const ClubStats = ({ stats }: ClubStatsProps) => {
               <Users className="h-6 w-6 text-primary" />
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Total de Holders</p>
+              <p className="text-sm text-muted-foreground">{t('club.totalHolders', 'Total de Holders')}</p>
               <p className="text-2xl font-bold">{stats.holders.toLocaleString()}</p>
             </div>
           </div>
