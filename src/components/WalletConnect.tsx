@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Wallet } from "lucide-react";
@@ -28,11 +29,6 @@ const WalletConnect = ({
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [hasProvider, setHasProvider] = useState(false);
-
-  useEffect(() => {
-    setHasProvider(window.ethereum !== undefined);
-  }, []);
 
   const handleConnectWallet = async (walletType: WalletType) => {
     setIsLoading(true);
@@ -95,7 +91,7 @@ const WalletConnect = ({
         <NotificationDropdown />
         <ConnectedWallet
           address={address}
-          balance={balance}
+          balance={balance || "0.00"}
           onDisconnect={onDisconnect}
         />
       </div>
@@ -150,11 +146,6 @@ const WalletConnect = ({
       {isLoading && (
         <span className="text-white text-sm font-medium ml-2 animate-fade-in">Conectando...</span>
       )}
-      {/* Se quiser mostrar erro, passe error como prop para WalletConnect e exiba aqui:
-      {error && (
-        <span className="text-red-400 text-sm font-medium ml-2 animate-fade-in">{error}</span>
-      )}
-      */}
     </div>
   );
 };

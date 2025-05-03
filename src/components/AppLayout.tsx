@@ -1,4 +1,5 @@
-import React from "react";
+
+import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useWallet } from "@/components/landing/useWallet";
 import { Home, Activity, Wallet, Users, BarChart3, Settings, Vote, PackageOpen, Trophy } from "lucide-react";
@@ -56,7 +57,7 @@ const SidebarLink = ({ to, icon, label }: SidebarLinkProps) => {
 
 const AppLayout = ({ children }: AppLayoutProps) => {
   const location = useLocation();
-  const { walletAddress, chzBalance, connect, disconnect, loading } = useWallet();
+  const { walletAddress, chzBalance, connect, disconnect } = useWallet();
   const { t } = useTranslation();
 
   const isConnected = !!walletAddress;
@@ -110,7 +111,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
               address={walletAddress}
               onConnect={handleConnect}
               onDisconnect={handleDisconnect}
-              balance={chzBalance ?? "0.00"}
+              balance={chzBalance || "0.00"}
             />
           </div>
         </div>

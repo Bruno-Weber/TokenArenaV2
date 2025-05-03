@@ -10,9 +10,21 @@ import SendTokens from "@/components/wallet/SendTokens";
 import AssetItem from "@/components/wallet/AssetList";
 import StakingSection from "@/components/wallet/StakingSection";
 import { useWallet } from "@/components/landing/useWallet";
+import { useToast } from "@/components/ui/use-toast";
 
 const Wallet = () => {
   const { walletAddress, chzBalance } = useWallet();
+  const { toast } = useToast();
+  
+  const handleCopyAddress = () => {
+    if (walletAddress) {
+      navigator.clipboard.writeText(walletAddress);
+      toast({
+        title: "Endereço copiado",
+        description: "O endereço da carteira foi copiado para a área de transferência"
+      });
+    }
+  };
   
   return (
     <AppLayout>
@@ -25,7 +37,7 @@ const Wallet = () => {
             <WalletInfo 
               address={walletAddress || "Connect your wallet"}
               balance={chzBalance || "0.00"}
-              onCopy={() => {}}
+              onCopy={handleCopyAddress}
             />
             <SendTokens mockBalance={chzBalance || "0.00"} />
           </div>
