@@ -1,9 +1,7 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { ExternalLink, Copy, Check } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 interface ConnectedWalletProps {

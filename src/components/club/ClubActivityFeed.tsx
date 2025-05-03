@@ -1,4 +1,3 @@
-
 import TransactionStatus from "@/components/TransactionStatus";
 import { mockTransactions } from "@/components/MockData";
 

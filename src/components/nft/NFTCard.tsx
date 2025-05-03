@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -53,7 +52,7 @@ const NFTCard: React.FC<NFTCardProps> = ({ nft, onMint }) => {
         <div className="flex items-center justify-between w-full">
           <div className="text-sm">
             <span className="text-gray-400">Price</span>
-            <p className="text-white font-bold">{nft.price} ETH</p>
+            <p className="text-white font-bold">{nft.price} CHZ</p>
           </div>
           <Button 
             onClick={() => onMint(nft)}
