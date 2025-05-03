@@ -149,6 +149,8 @@
   "voting": {
     "title": "Club Voting",
     "subtitle": "Participate in important decisions and help shape the future of your favorite clubs",
+    "active": "Active",
+"past": "Closed",
     "activeVotes": "Active Votes",
     "pastVotes": "Past Votes",
     "upcomingVotes": "Upcoming Votes",

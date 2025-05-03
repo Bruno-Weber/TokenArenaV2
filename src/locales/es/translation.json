@@ -149,6 +149,8 @@
   "voting": {
     "title": "Votaciones de Clubes",
     "subtitle": "Participa en decisiones importantes y ayuda a definir el futuro de tus clubes favoritos",
+    "active": "Activas",
+    "past": "Finalizadas",
     "activeVotes": "Votaciones Activas",
     "pastVotes": "Votaciones Pasadas",
     "upcomingVotes": "Próximas Votaciones",

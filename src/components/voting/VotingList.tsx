@@ -43,8 +43,8 @@ const VotingList = () => {
     <div className="space-y-6 animate-fade-in">
       <Tabs defaultValue="active" className="w-full">
         <TabsList className="grid w-full max-w-md mx-auto grid-cols-2">
-          <TabsTrigger value="active">{t('voting.activeVotes')}</TabsTrigger>
-          <TabsTrigger value="past">{t('voting.pastVotes')}</TabsTrigger>
+          <TabsTrigger value="active">{t('voting.active')}</TabsTrigger>
+          <TabsTrigger value="past">{t('voting.past')}</TabsTrigger>
         </TabsList>
         <TabsContent value="active" className="mt-6 space-y-6">
           {mockActiveVotes.map((vote) => (
