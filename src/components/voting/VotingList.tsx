@@ -15,8 +15,8 @@ const VotingList = () => {
     // Check if already voted
     if (votes[voteId]) {
       toast({
-        title: t('voting.alreadyVoted'),
-        description: t('voting.alreadyVotedDesc'),
+        title: t('voting.active'),
+        description: t('voting.past'),
         variant: "default",
       });
       return;
