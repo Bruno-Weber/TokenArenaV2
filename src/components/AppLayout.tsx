@@ -1,8 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useWallet } from "@/components/landing/useWallet";
-import { Button } from "@/components/ui/button";
-import { Home, Activity, Wallet, Users, BarChart3, Settings, Vote, Rocket, PackageOpen, Trophy } from "lucide-react";
+import { Home, Activity, Wallet, Users, BarChart3, Settings, Vote, PackageOpen, Trophy } from "lucide-react";
 import { BackgroundPaths } from "@/components/ui/background-paths";
 // Logo is loaded directly from public folder
 import WalletConnect from "@/components/WalletConnect";

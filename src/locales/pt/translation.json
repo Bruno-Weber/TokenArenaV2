@@ -188,6 +188,8 @@
     "minimumTokens": "Tokens Mínimos",
     "eligibleToVote": "Você está elegível para votar",
     "notEligibleToVote": "Você não está elegível para votar",
+    "voteSubmitted": "Voto registrado!",
+    "voteSubmittedDesc": "Seu voto foi computado com sucesso.",
     "connectToVote": "Conecte sua carteira para votar"
   },
   "activity": {
