@@ -2,12 +2,15 @@
 import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useWallet } from "@/components/landing/useWallet";
-import { Home, Activity, Wallet, Users, BarChart3, Settings, Vote, PackageOpen, Trophy } from "lucide-react";
+import { Home, Activity, Wallet, Users, BarChart3, Settings, Vote, PackageOpen, Trophy, Menu } from "lucide-react";
 import { BackgroundPaths } from "@/components/ui/background-paths";
 // Logo is loaded directly from public folder
 import WalletConnect from "@/components/WalletConnect";
 import LanguageSelector from "@/components/LanguageSelector";
 import { useTranslation } from "react-i18next";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Button } from "@/components/ui/button";
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -55,10 +58,29 @@ const SidebarLink = ({ to, icon, label }: SidebarLinkProps) => {
   );
 };
 
+const MobileSidebarLink = ({ to, icon, label }: SidebarLinkProps) => {
+  const isActive = window.location.pathname === to;
+  
+  return (
+    <Link
+      to={to}
+      className={`flex items-center gap-3 p-2 rounded-md transition-colors ${
+        isActive
+          ? "bg-sidebar-accent text-sidebar-accent-foreground"
+          : "text-sidebar-foreground/80 hover:text-sidebar-foreground hover:bg-sidebar-accent/50"
+      }`}
+    >
+      {icon}
+      <span>{label}</span>
+    </Link>
+  );
+};
+
 const AppLayout = ({ children }: AppLayoutProps) => {
   const location = useLocation();
   const { walletAddress, chzBalance, connect, disconnect } = useWallet();
   const { t } = useTranslation();
+  const isMobile = useIsMobile();
 
   const isConnected = !!walletAddress;
 
@@ -106,6 +128,28 @@ const AppLayout = ({ children }: AppLayoutProps) => {
           
           <div className="flex items-center gap-2">
             <LanguageSelector />
+            {isMobile && (
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="icon" className="md:hidden">
+                    <Menu className="h-6 w-6" />
+                    <span className="sr-only">Menu</span>
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="right" className="w-[75vw] sm:w-[350px] bg-token-background">
+                  <div className="flex flex-col mt-6 space-y-2">
+                    {sidebarLinks.map((link) => (
+                      <MobileSidebarLink 
+                        key={link.to} 
+                        to={link.to} 
+                        icon={link.icon} 
+                        label={link.label} 
+                      />
+                    ))}
+                  </div>
+                </SheetContent>
+              </Sheet>
+            )}
             <WalletConnect
               isConnected={isConnected}
               address={walletAddress}
@@ -147,7 +191,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                 {t('footer.copyright')}
               </p>
             </div>
-            <div className="flex gap-4">
+            <div className="flex flex-wrap gap-4 justify-center">
               <a href="#" className="text-sm text-gray-400 hover:text-gray-100">
                 {t('footer.terms')}
               </a>

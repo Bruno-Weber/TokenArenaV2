@@ -6,6 +6,7 @@ import { Wallet } from "lucide-react";
 import { NETWORKS } from "@/lib/web3";
 import ConnectedWallet from "./wallet/ConnectedWallet";
 import { useTranslation } from "react-i18next";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 import type { WalletType } from "@/components/landing/useWallet";
 import NotificationDropdown from "./notifications/NotificationDropdown";
@@ -29,6 +30,7 @@ const WalletConnect = ({
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const isMobile = useIsMobile();
 
   const handleConnectWallet = async (walletType: WalletType) => {
     setIsLoading(true);
@@ -88,7 +90,7 @@ const WalletConnect = ({
   if (isConnected && address) {
     return (
       <div className="flex items-center gap-2">
-        <NotificationDropdown />
+        {!isMobile && <NotificationDropdown />}
         <ConnectedWallet
           address={address}
           balance={balance || "0.00"}
@@ -100,14 +102,17 @@ const WalletConnect = ({
 
   return (
     <div className="flex items-center gap-2">
-      <NotificationDropdown />
-      <Button className="text-white flex items-center gap-2 bg-violet-800 hover:bg-violet-700" onClick={() => setIsOpen(true)}>
+      {!isMobile && <NotificationDropdown />}
+      <Button 
+        className={`text-white flex items-center gap-1 bg-violet-800 hover:bg-violet-700 ${isMobile ? 'px-2' : 'px-4'}`} 
+        onClick={() => setIsOpen(true)}
+      >
         <Wallet className="h-4 w-4" />
-        {t('wallet.connect')}
+        {!isMobile && t('wallet.connect')}
       </Button>
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center min-h-screen bg-black/60">
-          <div className="bg-token-background rounded-lg shadow-xl p-16 min-w-[320px] relative">
+          <div className="bg-token-background rounded-lg shadow-xl p-4 sm:p-16 min-w-[280px] sm:min-w-[320px] w-[90vw] sm:w-auto max-w-md relative">
             <button className="absolute top-2 right-2 text-white/60 hover:text-white text-xl" onClick={() => setIsOpen(false)}>&times;</button>
             <h2 className="text-xl font-bold mb-2 text-white">{t('wallet.connectWalletTitle', 'Conectar carteira')}</h2>
             <p className="text-white/70 mb-4">{t('wallet.chooseWallet', 'Escolha uma carteira para conectar à Chiliz Chain')}</p>
