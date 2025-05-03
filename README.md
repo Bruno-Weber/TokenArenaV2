@@ -91,10 +91,10 @@ VITE_WEB3_PROVIDER=https://provider.url
 
 ## Roadmap
 
-- [x] Implementação do marketplace de fan tokens
 - [x] Sistema de staking e recompensas
 - [x] Mercado de NFTs
 - [x] Sistema de votação
+- [ ] Implementação do marketplace de fan tokens
 - [ ] Integração com blockchain real
 - [ ] App mobile
 - [ ] Suporte para múltiplos idiomas adicionais
@@ -107,6 +107,10 @@ Contribuições são bem-vindas! Por favor, sinta-se à vontade para submeter um
 
 Este projeto está licenciado sob a licença MIT - veja o arquivo LICENSE para mais detalhes.
 
+## Desenvolvedores
+- [Bruno Weber](https://www.linkedin.com/in/brunolweber/)
+- [Leo Schlanger](https://www.linkedin.com/in/leo-schlanger-226467192/)
+  
 ## Contato
 
-Para mais informações, entre em contato através de [email@exemplo.com](mailto:email@exemplo.com)
+Para mais informações, entre em contato através de [contato@tokenarena.club](mailto:contato@tokenarena.com)
