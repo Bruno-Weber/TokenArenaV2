@@ -9,10 +9,10 @@ import WalletInfo from "@/components/wallet/WalletInfo";
 import SendTokens from "@/components/wallet/SendTokens";
 import AssetItem from "@/components/wallet/AssetList";
 import StakingSection from "@/components/wallet/StakingSection";
+import { useWallet } from "@/components/landing/useWallet";
 
 const Wallet = () => {
-  const mockAddress = "0x1234567890abcdef1234567890abcdef12345678";
-  const mockBalance = "152.45";
+  const { walletAddress, chzBalance } = useWallet();
   
   return (
     <AppLayout>
@@ -23,11 +23,11 @@ const Wallet = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-1">
             <WalletInfo 
-              address={mockAddress}
-              balance={mockBalance}
+              address={walletAddress || "Connect your wallet"}
+              balance={chzBalance || "0.00"}
               onCopy={() => {}}
             />
-            <SendTokens mockBalance={mockBalance} />
+            <SendTokens mockBalance={chzBalance || "0.00"} />
           </div>
           
           <div className="lg:col-span-2">

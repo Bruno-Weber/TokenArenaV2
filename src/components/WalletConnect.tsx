@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -120,7 +119,7 @@ const WalletConnect = ({
               <Button
                 variant="outline"
                 className="flex items-center gap-3 border-token-purple text-white font-medium text-base px-6 py-3"
-                onClick={() => { onConnect('metamask'); setIsOpen(false); }}
+                onClick={() => handleConnectWallet('metamask')}
                 disabled={isLoading}
               >
                 <img src="/metamask.svg" alt="MetaMask" className="w-6 h-6 mr-2" />
@@ -129,7 +128,7 @@ const WalletConnect = ({
               <Button
                 variant="outline"
                 className="flex items-center gap-3 border-token-purple text-white font-medium text-base px-6 py-3"
-                onClick={() => { onConnect('rabby'); setIsOpen(false); }}
+                onClick={() => handleConnectWallet('rabby')}
                 disabled={isLoading}
               >
                 <img src="/images/rabby.png" alt="Rabby" className="w-6 h-6 mr-2" />
