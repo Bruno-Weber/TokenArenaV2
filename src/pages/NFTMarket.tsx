@@ -70,7 +70,7 @@ const NFTMarket = () => {
             <DialogHeader>
               <DialogTitle className="text-2xl font-bold text-white">Buy NFT</DialogTitle>
               <DialogDescription className="text-gray-400">
-                Are you sure you want to buy {selectedNFT?.name} for {selectedNFT?.price} ETH?
+                Are you sure you want to buy {selectedNFT?.name} for {selectedNFT?.price} CHZ?
               </DialogDescription>
             </DialogHeader>
             <div className="flex justify-end space-x-4 mt-4">

@@ -1,11 +1,9 @@
 
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Wallet, AlertCircle } from "lucide-react";
+import { Wallet } from "lucide-react";
 import { NETWORKS } from "@/lib/web3";
-import WalletOption from "./wallet/WalletOption";
 import ConnectedWallet from "./wallet/ConnectedWallet";
 import { useTranslation } from "react-i18next";
 

@@ -1,7 +1,5 @@
 
 import { Club } from "@/types/club";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
 import StakingModal from "@/components/staking/StakingModal";
 
 interface ClubBannerProps {
@@ -9,8 +7,6 @@ interface ClubBannerProps {
 }
 
 const ClubBanner = ({ club }: ClubBannerProps) => {
-  const { toast } = useToast();
-
   const handleStake = async (amount: string) => {
     // Simulate staking delay
     await new Promise((resolve) => setTimeout(resolve, 2000));

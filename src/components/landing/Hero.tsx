@@ -3,19 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Rocket, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useWallet } from "./useWallet";
 import { useTranslation } from "react-i18next";
 
 const Hero = () => {
-  const {
-    walletAddress,
-    chzBalance,
-    loading,
-    error,
-    connect,
-    disconnect
-  } = useWallet();
-  
   const { t } = useTranslation();
 
   return (
