@@ -22,20 +22,20 @@ export function useWallet() {
     setError(null);
     setLoading(true);
     try {
-      let ethereum;
-      if (wallet === "rabby" && (window as any).ethereum?.isRabby) {
-        ethereum = (window as any).ethereum;
-      } else if (wallet === "metamask" && (window as any).ethereum?.isMetaMask) {
-        ethereum = (window as any).ethereum;
-      } else if ((window as any).ethereum) {
+      let chiliz;
+      if (wallet === "rabby" && (window as any).chiliz?.isRabby) {
+        chiliz = (window as any).chiliz;
+      } else if (wallet === "metamask" && (window as any).chiliz?.isMetaMask) {
+        chiliz = (window as any).chiliz;
+      } else if ((window as any).chiliz) {
         // fallback: use whatever is injected
-        ethereum = (window as any).ethereum;
+        chiliz = (window as any).chiliz;
       } else {
         setError("Wallet não encontrada. Instale Rabby ou MetaMask.");
         setLoading(false);
         return;
       }
-      const browserProvider = new ethers.BrowserProvider(ethereum);
+      const browserProvider = new ethers.BrowserProvider(chiliz);
       setProvider(browserProvider);
       const accounts = await browserProvider.send("eth_requestAccounts", []);
       const address = accounts[0];
