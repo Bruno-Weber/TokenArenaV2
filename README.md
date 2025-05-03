@@ -1,73 +1,112 @@
-# Welcome to your Lovable project
 
-## Project info
+# Token Arena - Plataforma de Fan Tokens
 
-**URL**: https://lovable.dev/projects/c40d9639-cc91-4a15-b8c3-eb0afddb5ebe
+![Token Arena Logo](public/lovable-uploads/634fb5a1-528a-452b-96aa-7b92c47626f5.png)
 
-## How can I edit this code?
+## Visão Geral
 
-There are several ways of editing your application.
+Token Arena é uma plataforma de fan tokens construída para conectar fãs e clubes esportivos através de criptomoedas. A plataforma permite que usuários participem ativamente das decisões de seus clubes favoritos através do staking de tokens, votações em propostas oficiais e recompensas por engajamento.
 
-**Use Lovable**
+## Principais Recursos
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c40d9639-cc91-4a15-b8c3-eb0afddb5ebe) and start prompting.
+### Para Fãs
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Marketplace de Fan Tokens**: Compre, venda e troque tokens de seus clubes favoritos
+- **Sistema de Staking**: Faça stake dos seus tokens para ganhar recompensas e aumentar seu poder de voto
+- **Participação em Votações**: Vote em decisões importantes do clube usando seus tokens
+- **NFTs Colecionáveis**: Adquira itens digitais exclusivos do seu clube favorito
+- **Carteira Integrada**: Gerencie todos os seus ativos digitais em um só lugar
+- **Sistema de Ranqueamento**: Ganhe recompensas baseadas no seu nível de engajamento
 
-**Use your preferred IDE**
+### Para Clubes
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- **Criação de Fan Tokens**: Lance seu próprio token para engajar sua base de fãs
+- **Propostas de Votação**: Crie votações para envolver seus fãs em decisões do clube
+- **Análise de Engajamento**: Acompanhe métricas de participação e engajamento dos fãs
+- **Emissão de NFTs**: Crie e distribua itens digitais colecionáveis exclusivos
+- **Feed de Atividades**: Mantenha seus fãs informados sobre as últimas novidades
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Tecnologias Utilizadas
 
-Follow these steps:
+- **Frontend**: React + TypeScript
+- **Estilização**: Tailwind CSS + shadcn/ui
+- **Internacionalização**: i18next
+- **Animações**: Framer Motion
+- **Gráficos**: Recharts
+- **Web3**: Integração com carteiras via WalletConnect
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## Estrutura da Plataforma
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### Páginas Principais
 
-# Step 3: Install the necessary dependencies.
-npm i
+1. **Home**: Visão geral da plataforma, estatísticas e atividades recentes
+2. **Market**: Marketplace completo de fan tokens com filtros e categorias
+3. **NFT Market**: Mercado de NFTs colecionáveis dos clubes
+4. **Teams**: Lista de clubes participantes com detalhes e estatísticas
+5. **Voting**: Sistema de votações ativas para propostas dos clubes
+6. **Wallet**: Carteira digital para gerenciar todos os ativos
+7. **Gamification**: Sistema de ranqueamento e recompensas
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+### Recursos para Clubes
+
+- **Club Page**: Página dedicada com todas as informações do clube
+- **Activity Feed**: Feed de transações e atividades relacionadas ao clube
+- **Token Management**: Ferramentas para gestão do token do clube
+- **Staking Manager**: Controle de recompensas de staking para fãs
+
+## Começando
+
+### Requisitos
+
+- Node.js 16+ e NPM
+
+### Instalação
+
+```bash
+# Clonar o repositório
+git clone <URL_DO_REPOSITORIO>
+
+# Navegar para o diretório do projeto
+cd token-arena
+
+# Instalar dependências
+npm install
+
+# Iniciar o servidor de desenvolvimento
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### Configuração
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+O projeto utiliza variáveis de ambiente para configurações sensíveis:
 
-**Use GitHub Codespaces**
+```bash
+# Crie um arquivo .env na raiz do projeto
+touch .env
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# Adicione as variáveis necessárias
+VITE_API_URL=https://api.url
+VITE_WEB3_PROVIDER=https://provider.url
+```
 
-## What technologies are used for this project?
+## Roadmap
 
-This project is built with:
+- [x] Implementação do marketplace de fan tokens
+- [x] Sistema de staking e recompensas
+- [x] Mercado de NFTs
+- [x] Sistema de votação
+- [ ] Integração com blockchain real
+- [ ] App mobile
+- [ ] Suporte para múltiplos idiomas adicionais
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Contribuindo
 
-## How can I deploy this project?
+Contribuições são bem-vindas! Por favor, sinta-se à vontade para submeter um pull request.
 
-Simply open [Lovable](https://lovable.dev/projects/c40d9639-cc91-4a15-b8c3-eb0afddb5ebe) and click on Share -> Publish.
+## Licença
 
-## Can I connect a custom domain to my Lovable project?
+Este projeto está licenciado sob a licença MIT - veja o arquivo LICENSE para mais detalhes.
 
-Yes, you can!
+## Contato
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Para mais informações, entre em contato através de [email@exemplo.com](mailto:email@exemplo.com)
