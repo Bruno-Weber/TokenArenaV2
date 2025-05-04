@@ -167,8 +167,8 @@ export function useWallet() {
   }
 
   function disconnect() {
-    setWalletAddress(null);
-    setChzBalance(null);
+    setWalletAddress("");
+    setChzBalance("0.00");
     setProvider(null);
     setError(null);
     localStorage.removeItem("walletConnection");

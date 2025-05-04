@@ -1,35 +1,56 @@
-
-import React from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Copy, ExternalLink, QrCode, Send, ArrowDownUp, Wallet as WalletIcon } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { useWallet } from "../landing/useWallet";
 
 interface WalletInfoProps {
-  address: string;
-  balance: string;
   onCopy: () => void;
 }
 
-const WalletInfo = ({ address, balance }: WalletInfoProps) => {
+const WalletInfo = ({ }: WalletInfoProps) => {
   const { toast } = useToast();
-  const isConnected = address !== "Connect your wallet";
+  const { chzBalance, walletAddress } = useWallet();
+
+  const [balance, setBalance] = useState("0.00");
+  const [usdValue, setUsdValue] = useState("0.00");
+  const [address, setAddress] = useState(walletAddress || "Connect your wallet");
 
   const handleCopy = () => {
-    if (!isConnected) return;
-    
-    navigator.clipboard.writeText(address);
+    if (!walletAddress) return;
+
+    navigator.clipboard.writeText(walletAddress);
     toast({
       title: "Address Copied",
       description: "Wallet address has been copied to clipboard",
     });
   };
 
-  const calculateUsdValue = () => {
-    // Approximate CHZ price in USD - in a real application, this would come from an API
-    const chzPriceInUsd = 0.30;
-    const balanceNumber = parseFloat(balance) || 0;
-    return (balanceNumber * chzPriceInUsd).toFixed(2);
+  useEffect(() => {
+    setBalance(chzBalance || "0.00");
+    setAddress(walletAddress || "Connect your wallet");
+    fetchUsdValue();
+  }, [chzBalance, walletAddress]);
+
+  const fetchUsdValue = async () => {
+    const balanceNumber = parseFloat(chzBalance) || 0;
+
+    if (!walletAddress || balanceNumber === 0) {
+      setUsdValue("0.00");
+      return;
+    }
+
+    try {
+      const res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=chiliz&vs_currencies=usd");
+      const data = await res.json();
+      const price = data?.chiliz?.usd ?? 0;
+      const value = (balanceNumber * price).toFixed(2);
+      setUsdValue(value);
+    } catch (error) {
+      console.error("Failed to fetch CHZ price:", error);
+      setUsdValue("0.00");
+    }
   };
 
   return (
@@ -44,11 +65,11 @@ const WalletInfo = ({ address, balance }: WalletInfoProps) => {
           My Wallet
         </CardTitle>
         <CardDescription className="text-white/60">
-          {isConnected ? "Connected to Chiliz Chain" : "Not connected"}
+          {walletAddress ? "Connected to Chiliz Chain" : "Not connected"}
         </CardDescription>
       </CardHeader>
       <CardContent className="pb-2 relative">
-        {isConnected ? (
+        {walletAddress ? (
           <div className="flex items-center justify-between mb-4">
             <div className="font-mono text-sm bg-black/30 p-2 rounded-md overflow-hidden overflow-ellipsis backdrop-blur-sm border border-white/10">
               {address}
@@ -64,7 +85,7 @@ const WalletInfo = ({ address, balance }: WalletInfoProps) => {
                 variant="ghost" 
                 size="sm" 
                 className="h-8 w-8 p-0 hover:bg-white/10"
-                onClick={() => window.open(`https://chiliscan.com/address/${address}`, "_blank")}
+                onClick={() => window.open(`https://chiliscan.com/address/${walletAddress}`, "_blank")}
               >
                 <ExternalLink className="h-4 w-4" />
               </Button>
@@ -83,7 +104,7 @@ const WalletInfo = ({ address, balance }: WalletInfoProps) => {
           <div className="text-3xl font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
             {balance} CHZ
           </div>
-          <div className="text-sm text-white/60 mt-1">≈ ${calculateUsdValue()} USD</div>
+          <div className="text-sm text-white/60 mt-1">≈ ${usdValue} USD</div>
         </div>
       </CardContent>
       <CardFooter className="relative">
