@@ -15,7 +15,7 @@ export interface Web3Provider {
 // Chiliz Chain Network Constants
 export const NETWORKS = {
   CHILIZ_MAINNET: {
-    chainId: 88888,
+    chainId: 8895,
     name: "Chiliz Chain",
     rpcUrl: "https://rpc.ankr.com/chiliz",
     blockExplorer: "https://chiliscan.com",

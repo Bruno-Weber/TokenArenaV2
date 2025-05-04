@@ -1,10 +1,23 @@
-
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 
-// Contrato CHZ com o endereço corrigido (usando checksummed address)
-const CHZ_CONTRACT = "0x3506424F91fD5eBf2cD5F3aD5e437cD8B09038d1";
+const CHZ_CONTRACT = "0x3506424F91fFC5eBf2cD5F3aD5e437cD8B09038d1";
 const CHZ_DECIMALS = 18;
+const CHILIZ_CHAIN_ID_HEX = "0x15B38"; // 888888
+const CHILIZ_CHAIN_ID = 888888;
+
+const CHILIZ_PARAMS = {
+  chainId: CHILIZ_CHAIN_ID_HEX,
+  chainName: "Chiliz Chain",
+  nativeCurrency: {
+    name: "CHZ",
+    symbol: "CHZ",
+    decimals: 18,
+  },
+  rpcUrls: ["https://rpc.ankr.com/chiliz"],
+  blockExplorerUrls: ["https://chiliscan.com"],
+};
+
 const ERC20_ABI = [
   "function balanceOf(address owner) view returns (uint256)",
   "function decimals() view returns (uint8)",
@@ -13,7 +26,6 @@ const ERC20_ABI = [
 
 export type WalletType = "rabby" | "metamask";
 
-// Define o formato dos dados persistidos
 interface PersistedWallet {
   address: string;
   balance: string;
@@ -27,55 +39,43 @@ export function useWallet() {
   const [error, setError] = useState<string | null>(null);
   const [provider, setProvider] = useState<ethers.BrowserProvider | null>(null);
 
-  // Carrega os dados salvos ao inicializar
   useEffect(() => {
     loadSavedWalletData();
   }, []);
 
-  // Função para carregar dados salvos
   const loadSavedWalletData = () => {
     try {
-      const savedWallet = localStorage.getItem('walletConnection');
+      const savedWallet = localStorage.getItem("walletConnection");
       if (savedWallet) {
         const walletData: PersistedWallet = JSON.parse(savedWallet);
         const currentTime = new Date().getTime();
-        
-        // Se os dados tiverem menos de 30 minutos (1800000 ms), use-os
         if (currentTime - walletData.timestamp < 1800000) {
           setWalletAddress(walletData.address);
           setChzBalance(walletData.balance);
-          
-          // Reconectar ao provider se temos um endereço salvo
-          if (walletData.address) {
-            reconnectProvider();
-          }
+          reconnectProvider();
         } else {
-          // Se os dados forem antigos, limpe-os
-          localStorage.removeItem('walletConnection');
+          localStorage.removeItem("walletConnection");
         }
       }
     } catch (e) {
-      console.error("Erro ao carregar dados salvos da carteira:", e);
-      localStorage.removeItem('walletConnection');
+      console.error("Erro ao carregar dados salvos:", e);
+      localStorage.removeItem("walletConnection");
     }
   };
 
-  // Função para salvar dados da carteira
   const saveWalletData = (address: string, balance: string) => {
     try {
       const walletData: PersistedWallet = {
         address,
         balance,
-        timestamp: new Date().getTime()
+        timestamp: new Date().getTime(),
       };
-      
-      localStorage.setItem('walletConnection', JSON.stringify(walletData));
+      localStorage.setItem("walletConnection", JSON.stringify(walletData));
     } catch (e) {
-      console.error("Erro ao salvar dados da carteira:", e);
+      console.error("Erro ao salvar dados:", e);
     }
   };
 
-  // Função para reconectar ao provider
   const reconnectProvider = async () => {
     try {
       if (window.ethereum) {
@@ -84,7 +84,7 @@ export function useWallet() {
         return browserProvider;
       }
     } catch (e) {
-      console.error("Erro ao reconectar ao provider:", e);
+      console.error("Erro ao reconectar:", e);
     }
     return null;
   };
@@ -93,19 +93,36 @@ export function useWallet() {
     setError(null);
     setLoading(true);
     try {
-      let ethereum;
-      if (wallet === "rabby" && (window as any).ethereum?.isRabby) {
-        ethereum = (window as any).ethereum;
-      } else if (wallet === "metamask" && (window as any).ethereum?.isMetaMask) {
-        ethereum = (window as any).ethereum;
-      } else if ((window as any).ethereum) {
-        // fallback: use whatever is injected
-        ethereum = (window as any).ethereum;
-      } else {
-        setError("Wallet não encontrada. Instale Rabby ou MetaMask.");
-        setLoading(false);
-        return;
+      const ethereum = (window as any).ethereum;
+      if (!ethereum) throw new Error("Wallet não encontrada.");
+
+      const isValid =
+        (wallet === "metamask" && ethereum.isMetaMask) ||
+        (wallet === "rabby" && ethereum.isRabby) ||
+        (!wallet && ethereum);
+
+      if (!isValid) throw new Error("Tipo de carteira inválido ou não suportado.");
+
+      // Força a rede Chiliz
+      const currentChainId = await ethereum.request({ method: "eth_chainId" });
+      if (currentChainId !== CHILIZ_CHAIN_ID_HEX) {
+        try {
+          await ethereum.request({
+            method: "wallet_switchEthereumChain",
+            params: [{ chainId: CHILIZ_CHAIN_ID_HEX }],
+          });
+        } catch (switchError: any) {
+          if (switchError.code === 4902) {
+            await ethereum.request({
+              method: "wallet_addEthereumChain",
+              params: [CHILIZ_PARAMS],
+            });
+          } else {
+            throw switchError;
+          }
+        }
       }
+
       const browserProvider = new ethers.BrowserProvider(ethereum);
       setProvider(browserProvider);
       const accounts = await browserProvider.send("eth_requestAccounts", []);
@@ -113,62 +130,48 @@ export function useWallet() {
       setWalletAddress(address);
       await fetchChzBalance(address, browserProvider);
     } catch (e: any) {
-      setError("Erro ao conectar ou buscar saldo: " + (e.message || e));
+      setError("Erro ao conectar: " + (e.message || e));
     }
     setLoading(false);
   }
 
-  async function fetchChzBalance(address: string, prov?: any) {
+  async function fetchChzBalance(address: string, prov?: ethers.BrowserProvider) {
     setChzBalance(null);
     try {
       const usedProvider = prov || provider;
-      if (!usedProvider) return;
-      
-      try {
-        // Vamos usar um mock para o saldo CHZ caso o contrato não funcione
-        const mockBalance = "25.00"; 
-        
-        // Tenta obter o saldo real do contrato
-        try {
-          const chzContract = new ethers.Contract(
-            CHZ_CONTRACT,
-            ERC20_ABI, 
-            usedProvider
-          );
-          
-          const rawBalance = await chzContract.balanceOf(address);
-          const formatted = ethers.formatUnits(rawBalance, CHZ_DECIMALS);
-          setChzBalance(formatted);
-          saveWalletData(address, formatted);
-        } catch (contractError) {
-          console.error("Erro ao buscar saldo CHZ do contrato:", contractError);
-          // Usa o mock se o contrato falhar
-          setChzBalance(mockBalance);
-          saveWalletData(address, mockBalance);
-        }
-      } catch (error) {
-        console.error("Erro ao buscar saldo CHZ:", error);
-        // Se não conseguirmos ler o contrato CHZ, definimos um valor padrão
-        const fallbackBalance = "0.00";
-        setChzBalance(fallbackBalance);
-        saveWalletData(address, fallbackBalance);
+      if (!usedProvider) {
+        setError("Provider não disponível.");
+        return;
       }
-    } catch (e: any) {
-      console.error("Erro geral ao buscar saldo:", e);
-      setError("Erro ao buscar saldo: " + (e.message || e));
-      const fallbackBalance = "0.00";
-      setChzBalance(fallbackBalance);
-      saveWalletData(address, fallbackBalance);
+  
+      const network = await usedProvider.getNetwork();
+      console.log("🌐 Conectado na rede:", network.chainId);
+      
+      if (network.chainId !== 88888n) {
+        setError("Conecte-se à Chiliz Chain para visualizar o saldo CHZ.");
+        return;
+      }
+  
+      const rawBalance = await usedProvider.getBalance(address);
+      const formatted = ethers.formatEther(rawBalance); // 18 casas decimais
+      console.log("✅ Saldo CHZ (nativo):", formatted);
+  
+      setChzBalance(formatted);
+      saveWalletData(address, formatted);
+    } catch (e) {
+      console.error("❌ Erro ao buscar saldo CHZ:", e);
+      setError("Erro ao buscar saldo CHZ.");
+      setChzBalance("0.00");
+      saveWalletData(address, "0.00");
     }
   }
 
   function disconnect() {
-    setWalletAddress(null);
-    setChzBalance(null);
+    setWalletAddress("");
+    setChzBalance("0.00");
     setProvider(null);
     setError(null);
-    // Remove os dados salvos
-    localStorage.removeItem('walletConnection');
+    localStorage.removeItem("walletConnection");
   }
 
   return {
@@ -178,6 +181,6 @@ export function useWallet() {
     error,
     connect,
     disconnect,
-    fetchChzBalance
+    fetchChzBalance,
   };
 }

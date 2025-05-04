@@ -37,8 +37,6 @@ const Wallet = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
           <div className="lg:col-span-1">
             <WalletInfo 
-              address={walletAddress || "Connect your wallet"}
-              balance={chzBalance || "0.00"}
               onCopy={handleCopyAddress}
             />
             <SendTokens mockBalance={chzBalance || "0.00"} />
